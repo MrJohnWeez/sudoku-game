@@ -7,11 +7,13 @@ using namespace std;
 int main()
 {
     game.run();
-    cout << "I'm on a boat" << endl;
-    cout << "      O      " << endl;
-    cout << "     /|\\    " << endl;
-    cout << "     / \\    " << endl;
-    cout << "  <_______>  " << endl;
+    // How are you?
+    cout << "testing" << endl;
+ //   cout << "I'm on a boat" << endl;
+ //   cout << "      O      " << endl;
+  //  cout << "     /|\\    " << endl;
+//    cout << "     / \\    " << endl;
+//    cout << "  <_______>  " << endl;
 
     return 0;
 }
