@@ -6,7 +6,6 @@ using namespace std;
 
 int main()
 {
-<<<<<<< f21844cf20d415b79d23b15640eadb31da72e11f
     game.run();
     // How are you?
     cout << "testing" << endl;
@@ -15,7 +14,6 @@ int main()
   //  cout << "     /|\\    " << endl;
 //    cout << "     / \\    " << endl;
 //    cout << "  <_______>  " << endl;
-=======
     game game1;
     game1.run();
     cout << "I don't knwo what this will do";
@@ -24,7 +22,6 @@ int main()
     cout << "      O      " << endl;
     cout << "     / \\    " << endl;
     cout << "  <_______>  " << endl;
->>>>>>> testing overlap code
 
     return 0;
 }
