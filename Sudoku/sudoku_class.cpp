@@ -6,6 +6,7 @@
 #include <fstream>
 
 class game{
+public:
     game(){
         //initulize vars???
     }
@@ -14,6 +15,6 @@ private:
 
 public:
     void run(){
-        cout << "Game Ran" << endl;
+        std::cout << "Game Run" << std::endl;
     }
 };
