@@ -44,13 +44,14 @@ private:
         cin.get();
     }
 
-    void assign(gameboard playBoard,int startBoard[9][9], int keyBoard[9][9]){
-        for(int row = 0; row < 9; row++){
-            for(int col = 0; col < 9; col++){
+    void assign(gameboard playBoard, int startBoard[][9], int keyBoard[][9]){
+        for(unsigned int row = 0; row < 9; row++){
+            for(unsigned int col = 0; col < 9; col++){
                 playBoard.board[row][col] = startBoard[row][col];
                 playBoard.boardkey[row][col] = keyBoard[row][col];
             }
         }
+        cout << "Went through" << endl;
     }
 
     gameboard boardSelect(){
@@ -65,6 +66,7 @@ private:
                  << "(3) Hard\n";
             cin >> diff;
         }while(diff != 1 && diff != 2 && diff != 3);
+
         gameboard playBoard;
         playBoard.title = "Easy #1";
         int easyBoard1[9][9] = {{3, 0, 6, 5, 0, 8, 4, 0, 0},
