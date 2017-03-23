@@ -39,15 +39,27 @@ public:
 private:
     //Call functions durring game operation
     void title(){
-        cout << setw(60) << " _____             _         _           \n"
+
+
+
+
+
+        cout << setw(67) << "\033[1;31m _____             _         _           \n"
              << setw(60) << "/  ___|           | |       | |          \n"
              << setw(60) << "\\ `--.  _   _   __| |  ___  | | __ _   _ \n"
              << setw(60) << " `--. \\| | | | / _` | / _ \\ | |/ /| | | |\n"
              << setw(60) << "/\\__/ /| |_| || (_| || (_) ||   < | |_| |\n"
              << setw(61) << "\\____/  \\__,_| \\__,_| \\___/ |_|\\_\\ \\__,_|\n\n";
-        cout << setw(55) << "-----Press enter to play game-----";
+        cout << setw(61) << "-----Press enter to play game-----\033[0m\n";
         cin.get(); //Pause until enter
-    }
+cout <<"\033[1;31mbold red text\033[0m\n";
+
+
+
+
+
+        }
+
 
     void updateBoard(gameboard &start, int main[][9], int key[][9]){
         for(unsigned int row = 0; row < 9; row++){
