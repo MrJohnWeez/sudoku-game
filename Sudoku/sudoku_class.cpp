@@ -188,7 +188,6 @@ cout <<"\033[1;31mbold red text\033[0m\n";
             cin >> diff;
         }
 
-
         while(version < 1 || version > 5){
             if(version != 0){
                 cout << "Must enter 1-5" << endl;
