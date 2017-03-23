@@ -8,7 +8,7 @@ int main()
 {
     game game1;
     //Runs game
-    game1.setup();
+    game1.playGame();
 
     return 0;
 }

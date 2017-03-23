@@ -9,18 +9,20 @@ using namespace std;
 
 
 //What to do...
-
-//Find a way to set board values LINE: 55
-
+//All things that need done
 
 
+//Q & A
 
 
+
+//Creates a type stored in gameboard that stores play board and the key
 struct holdBoard{
     int boardPlay[9][9] = {{0}};
     int boardKey[9][9] = {{0}};
 };
 
+//Creates a type that stores game data
 struct gameboard{
     string title;
     holdBoard board;
@@ -44,7 +46,7 @@ private:
              << setw(60) << "/\\__/ /| |_| || (_| || (_) ||   < | |_| |\n"
              << setw(61) << "\\____/  \\__,_| \\__,_| \\___/ |_|\\_\\ \\__,_|\n\n";
         cout << setw(55) << "-----Press enter to play game-----";
-        cin.get();
+        cin.get(); //Pause until enter
     }
 
     void updateBoard(gameboard &start, int main[][9], int key[][9]){
@@ -56,9 +58,9 @@ private:
         }
     }
 
-    gameboard chooseBoard(int option, gameboard &start){
+    void chooseBoard(int diff, gameboard &start){
         //easy
-        if(option == 1){
+        if(diff == 1){
             int main[9][9] = {{3, 0, 6, 5, 0, 8, 4, 0, 0},
                               {5, 2, 0, 0, 0, 0, 0, 0, 0},
                               {0, 8, 7, 0, 0, 0, 0, 3, 1},
@@ -78,10 +80,12 @@ private:
                              {6, 9, 2, 3, 5, 1, 8, 7, 4},
                              {7, 4, 5, 2, 8, 6, 3, 1, 9}};
             //changes boards to selected option
+            //Like start.board.boardPlay = main
+            //start.board.boardPlay[row][col] = main[row][col]
             updateBoard(start, main, key);
 
             //medium
-        }else if(option == 2){
+        }else if(diff == 2){
             int main[9][9] = {{4, 0, 6, 5, 0, 8, 4, 0, 0},
                               {5, 2, 0, 0, 0, 0, 0, 0, 0},
                               {0, 8, 7, 0, 0, 0, 0, 3, 1},
@@ -124,14 +128,13 @@ private:
                                        {7, 4, 5, 2, 8, 6, 3, 1, 9}};
             updateBoard(start, main, key);
         }
-
-        return start;
     }
 
 
     gameboard boardSelect(){
-        int diff = -1;
-        do{
+        int diff = 0;
+        int version = 0;
+        while(diff != 1 && diff != 2 && diff != 3){
             if(diff != -1){
                 cout << "Must enter 1 2 or 3" << endl;
             }
@@ -140,11 +143,28 @@ private:
                  << "(2) Medium\n"
                  << "(3) Hard\n";
             cin >> diff;
-        }while(diff != 1 && diff != 2 && diff != 3);
+        }
 
+        while(version < 1 && version > 5){
+            if(version < 1 && version > 5){
+                cout << "Must enter 1 2 or 3" << endl;
+            }
+            cout << "Choose difficulty:\n"
+                 << "(1) Easy\n"
+                 << "(2) Medium\n"
+                 << "(3) Hard\n";
+            cin >> diff;
+        }
         gameboard playBoard;
         playBoard.title = "Easy #1";
+
+
+        //Choose board also
+        //Needs to go into this function below
+
         chooseBoard(diff, playBoard);
+
+
 
         //Temp Printing
         int row, col = 0;
@@ -166,7 +186,7 @@ private:
     }
 
 public:
-    void setup(){
+    void playGame(){
         title();
         boardSelect();
 
