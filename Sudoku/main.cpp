@@ -11,6 +11,8 @@ int main()
     // How are you?
     cout << "testing" << endl;
 
+    cout << "testing again" << endl;
+
     cout << "I don't knwo what this will do";
     cout << "hi\n" << endl;
     cout << "I'm on a boat" << endl;
