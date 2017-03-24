@@ -58,21 +58,26 @@ struct boardType{
 
 //Creates a type that stores game data
 struct gameboard{
-    string title;
+    string title = "Untitled_Save";
     boardType board;
 };
 
+
+
 class game{
 public:
+    //Runs game when class is called ~ This is a constructor
     game(){
-
+        // Displays title screen
+        title();
+        gameboard saveFile;
+        //Options and Board setup ~ saves to game file
+        boardSelect(saveFile);
     }
 
 private:
     //Call functions durring game operation
     void title(){
-
-
 
         cout << setw(67) << "\033[1;31m _____             _         _           \n"
              << setw(60) << "/  ___|           | |       | |          \n"
@@ -82,9 +87,7 @@ private:
              << setw(61) << "\\____/  \\__,_| \\__,_| \\___/ |_|\\_\\ \\__,_|\n\n";
         cout << setw(61) << "-----Press enter to play game-----\033[0m\n";
         cin.get(); //Pause until enter
-cout <<"\033[1;31mbold red text\033[0m\n";
-
-
+//cout <<"\033[1;31mbold red text\033[0m\n";
 
 
         }
@@ -99,11 +102,11 @@ cout <<"\033[1;31mbold red text\033[0m\n";
         }
     }
 
+
     //sets difficulty, board #, and load it into "game memory"
-    void boardSelect(){
+    void boardSelect(gameboard &saveFile){
         int diff = 0;
         int version = 0;
-
         while(diff != 1 && diff != 2 && diff != 3){
             if(diff != 0){
                 cout << "Must enter 1 2 or 3" << endl;
@@ -128,9 +131,6 @@ cout <<"\033[1;31mbold red text\033[0m\n";
             cin >> version;
         }
 
-        gameboard saveFile;
-        saveFile.title = "Save_Name_Goes_Here";
-
         //copies board to save file (pass by reference via void function)
         copyBoard(diff, version, saveFile);
 
@@ -152,23 +152,9 @@ cout <<"\033[1;31mbold red text\033[0m\n";
         }
     }
 
-public:
-    void playGame(){
-        // Displays title screen
-        title();
-        //Options and Board
-        boardSelect();
-
-    }
-
-
-
-
-
 
 
 //Suduko Boards
-private:
     //Copies saved boards to game save file
     void copyBoard(int diff, int version, gameboard &start){
         //Easy

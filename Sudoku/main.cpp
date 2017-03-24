@@ -6,10 +6,7 @@ using namespace std;
 
 int main()
 {
-
-    game game1;
     //Runs game
-    game1.playGame();
-
+    game Suduko;
     return 0;
 }
