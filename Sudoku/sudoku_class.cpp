@@ -15,7 +15,26 @@ using namespace std;
       //5 Hard Boards need filling in
 
     //Graphical
-      //Find a way to display boards
+      //Find a way to display boards. !! Possibly with an array of strings?
+      // cout << "►" << endl;
+
+      // We can use these chars: http://www.copypastecharacter.com/all-characters
+
+        //Board prototype Needs Help
+//           A B C   D E F   G H I
+//         ___________________________
+//      1) | 0 0 0 |  0 0 0 |  0 0 0 |
+//      2) | 0 0 0 |  0 0 0 |  0 0 0 |
+//      3) | 0 0 0 |  0 0 0 |  0 0 0 |
+//         |-------|--------|--------|
+//      4) | 0 0 0 |  0 0 0 |  0 0 0 |
+//      5) | 0 0 0 |  0 0 0 |  0 0 0 |
+//      6) | 0 0 0 |  0 0 0 |  0 0 0 |
+//         |-------|--------|--------|
+//      7) | 0 0 0 |  0 0 0 |  0 0 0 |
+//      8) | 0 0 0 |  0 0 0 |  0 0 0 |
+//      9) | 0 0 0 |  0 0 0 |  0 0 0 |
+//         ---------------------------
 
     //Functions
       //Add Begin game function
