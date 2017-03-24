@@ -11,17 +11,16 @@ using namespace std;
 //What to do...
 
     //Grindy
-      //4 Medium Boards need filling in
       //5 Hard Boards need filling in
 
     //Graphical
-      //Find a way to display boards. !! Possibly with an array of strings?
+      //Find a way to display boards. ~ Possibly with an array of strings?
       // cout << "►" << endl;
 
       // We can use these chars: http://www.copypastecharacter.com/all-characters
 
         //Board prototype Needs Help
-//           A B C   D E F   G H I
+//           A B C    D E F    G H I
 //         ___________________________
 //      1) | 0 0 0 |  0 0 0 |  0 0 0 |
 //      2) | 0 0 0 |  0 0 0 |  0 0 0 |
@@ -52,7 +51,7 @@ using namespace std;
 
 
 //Creates a type stored in gameboard that stores play board and the key
-struct holdBoard{
+struct boardType{
     int boardPlay[9][9] = {{0}};
     int boardKey[9][9] = {{0}};
 };
@@ -60,7 +59,7 @@ struct holdBoard{
 //Creates a type that stores game data
 struct gameboard{
     string title;
-    holdBoard board;
+    boardType board;
 };
 
 class game{
@@ -101,7 +100,7 @@ cout <<"\033[1;31mbold red text\033[0m\n";
     }
 
     //sets difficulty, board #, and load it into "game memory"
-    gameboard boardSelect(){
+    void boardSelect(){
         int diff = 0;
         int version = 0;
 
@@ -151,8 +150,6 @@ cout <<"\033[1;31mbold red text\033[0m\n";
             }
             cout << endl;
         }
-
-        return saveFile;
     }
 
 public:
