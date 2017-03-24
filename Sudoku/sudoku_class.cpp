@@ -75,6 +75,11 @@ public:
         boardSelect(saveFile);
     }
 
+    //Runs when game is exited
+    ~game(){
+        cout << "Thanks for playing our game." << endl;
+    }
+
 private:
     //Call functions durring game operation
     void title(){
