@@ -34,16 +34,21 @@ using namespace std;
 
     //Functions
       //Add Begin game function
-      //Add function to compare boards
+      //Function
 
     //Logic
-      //User can restart anytime
+      //User can resaveFile anytime
       //User can quit anytime
       //If user entered a void cord make them re-enter it. Also tell them "Invalid cordinate"
 
 
 //Q & A
     //Is Aaron going to edit this over the weekend?
+
+
+
+//Put diff and version vars in savefile, Fixed board errors
+
 
 
 
@@ -56,6 +61,8 @@ struct boardType{
 //Creates a type that stores game data
 struct gameboard{
     string title = "Untitled_Save";
+    int diff = 0;
+    int version = 0;
     int incorrect = 0;
     boardType board;
 };
@@ -95,7 +102,7 @@ private:
 
         }
 
-    //Copies board to main "game memory" ~ var name used: saveFile
+    //Copies board to main "game memory"
     void updateBoard(gameboard &saveFile, int main[][9], int key[][9]){
         for(unsigned int row = 0; row < 9; row++){
             for(unsigned int col = 0; col < 9; col++){
@@ -122,21 +129,19 @@ private:
 
     //sets difficulty, board #, and load it into "game memory"
     void boardSelect(gameboard &saveFile){
-        int diff = 0;
-        int version = 0;
-        while(diff != 1 && diff != 2 && diff != 3){
-            if(diff != 0){
+        while(saveFile.diff != 1 && saveFile.diff != 2 && saveFile.diff != 3){
+            if(saveFile.diff != 0){
                 cout << "Must enter 1 2 or 3" << endl;
             }
             cout << "Choose difficulty:\n"
                  << "(1) Easy\n"
                  << "(2) Medium\n"
                  << "(3) Hard\n";
-            cin >> diff;
+            cin >> saveFile.diff;
         }
 
-        while(version < 1 || version > 5){
-            if(version != 0){
+        while(saveFile.version < 1 || saveFile.version > 5){
+            if(saveFile.version != 0){
                 cout << "Must enter 1-5" << endl;
             }
             cout << "Choose board number:\n"
@@ -145,11 +150,11 @@ private:
                  << "(3) Board 3\n"
                  << "(4) Board 4\n"
                  << "(5) Board 5\n";
-            cin >> version;
+            cin >> saveFile.version;
         }
 
         //copies board to save file (pass by reference via void function)
-        copyBoard(diff, version, saveFile);
+        copyBoard(saveFile);
 
 
         //Temp Printing
@@ -168,6 +173,7 @@ private:
             cout << endl;
         }
 
+        //Compares playboard to its key. Saves amount of incorrect in saveFile.incorrect
         check(saveFile);
     }
 
@@ -175,10 +181,10 @@ private:
 
 //Suduko Boards
     //Copies saved boards to game save file
-    void copyBoard(int diff, int version, gameboard &start){
+    void copyBoard(gameboard &saveFile){
         //Easy
-        if(diff == 1){
-            if(version == 1){
+        if(saveFile.diff == 1){
+            if(saveFile.version == 1){
                 int main[9][9] = {{0, 6, 1,   0, 0, 0,   4, 3, 0},
                                   {0, 0, 0,   8, 0, 7,   0, 0, 0},
                                   {9, 8, 0,   0, 4, 0,   0, 5, 6},
@@ -202,9 +208,9 @@ private:
                                  {1, 7, 4,   5, 2, 3,   6, 8, 9},
                                  {6, 9, 5,   4, 7, 8,   1, 2, 3}};
                 //changes boards to selected option
-                //Similar to inccorect logic: start.board.boardPlay = main
-                updateBoard(start, main, key);
-            }else if(version == 2){
+                //Similar to inccorect logic: saveFile.board.boardPlay = main
+                updateBoard(saveFile, main, key);
+            }else if(saveFile.version == 2){
                 int main[9][9] = {{6, 1, 0,   0, 0, 0,   2, 0, 4},
                                   {0, 7, 3,   4, 0, 0,   0, 8, 5},
                                   {8, 0, 0,   7, 9, 0,   0, 6, 0},
@@ -213,7 +219,7 @@ private:
                                   {0, 0, 1,   0, 3, 0,   6, 0, 0},
                                   {0, 3, 6,   5, 0, 9,   0, 0, 0},
 
-                                  {9, 0, 0,   0, 2, 5,   0, 0, 7},
+                                  {0, 9, 0,   0, 2, 5,   0, 0, 7},
                                   {5, 4, 0,   0, 0, 3,   8, 9, 0},
                                   {3, 0, 7,   0, 0, 0,   0, 1, 2}};
                 int key[9][9] = {{6, 1, 9,   3, 5, 8,   2, 7, 4},
@@ -227,10 +233,10 @@ private:
                                  {1, 9, 8,   6, 2, 5,   4, 3, 7},
                                  {5, 4, 2,   1, 7, 3,   8, 9, 6},
                                  {3, 6, 7,   9, 8, 4,   5, 1, 2}};
-                updateBoard(start, main, key);
-            }else if(version == 3){
+                updateBoard(saveFile, main, key);
+            }else if(saveFile.version == 3){
                 int main[9][9] = {{9, 0, 0,   3, 0, 4,   0, 0, 0},
-                                  {7, 6, 0,   0, 0, 0,   4, 9, 0},
+                                  {7, 6, 0,   0, 0, 0,   0, 4, 9},
                                   {0, 4, 0,   0, 8, 0,   7, 0, 0},
 
                                   {0, 2, 0,   7, 4, 0,   0, 0, 1},
@@ -251,8 +257,8 @@ private:
                                  {6, 9, 4,   8, 1, 3,   2, 5, 7},
                                  {8, 5, 2,   4, 9, 7,   1, 6, 3},
                                  {1, 3, 7,   2, 5, 6,   9, 8, 4}};
-                updateBoard(start, main, key);
-            }else if(version == 4){
+                updateBoard(saveFile, main, key);
+            }else if(saveFile.version == 4){
                 int main[9][9] = {{0, 4, 1,   0, 2, 3,   0, 0, 0},
                                   {0, 7, 0,   0, 5, 0,   0, 4, 9},
                                   {0, 3, 0,   0, 0, 6,   0, 1, 0},
@@ -275,8 +281,8 @@ private:
                                  {3, 6, 4,   5, 7, 2,   9, 8, 1},
                                  {7, 2, 8,   6, 1, 9,   5, 3, 4},
                                  {1, 9, 5,   8, 3, 4,   2, 7, 6}};
-                updateBoard(start, main, key);
-            }else{ //version = 5
+                updateBoard(saveFile, main, key);
+            }else{ //saveFile.version = 5
                 int main[9][9] = {{4, 0, 2,   6, 0, 0,   8, 0, 0},
                                   {0, 9, 0,   3, 0, 0,   6, 0, 7},
                                   {0, 6, 0,   1, 0, 5,   0, 3, 0},
@@ -299,11 +305,11 @@ private:
                                  {6, 7, 4,   8, 1, 3,   5, 9, 2},
                                  {2, 8, 9,   5, 4, 7,   3, 6, 1},
                                  {3, 1, 5,   9, 6, 2,   7, 8, 4}};
-                updateBoard(start, main, key);
+                updateBoard(saveFile, main, key);
             }
         //Medium
-        }else if(diff == 2){
-            if(version == 1){
+        }else if(saveFile.diff == 2){
+            if(saveFile.version == 1){
                 int main[9][9] = {{0, 3, 6,   0, 0, 0,   0, 0, 0},
                                   {5, 0, 0,   8, 0, 6,   0, 0, 2},
                                   {9, 8, 0,   0, 0, 3,   0, 7, 0},
@@ -326,8 +332,8 @@ private:
                                   {3, 6, 7,   4, 2, 5,   9, 8, 1},
                                   {2, 5, 8,   6, 1, 9,   4, 3, 7},
                                   {4, 1, 9,   7, 3, 8,   5, 2, 6}};
-                updateBoard(start, main, key);
-            }else if(version == 2){
+                updateBoard(saveFile, main, key);
+            }else if(saveFile.version == 2){
                 int main[9][9] = {{0, 0, 0,   0, 4, 0,   8, 7, 9},
                                   {9, 3, 0,   7, 5, 0,   0, 2, 0},
                                   {0, 0, 0,   0, 0, 0,   5, 0, 0},
@@ -350,11 +356,11 @@ private:
                                  {3, 9, 1,   4, 2, 6,   7, 8, 5},
                                  {5, 2, 6,   9, 8, 7,   4, 1, 3},
                                  {4, 7, 8,   1, 3, 5,   9, 6, 2}};
-                updateBoard(start, main, key);
-            }else if(version == 3){
+                updateBoard(saveFile, main, key);
+            }else if(saveFile.version == 3){
                 int main[9][9] = {{0, 1, 0,   3, 0, 0,   8, 0, 0},
                                   {7, 0, 0,   2, 0, 0,   0, 0, 6},
-                                  {3, 0, 0,   0, 1, 9,   0, 0, 5},
+                                  {6, 0, 0,   0, 1, 9,   0, 0, 5},
 
                                   {0, 0, 6,   0, 5, 7,   0, 0, 9},
                                   {0, 0, 0,   0, 0, 0,   0, 0, 0},
@@ -375,15 +381,15 @@ private:
                                  {8, 2, 1,   9, 7, 6,   5, 3, 4},
                                  {3, 9, 4,   5, 8, 2,   6, 7, 1}};
 
-                updateBoard(start, main, key);
-            }else if(version == 4){
+                updateBoard(saveFile, main, key);
+            }else if(saveFile.version == 4){
                 int main[9][9] = {{0, 4, 9,   0, 0, 0,   1, 0, 0},
                                   {0, 0, 0,   1, 4, 0,   0, 0, 5},
                                   {7, 0, 0,   0, 0, 9,   0, 0, 4},
 
                                   {0, 0, 5,   6, 0, 8,   0, 4, 0},
                                   {0, 8, 0,   0, 3, 0,   0, 6, 0},
-                                  {0, 0, 3,   2, 0, 5,   7, 0, 0},
+                                  {0, 0, 4,   2, 0, 5,   7, 0, 0},
 
                                   {2, 0, 0,   4, 0, 0,   0, 0, 6},
                                   {5, 0, 0,   0, 6, 1,   0, 0, 0},
@@ -400,8 +406,8 @@ private:
                                  {5, 9, 3,   8, 6, 1,   4, 7, 2},
                                  {4, 6, 7,   9, 5, 2,   3, 8, 1}};
 
-                updateBoard(start, main, key);
-            }else{ //version = 5
+                updateBoard(saveFile, main, key);
+            }else{ //saveFile.version = 5
                 int main[9][9] = {{0, 0, 3,   4, 5, 0,   2, 0, 0},
                                   {0, 0, 4,   0, 0, 0,   0, 0, 1},
                                   {8, 0, 0,   6, 0, 0,   7, 9, 0},
@@ -425,12 +431,12 @@ private:
                                  {9, 8, 6,   2, 7, 4,   1, 3, 5},
                                  {4, 2, 5,   3, 1, 6,   9, 7, 8}};
 
-                updateBoard(start, main, key);
+                updateBoard(saveFile, main, key);
             }
 
         //hard
         }else{
-            if(version == 1){
+            if(saveFile.version == 1){
                 int main[9][9] = {{0, 2, 8,   0, 5, 0,   0, 0, 3},
                                   {0, 6, 0,   0, 0, 0,   8, 0, 0},
                                   {3, 0, 5,   0, 7, 2,   0, 0, 0},
@@ -454,8 +460,8 @@ private:
                                  {7, 9, 4,   2, 8, 3,   5, 6, 1},
                                  {2, 1, 6,   5, 4, 7,   9, 3, 8}};
 
-                updateBoard(start, main, key);
-            }else if(version == 2){
+                updateBoard(saveFile, main, key);
+            }else if(saveFile.version == 2){
                 int main[9][9] = {{0, 9, 0,   1, 0, 0,   0, 8, 0},
                                   {0, 0, 0,   6, 0, 0,   0, 9, 2},
                                   {0, 0, 8,   2, 0, 4,   7, 1, 0},
@@ -479,8 +485,8 @@ private:
                                  {7, 8, 2,   9, 6, 5,  3, 4, 1},
                                  {3, 1, 9,   8, 4, 7,   6, 2, 5}};
 
-                updateBoard(start, main, key);
-            }else if(version == 3){
+                updateBoard(saveFile, main, key);
+            }else if(saveFile.version == 3){
                 int main[9][9] = {{0, 9, 6,   2, 0, 3,   0, 0, 5},
                                  {0, 2, 1,   0, 0, 0,   0, 0, 6},
                                  {7, 0, 0,   4, 0, 0,   0, 0, 0},
@@ -504,8 +510,8 @@ private:
                                  {3, 5, 9,   6, 2, 1,   8, 7, 4},
                                  {2, 6, 8,   7, 9, 4,   5, 1, 3}};
 
-                updateBoard(start, main, key);
-            }else if(version == 4){
+                updateBoard(saveFile, main, key);
+            }else if(saveFile.version == 4){
                 int main[9][9] = {{0, 3, 5,   0, 0, 0,   8, 0, 0},
                                   {0, 0, 0,   2, 3, 0,   0, 0, 5},
                                   {9, 0, 0,   0, 0, 8,   0, 0, 3},
@@ -529,8 +535,8 @@ private:
                                  {5, 2, 6,   9, 7, 4,   3, 8, 1},
                                  {4, 9, 3,   1, 8, 5,   2, 6, 7}};
 
-                updateBoard(start, main, key);
-            }else{ //version = 5
+                updateBoard(saveFile, main, key);
+            }else{ //saveFile.version = 5
                 int main[9][9] = {{0, 0, 0,   7, 8, 0,   0, 5, 6},
                                   {5, 1, 0,   0, 3, 4,   0, 0, 7},
                                   {0, 0, 0,   0, 0, 0,   0, 0, 0},
@@ -553,7 +559,7 @@ private:
                                  {8, 2, 3,   5, 6, 7,   9, 1, 4},
                                  {7, 5, 9,   4, 1, 8,   6, 2, 3},
                                  {6, 4, 1,   3, 9, 2,   7, 8, 5}};
-                updateBoard(start, main, key);
+                updateBoard(saveFile, main, key);
             }
         }
     }
