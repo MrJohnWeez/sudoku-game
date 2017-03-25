@@ -56,6 +56,7 @@ struct boardType{
 //Creates a type that stores game data
 struct gameboard{
     string title = "Untitled_Save";
+    int incorrect = 0;
     boardType board;
 };
 
@@ -95,13 +96,27 @@ private:
         }
 
     //Copies board to main "game memory" ~ var name used: saveFile
-    void updateBoard(gameboard &start, int main[][9], int key[][9]){
+    void updateBoard(gameboard &saveFile, int main[][9], int key[][9]){
         for(unsigned int row = 0; row < 9; row++){
             for(unsigned int col = 0; col < 9; col++){
-                start.board.boardPlay[row][col] = main[row][col];
-                start.board.boardKey[row][col] = key[row][col];
+                saveFile.board.boardPlay[row][col] = main[row][col];
+                saveFile.board.boardKey[row][col] = key[row][col];
             }
         }
+    }
+
+
+    //Checks to see if board is correct ~ also sets savefile incorrect # values
+    void check(gameboard &saveFile){
+        saveFile.incorrect = 0;
+        for(unsigned int row = 0; row < 9; row++){
+            for(unsigned int col = 0; col < 9; col++){
+                if((saveFile.board.boardPlay[row][col] != 0) && !(saveFile.board.boardPlay[row][col] == saveFile.board.boardKey[row][col])){
+                    saveFile.incorrect++;
+                }
+            }
+        }
+        cout << saveFile.incorrect << endl;
     }
 
 
@@ -152,6 +167,8 @@ private:
             }
             cout << endl;
         }
+
+        check(saveFile);
     }
 
 
