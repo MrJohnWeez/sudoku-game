@@ -71,18 +71,14 @@ public:
     game(){
         // Displays title screen
         title();
-        gameboard saveFile;
-        //Options and Board setup ~ saves to game file
-        boardSelect(saveFile);
-        //Runs game
-        run(saveFile);
     }
-
 
     //Runs when game is exited ~ This is a deconstructor
     ~game(){
         cout << "Thanks for playing our game." << endl;
     }
+
+
 
     //pause(true) will output "Press enter..." pause(false) does not output anything
     void pause(bool enter){
@@ -144,62 +140,9 @@ public:
 //cout <<"\033[1;31mbold red text\033[0m\n";
         }
 
-private:
-    //Call functions durring game operation
-
-    bool menu(){
-        int option = -1;
-        while(option < 0 || option > 2){
-            if(option != -1){
-                cout << "Must enter 0-2" << endl;
-            }
-            cout << "\nMenu\n"
-                 << "1) How to play\n"
-                 << "2) Play game\n"
-                 << "0) Exit Game\n⏩ ";
-            cin >> option;
-        }
-        if(option == 0){
-        }else if(option == 1){
-            howToPlay();
-        }
-        return true;
+    void credits(){
+        cout << "Enter credits here" << endl;
     }
-
-    //Tells user how to play and what command there are
-    void howToPlay(){
-        cout << "Do you want to " << endl;
-        cout << "Insert how to play here" << endl;
-        cout << "hit enter go back" << endl;
-        pause(true);
-    }
-
-
-    //Copies board to main "game memory"
-    void updateBoard(gameboard &saveFile, int main[][9], int key[][9]){
-        for(unsigned int row = 0; row < 9; row++){
-            for(unsigned int col = 0; col < 9; col++){
-                saveFile.board.boardPlay[row][col] = main[row][col];
-                saveFile.board.boardKey[row][col] = key[row][col];
-            }
-        }
-    }
-
-
-    //Checks to see if board is correct ~ also sets savefile incorrect # values
-    void check(gameboard &saveFile){
-        saveFile.incorrect = 0;
-        for(unsigned int row = 0; row < 9; row++){
-            for(unsigned int col = 0; col < 9; col++){
-                if((saveFile.board.boardPlay[row][col] != 0) && !(saveFile.board.boardPlay[row][col] == saveFile.board.boardKey[row][col])){
-                    saveFile.incorrect++;
-                }
-            }
-        }
-        //temp
-        cout << saveFile.incorrect << endl;
-    }
-
 
     //sets difficulty, board #, and load it into "game memory"
     void boardSelect(gameboard &saveFile){
@@ -212,6 +155,7 @@ private:
                  << "(2) Medium\n"
                  << "(3) Hard\n⏩ ";
             cin >> saveFile.diff;
+            cin.ignore();
         }
 
         while(saveFile.version < 1 || saveFile.version > 5){
@@ -225,6 +169,7 @@ private:
                  << "(4) Board 4\n"
                  << "(5) Board 5\n⏩ ";
             cin >> saveFile.version;
+            cin.ignore();
         }
 
         //Copies board to save file (pass by reference via void function)
@@ -260,6 +205,67 @@ private:
             cout << "Game Terminated" << endl;
         }
     }
+
+private:
+    //Call functions durring game operation
+
+    bool menu(){
+        int option = -1;
+        while(option < 0 || option > 2){
+            if(option != -1){
+                cout << "Must enter 0-2" << endl;
+            }
+            cout << "\nMenu\n"
+                 << "1) How to play\n"
+                 << "2) Play game\n"
+                 << "0) Exit Game\n⏩ ";
+            cin >> option;
+        }
+        cin.ignore(); //Clears new line from cin
+        if(option == 0){
+            return false;
+        }else if(option == 1){
+            howToPlay();
+            menu();
+        }else if(option == 2){
+            return true;
+        }
+    }
+
+    //Tells user how to play and what command there are
+    void howToPlay(){
+        cout << "Bla Bla Bla" << endl;
+        pause(true);
+    }
+
+
+    //Copies board to main "game memory"
+    void updateBoard(gameboard &saveFile, int main[][9], int key[][9]){
+        for(unsigned int row = 0; row < 9; row++){
+            for(unsigned int col = 0; col < 9; col++){
+                saveFile.board.boardPlay[row][col] = main[row][col];
+                saveFile.board.boardKey[row][col] = key[row][col];
+            }
+        }
+    }
+
+
+    //Checks to see if board is correct ~ also sets savefile incorrect # values
+    void check(gameboard &saveFile){
+        saveFile.incorrect = 0;
+        for(unsigned int row = 0; row < 9; row++){
+            for(unsigned int col = 0; col < 9; col++){
+                if((saveFile.board.boardPlay[row][col] != 0) && !(saveFile.board.boardPlay[row][col] == saveFile.board.boardKey[row][col])){
+                    saveFile.incorrect++;
+                }
+            }
+        }
+        //temp
+        cout << saveFile.incorrect << endl;
+    }
+
+
+
 
 
 //Suduko Boards
