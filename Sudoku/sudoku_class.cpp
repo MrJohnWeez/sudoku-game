@@ -34,7 +34,7 @@ using namespace std;
 
     //Functions
       //Add Begin game function
-      //Function
+      //Print out a board with pretty display
 
     //Logic
       //User can resaveFile anytime
@@ -44,10 +44,6 @@ using namespace std;
 
 //Q & A
     //Is Aaron going to edit this over the weekend?
-
-
-
-//Put diff and version vars in savefile, Fixed board errors
 
 
 
@@ -78,9 +74,11 @@ public:
         gameboard saveFile;
         //Options and Board setup ~ saves to game file
         boardSelect(saveFile);
+        //Runs game
+        run(saveFile);
     }
 
-    //Runs when game is exited
+    //Runs when game is exited ~ This is a deconstructor
     ~game(){
         cout << "Thanks for playing our game." << endl;
     }
@@ -101,6 +99,29 @@ private:
 
 
         }
+
+    void menu(){
+//        int option = -1;
+//        while(option < 0 || option > 2){
+//            if(saveFile.version != 0){
+//                cout << "Must enter 0-2" << endl;
+//            }
+//            cout << "\nMenu\n"
+//                 << "1) How to play\n"
+//                 << "2) Play game\n"
+//                 << "0) EXIT";
+//            cin >> saveFile.version;
+//        }
+
+    }
+
+    //Tells user how to play and what command there are
+    void howToPlay(){
+        string option;
+        cout << "Do you want to " << endl;
+        cout << "Insert how to play here" << endl;
+    }
+
 
     //Copies board to main "game memory"
     void updateBoard(gameboard &saveFile, int main[][9], int key[][9]){
@@ -123,6 +144,7 @@ private:
                 }
             }
         }
+        //temp
         cout << saveFile.incorrect << endl;
     }
 
@@ -153,8 +175,10 @@ private:
             cin >> saveFile.version;
         }
 
-        //copies board to save file (pass by reference via void function)
+        //Copies board to save file (pass by reference via void function)
         copyBoard(saveFile);
+        //Compares playboard to its key. Saves amount of incorrect in saveFile.incorrect (pass by reference via void function)
+        check(saveFile);
 
 
         //Temp Printing
@@ -172,11 +196,13 @@ private:
             }
             cout << endl;
         }
-
-        //Compares playboard to its key. Saves amount of incorrect in saveFile.incorrect
-        check(saveFile);
     }
 
+
+    void run(gameboard &saveFile){
+        howToPlay();
+
+    }
 
 
 //Suduko Boards
