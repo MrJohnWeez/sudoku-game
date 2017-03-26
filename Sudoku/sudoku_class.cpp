@@ -4,7 +4,6 @@
 #include <cmath>
 #include <iomanip> //setw
 
-
 using namespace std;
 
 
@@ -44,7 +43,7 @@ using namespace std;
 
 //Q & A
     //Is Aaron going to edit this over the weekend?
-//Idunno
+//Idunno ~ OK
 
 
 
@@ -79,6 +78,7 @@ public:
         run(saveFile);
     }
 
+
     //Runs when game is exited ~ This is a deconstructor
     ~game(){
         cout << "Thanks for playing our game." << endl;
@@ -94,7 +94,7 @@ private:
              << setw(60) << " `--. \\| | | | / _` | / _ \\ | |/ /| | | |\n"
              << setw(60) << "/\\__/ /| |_| || (_| || (_) ||   < | |_| |\n"
              << setw(61) << "\\____/  \\__,_| \\__,_| \\___/ |_|\\_\\ \\__,_|\n\n";
-        cout << setw(61) << "-----Press enter to play game-----\033[0m\n";\
+        cout << setw(62) << "-----Press enter to continue-----\033[0m\n";\
 
         cout << "          A B C    D E F    G H I  "<< endl;
         cout << "         ┏━━━━━━━┯━━━━━━━┯━━━━━━━┓ "<< endl;
@@ -111,33 +111,47 @@ private:
         cout << "      9) ┃ 0 0 0 │ 0 0 0 │ 0 0 0 ┃ "<< endl;
         cout << "         ┗━━━━━━━┷━━━━━━━┷━━━━━━━┛ "<< endl;
 
+        pause(false);
 
-        cin.get(); //Pause until enter
 //cout <<"\033[1;31mbold red text\033[0m\n";
 
 
         }
 
-    void menu(){
-//        int option = -1;
-//        while(option < 0 || option > 2){
-//            if(saveFile.version != 0){
-//                cout << "Must enter 0-2" << endl;
-//            }
-//            cout << "\nMenu\n"
-//                 << "1) How to play\n"
-//                 << "2) Play game\n"
-//                 << "0) EXIT";
-//            cin >> saveFile.version;
-//        }
+    //pause(true) will output "Press enter..." pause(false) does not output anything
+    void pause(bool enter){
+        if(enter) cout << "Press enter to continue" << endl;
+        do
+         {
+           cout << "";
+         } while (cin.get() != '\n');
+    }
 
+    bool menu(){
+        int option = -1;
+        while(option < 0 || option > 2){
+            if(option != -1){
+                cout << "Must enter 0-2" << endl;
+            }
+            cout << "\nMenu\n"
+                 << "1) How to play\n"
+                 << "2) Play game\n"
+                 << "0) Exit Game\n⏩ ";
+            cin >> option;
+        }
+        if(option == 0){
+        }else if(option == 1){
+            howToPlay();
+        }
+        return true;
     }
 
     //Tells user how to play and what command there are
     void howToPlay(){
-        string option;
         cout << "Do you want to " << endl;
         cout << "Insert how to play here" << endl;
+        cout << "hit enter go back" << endl;
+        pause(true);
     }
 
 
@@ -176,7 +190,7 @@ private:
             cout << "Choose difficulty:\n"
                  << "(1) Easy\n"
                  << "(2) Medium\n"
-                 << "(3) Hard\n";
+                 << "(3) Hard\n⏩ ";
             cin >> saveFile.diff;
         }
 
@@ -189,7 +203,7 @@ private:
                  << "(2) Board 2\n"
                  << "(3) Board 3\n"
                  << "(4) Board 4\n"
-                 << "(5) Board 5\n";
+                 << "(5) Board 5\n⏩ ";
             cin >> saveFile.version;
         }
 
@@ -218,8 +232,13 @@ private:
 
 
     void run(gameboard &saveFile){
-        howToPlay();
-
+        bool go = true;
+        go = menu();
+        if(go){
+            cout << "Run game code here" << endl;
+        }else{
+            cout << "Game Terminated" << endl;
+        }
     }
 
 
