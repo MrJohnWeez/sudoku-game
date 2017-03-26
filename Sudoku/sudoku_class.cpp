@@ -84,8 +84,15 @@ public:
         cout << "Thanks for playing our game." << endl;
     }
 
-private:
-    //Call functions durring game operation
+    //pause(true) will output "Press enter..." pause(false) does not output anything
+    void pause(bool enter){
+        if(enter) cout << "Press enter to continue" << endl;
+        do
+         {
+           cout << "";
+         } while (cin.get() != '\n');
+    }
+
     void title(){
 
         cout << setw(67) << "\033[1;31m _____             _         _           \n"
@@ -110,7 +117,7 @@ private:
         cout << "      8❱ ┃ 0 0 0 │ 0 0 0 │ 0 0 0 ┃ "<< endl;
         cout << "      9❱ ┃ 0 0 0 │ 0 0 0 │ 0 0 0 ┃ "<< endl;
         cout << "         ┗━━━━━━━┷━━━━━━━┷━━━━━━━┛ "<< endl;
-        
+
         cout << "           A   B   C   D   E   F   G   H   I   "<< endl;
         cout << "         ┏━━━┯━━━┯━━━┳━━━┯━━━┯━━━┳━━━┯━━━┯━━━┓ "<< endl;
         cout << "      1❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
@@ -135,18 +142,10 @@ private:
         pause(false);
 
 //cout <<"\033[1;31mbold red text\033[0m\n";
-
-
         }
 
-    //pause(true) will output "Press enter..." pause(false) does not output anything
-    void pause(bool enter){
-        if(enter) cout << "Press enter to continue" << endl;
-        do
-         {
-           cout << "";
-         } while (cin.get() != '\n');
-    }
+private:
+    //Call functions durring game operation
 
     bool menu(){
         int option = -1;
