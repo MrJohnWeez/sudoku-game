@@ -33,7 +33,7 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = Sudoku1.0.0
-DISTDIR = /home/student/Programming/CS_Final_Lab/Sudoku-game/build-Sudoku-Desktop_Qt_5_7_1_GCC_64bit-Debug/.tmp/Sudoku1.0.0
+DISTDIR = /home/student/Programming/Sudoku-game/build-Sudoku-Desktop_Qt_5_7_1_GCC_64bit-Debug/.tmp/Sudoku1.0.0
 LINK          = g++
 LFLAGS        = 
 LIBS          = $(SUBLIBS)  
@@ -185,6 +185,7 @@ DIST          = /opt/Qt/5.7/gcc_64/mkspecs/features/spec_pre.prf \
 		/opt/Qt/5.7/gcc_64/mkspecs/features/qt_config.prf \
 		/opt/Qt/5.7/gcc_64/mkspecs/linux-g++/qmake.conf \
 		/opt/Qt/5.7/gcc_64/mkspecs/features/spec_post.prf \
+		../Sudoku/.qmake.stash \
 		/opt/Qt/5.7/gcc_64/mkspecs/features/exclusive_builds.prf \
 		/opt/Qt/5.7/gcc_64/mkspecs/features/toolchain.prf \
 		/opt/Qt/5.7/gcc_64/mkspecs/features/default_pre.prf \
@@ -344,6 +345,7 @@ Makefile: ../Sudoku/Sudoku.pro /opt/Qt/5.7/gcc_64/mkspecs/linux-g++/qmake.conf /
 		/opt/Qt/5.7/gcc_64/mkspecs/features/qt_config.prf \
 		/opt/Qt/5.7/gcc_64/mkspecs/linux-g++/qmake.conf \
 		/opt/Qt/5.7/gcc_64/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/opt/Qt/5.7/gcc_64/mkspecs/features/exclusive_builds.prf \
 		/opt/Qt/5.7/gcc_64/mkspecs/features/toolchain.prf \
 		/opt/Qt/5.7/gcc_64/mkspecs/features/default_pre.prf \
@@ -493,6 +495,7 @@ Makefile: ../Sudoku/Sudoku.pro /opt/Qt/5.7/gcc_64/mkspecs/linux-g++/qmake.conf /
 /opt/Qt/5.7/gcc_64/mkspecs/features/qt_config.prf:
 /opt/Qt/5.7/gcc_64/mkspecs/linux-g++/qmake.conf:
 /opt/Qt/5.7/gcc_64/mkspecs/features/spec_post.prf:
+.qmake.stash:
 /opt/Qt/5.7/gcc_64/mkspecs/features/exclusive_builds.prf:
 /opt/Qt/5.7/gcc_64/mkspecs/features/toolchain.prf:
 /opt/Qt/5.7/gcc_64/mkspecs/features/default_pre.prf:
@@ -549,7 +552,8 @@ compiler_clean:
 
 ####### Compile
 
-main.o: ../Sudoku/main.cpp ../Sudoku/sudoku_class.cpp
+main.o: ../Sudoku/main.cpp ../Sudoku/sudoku_class.cpp \
+		../Sudoku/textediting.cpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../Sudoku/main.cpp
 
 ####### Install

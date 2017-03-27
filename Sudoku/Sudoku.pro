@@ -4,4 +4,5 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += main.cpp \
-    sudoku_class.cpp
+    sudoku_class.cpp \
+    textediting.cpp

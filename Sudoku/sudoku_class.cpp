@@ -3,6 +3,9 @@
 #include <vector>
 #include <cmath>
 #include <iomanip> //setw
+#include "textediting.cpp"
+
+
 
 using namespace std;
 
@@ -74,13 +77,13 @@ public:
     }
 
     void title(){
-
-        cout << red(" _____             _         _           \n"
-                    "/  ___|           | |       | |          \n"
-                    "\\ `--.  _   _   __| |  ___  | | __ _   _ \n"
-                    " `--. \\| | | | / _` | / _ \\ | |/ /| | | |\n"
-                    "/\\__/ /| |_| || (_| || (_) ||   < | |_| |\n"
-                    "\\____/  \\__,_| \\__,_| \\___/ |_|\\_\\ \\__,_|\n\n");
+        cout <<"Total________________________________screen_______________________________Length" << endl;
+        cout << red("                    _____             _         _           \n"
+                    "                   /  ___|           | |       | |          \n"
+                    "                   \\ `--.  _   _   __| |  ___  | | __ _   _ \n"
+                    "                    `--. \\| | | | / _` | / _ \\ | |/ /| | | |\n"
+                    "                   /\\__/ /| |_| || (_| || (_) ||   < | |_| |\n"
+                    "                   \\____/  \\__,_| \\__,_| \\___/ |_|\\_\\ \\__,_|\n\n");
         pause(true);
 
 
@@ -189,22 +192,7 @@ public:
     }
 
 
-    //Functions for manipulating strings
-    string bold(string text){
-        string newtext;
-        newtext += "\e[1m";
-        newtext += text;
-        newtext += "\e[0m";
-        return newtext;
-    }
 
-    string red(string text){
-        string newtext;
-        newtext += "\033[1;31m";
-        newtext += text;
-        newtext += "\033[0m";
-        return newtext;
-    }
 
 
 
