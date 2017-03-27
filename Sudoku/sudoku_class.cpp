@@ -14,7 +14,6 @@ using namespace std;
 
     //Graphical
       //Find a way to display boards. ~ Possibly with an array of strings?
-      // cout << "►" << endl;
 
       // We can use these chars: http://www.copypastecharacter.com/all-characters
 
@@ -70,6 +69,7 @@ public:
          {
            cout << "";
          } while (cin.get() != '\n');
+
     }
 
     void title(){
@@ -81,23 +81,6 @@ public:
                     "                   /\\__/ /| |_| || (_| || (_) ||   < | |_| |\n"
                     "                   \\____/  \\__,_| \\__,_| \\___/ |_|\\_\\ \\__,_|\n\n");
         pause(true);
-
-
-
-//        cout << "          A B C    D E F    G H I  "<< endl;
-//        cout << "         ┏━━┯━┯━━┯━━┯━┯━━┯━━┯━┯━━┓ "<< endl;
-//        cout << "      1❱ ┃ 0 0 0 │ 0 0 0 │ 0 0 0 ┃ "<< endl;
-//        cout << "      2❱ ┃ 0 0 0 │ 0 0 0 │ 0 0 0 ┃ "<< endl;
-//        cout << "      3❱ ┃ 0 0 0 │ 0 0 0 │ 0 0 0 ┃ "<< endl;
-//        cout << "         ┠───────┼───────┼───────┨ "<< endl;
-//        cout << "      4❱ ┃ 0 0 0 │ 0 0 0 │ 0 0 0 ┃ "<< endl;
-//        cout << "      5❱ ┃ 0 0 0 │ 0 0 0 │ 0 0 0 ┃ "<< endl;
-//        cout << "      6❱ ┃ 0 0 0 │ 0 0 0 │ 0 0 0 ┃ "<< endl;
-//        cout << "         ┠───────┼───────┼───────┨ "<< endl;
-//        cout << "      7❱ ┃ 0 0 0 │ 0 0 0 │ 0 0 0 ┃ "<< endl;
-//        cout << "      8❱ ┃ 0 0 0 │ 0 0 0 │ 0 0 0 ┃ "<< endl;
-//        cout << "      9❱ ┃ 0 0 0 │ 0 0 0 │ 0 0 0 ┃ "<< endl;
-//        cout << "         ┗━━━━━━━┷━━━━━━━┷━━━━━━━┛ "<< endl;
 
 //        cout << "           A   B   C   D   E   F   G   H   I   "<< endl;
 //        cout << "         ┏━━━┯━━━┯━━━┳━━━┯━━━┯━━━┳━━━┯━━━┯━━━┓ "<< endl;
@@ -119,10 +102,40 @@ public:
 //        cout << "         ┠───┼───┼───╂───┼───┼───╂───┼───┼───┨ "<< endl;
 //        cout << "      9❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
 //        cout << "         ┗━━━┷━━━┷━━━┻━━━┷━━━┷━━━┻━━━┷━━━┷━━━┛ "<< endl;
+
+
+
+
+        //TEsting
+
+
+
+
+
+
+
+
+
         }
 
     void credits(){
         cout << "Enter credits here" << endl;
+    }
+
+    //Clears terminal
+    void clear(){
+        cout << string( 24, '\n' );
+    }
+
+
+    //Printing A Aron THIS IS WHAT YOU SHOULD DO :)
+    void print(gameboard &saveFile){
+        for(unsigned int row = 0; row < 9; row++){
+            for(unsigned int col = 0; col < 9; col++){
+                cout << saveFile.board.boardPlay[row][col];
+            }
+            cout << endl;
+        }
     }
 
     //sets difficulty, board #, and load it into "game memory"
@@ -143,8 +156,8 @@ public:
             if(saveFile.version != 0){
                 cout << "Must enter 1-5" << endl;
             }
-            cout << "Choose board number:"
-                 << "(1) Board 1\n"
+            cout << bold("Choose board number:") << endl;
+            cout << "(1) Enter 7 in (A,1) to win\n"
                  << "(2) Board 2\n"
                  << "(3) Board 3\n"
                  << "(4) Board 4\n"
@@ -155,34 +168,80 @@ public:
 
         //Copies board to save file (pass by reference via void function)
         copyBoard(saveFile);
-        //Compares playboard to its key. Saves amount of incorrect in saveFile.incorrect (pass by reference via void function)
-        check(saveFile);
-
-
-        //Temp Printing
-        int row, col = 0;
-        for(row = 0; row < 9; row++){
-            for(col = 0; col < 9; col++){
-                cout << saveFile.board.boardPlay[row][col];
-            }
-            cout << endl;
-        }
-        cout << "\n" << endl;
-        for(row = 0; row < 9; row++){
-            for(col = 0; col < 9; col++){
-                cout << saveFile.board.boardKey[row][col];
-            }
-            cout << endl;
-        }
+        //Compares playboard to its key. Saves amount of incorrect in saveFile.incorrect returns number (pass by reference)
     }
 
 
     void run(gameboard &saveFile){
         bool go = true;
+        char charcord1;
+        int cord1 = 0;
+        int cord2 = 0;
+        int answer = 0;
         go = menu();
+        bool exit = false;
+        int incorrect = 0;
         if(go){
-            cout << "Run game code here" << endl;
+            clear();
+            print(saveFile);
+            do{
+                charcord1 = 'Z';
+                while((charcord1 < 'A' || charcord1 > 'I') && !exit){
+                    cout << "Enter (A-I) cordinate: ";
+                    cin >> charcord1;
+                    cin.ignore();
+                    charcord1 = toupper(charcord1);
+
+                }
+                cord1 = double(charcord1)-65;
+
+                cord2 = -1;
+                while((cord2 < 0 || cord2 > 9) && !exit){
+                    cout << "Enter (1-9) cordinate: ";
+                    cin >> cord2;
+                    cin.ignore();
+                    if(cord2 == 0) exit = true;
+                }
+
+                cout << "Editing " << "(" << charcord1 << "," << cord2 << ")" << endl;
+
+                answer = -1;
+                while((answer < 0 || answer > 9) && !exit){
+                    cout << "Enter (1-9) answer: ";
+                    cin >> answer;
+                    cin.ignore();
+                    if(answer == 0) exit = true;
+                }
+
+                saveFile.board.boardPlay[cord2-1][cord1] = answer;
+                clear();
+
+                incorrect = check(saveFile);
+                cout << "Incorrect = " << incorrect << endl;
+                print(saveFile);
+
+                //Does user win game? win == go = false
+                if(saveFile.incorrect == 0) go = false;
+
+            }while(go && !exit);
+
+            clear();
+            //User has won/solved puzzle
+            if(!go && !exit){
+                cout << "you won!!!" << endl;
+                credits();
+            }
+
+            if(exit){
+                clear();
+                cout << "Sorry to see you go so soon" << endl;
+                credits();
+            }
+
+
+
         }else{
+            clear();
             credits();
         }
     }
@@ -197,12 +256,14 @@ private:
     bool menu(){
         int option = -1;
         while(option < 0 || option > 2){
-            if(option != -1){
+            if(option != 10){
                 cout << "Must enter 0-2" << endl;
             }
             cout << "\nMenu\n"
                  << "1) How to play\n"
                  << "2) Play game\n"
+//                 << "2) Continue game\n"
+//                 << "3) Restart game\n"
                  << "0) Exit Game\n⏩ ";
             cin >> option;
         }
@@ -236,17 +297,19 @@ private:
 
 
     //Checks to see if board is correct ~ also sets savefile incorrect # values
-    void check(gameboard &saveFile){
-        saveFile.incorrect = 0;
+    int check(gameboard &saveFile){
+        int RealitiveIncorrect = 0;
         for(unsigned int row = 0; row < 9; row++){
             for(unsigned int col = 0; col < 9; col++){
                 if((saveFile.board.boardPlay[row][col] != 0) && !(saveFile.board.boardPlay[row][col] == saveFile.board.boardKey[row][col])){
+                    RealitiveIncorrect++;
+                }
+                if(!(saveFile.board.boardPlay[row][col] == saveFile.board.boardKey[row][col])){
                     saveFile.incorrect++;
                 }
             }
         }
-        //temp
-        cout << saveFile.incorrect << endl;
+        return RealitiveIncorrect;
     }
 
 
@@ -259,17 +322,18 @@ private:
         //Easy
         if(saveFile.diff == 1){
             if(saveFile.version == 1){
-                int main[9][9] = {{0, 6, 1,   0, 0, 0,   4, 3, 0},
-                                  {0, 0, 0,   8, 0, 7,   0, 0, 0},
-                                  {9, 8, 0,   0, 4, 0,   0, 5, 6},
 
-                                  {0, 0, 7,   1, 0, 5,   9, 0, 0},
-                                  {8, 0, 0,   0, 0, 0,   0, 0, 2},
-                                  {0, 0, 9,   6, 0, 2,   8, 0, 0},
+                int main[9][9] = {{0, 6, 1,   2, 5, 9,   4, 3, 8},
+                                  {5, 4, 3,   8, 6, 7,   2, 9, 1},
+                                  {9, 8, 2,   3, 4, 1,   7, 5, 6},
 
-                                  {2, 3, 0,   0, 1, 0,   0, 4, 7},
-                                  {0, 0, 0,   5, 0, 3,   0, 0, 0},
-                                  {0, 9, 5,   0, 0, 0,   1, 2, 0}};
+                                  {3, 2, 7,   1, 8, 5,   9, 6, 4},
+                                  {8, 5, 6,   7, 9, 4,   3, 1, 2},
+                                  {4, 1, 9,   6, 3, 2,   8, 7, 5},
+
+                                  {2, 3, 8,   9, 1, 6,   5, 4, 7},
+                                  {1, 7, 4,   5, 2, 3,   6, 8, 9},
+                                  {6, 9, 5,   4, 7, 8,   1, 2, 3}};
                 int key[9][9] = {{7, 6, 1,   2, 5, 9,   4, 3, 8},
                                  {5, 4, 3,   8, 6, 7,   2, 9, 1},
                                  {9, 8, 2,   3, 4, 1,   7, 5, 6},
@@ -281,6 +345,30 @@ private:
                                  {2, 3, 8,   9, 1, 6,   5, 4, 7},
                                  {1, 7, 4,   5, 2, 3,   6, 8, 9},
                                  {6, 9, 5,   4, 7, 8,   1, 2, 3}};
+
+
+//                int main[9][9] = {{0, 6, 1,   0, 0, 0,   4, 3, 0},
+//                                  {0, 0, 0,   8, 0, 7,   0, 0, 0},
+//                                  {9, 8, 0,   0, 4, 0,   0, 5, 6},
+
+//                                  {0, 0, 7,   1, 0, 5,   9, 0, 0},
+//                                  {8, 0, 0,   0, 0, 0,   0, 0, 2},
+//                                  {0, 0, 9,   6, 0, 2,   8, 0, 0},
+
+//                                  {2, 3, 0,   0, 1, 0,   0, 4, 7},
+//                                  {0, 0, 0,   5, 0, 3,   0, 0, 0},
+//                                  {0, 9, 5,   0, 0, 0,   1, 2, 0}};
+//                int key[9][9] = {{7, 6, 1,   2, 5, 9,   4, 3, 8},
+//                                 {5, 4, 3,   8, 6, 7,   2, 9, 1},
+//                                 {9, 8, 2,   3, 4, 1,   7, 5, 6},
+
+//                                 {3, 2, 7,   1, 8, 5,   9, 6, 4},
+//                                 {8, 5, 6,   7, 9, 4,   3, 1, 2},
+//                                 {4, 1, 9,   6, 3, 2,   8, 7, 5},
+
+//                                 {2, 3, 8,   9, 1, 6,   5, 4, 7},
+//                                 {1, 7, 4,   5, 2, 3,   6, 8, 9},
+//                                 {6, 9, 5,   4, 7, 8,   1, 2, 3}};
                 //changes boards to selected option
                 //Similar to inccorect logic: saveFile.board.boardPlay = main
                 updateBoard(saveFile, main, key);
