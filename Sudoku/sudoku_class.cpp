@@ -15,21 +15,6 @@ using namespace std;
 
       // We can use these chars: http://www.copypastecharacter.com/all-characters
 
-        //Board prototype Needs Help
-//           A B C    D E F    G H I
-//         ┌───────┬───────┬───────┐
-//      1) │ 0 0 0 │ 0 0 0 │ 0 0 0 │
-//      2) │ 0 0 0 │ 0 0 0 │ 0 0 0 │
-//      3) │ 0 0 0 │ 0 0 0 │ 0 0 0 │
-//         ├───────┼───────┼───────┤
-//      4) │ 0 0 0 │ 0 0 0 │ 0 0 0 │
-//      5) │ 0 0 0 │ 0 0 0 │ 0 0 0 │
-//      6) │ 0 0 0 │ 0 0 0 │ 0 0 0 │
-//         ├───────┼───────┼───────┤
-//      7) │ 0 0 0 │ 0 0 0 │ 0 0 0 │
-//      8) │ 0 0 0 │ 0 0 0 │ 0 0 0 │
-//      9) │ 0 0 0 │ 0 0 0 │ 0 0 0 │
-//         └───────┴───────┴───────┘
 
     //Functions
       //Add Begin game function
@@ -44,7 +29,6 @@ using namespace std;
 //Q & A
     //Is Aaron going to edit this over the weekend?
 //Idunno ~ OK
-
 
 
 
@@ -82,7 +66,7 @@ public:
 
     //pause(true) will output "Press enter..." pause(false) does not output anything
     void pause(bool enter){
-        if(enter) cout << "Press enter to continue" << endl;
+        if(enter) cout << setw(55) << "-----Press enter to continue-----" << endl;
         do
          {
            cout << "";
@@ -91,53 +75,51 @@ public:
 
     void title(){
 
-        cout << setw(67) << "\033[1;31m _____             _         _           \n"
-             << setw(60) << "/  ___|           | |       | |          \n"
-             << setw(60) << "\\ `--.  _   _   __| |  ___  | | __ _   _ \n"
-             << setw(60) << " `--. \\| | | | / _` | / _ \\ | |/ /| | | |\n"
-             << setw(60) << "/\\__/ /| |_| || (_| || (_) ||   < | |_| |\n"
-             << setw(61) << "\\____/  \\__,_| \\__,_| \\___/ |_|\\_\\ \\__,_|\n\n";
-        cout << setw(62) << "-----Press enter to continue-----\033[0m\n";\
+        cout << red(" _____             _         _           \n"
+                    "/  ___|           | |       | |          \n"
+                    "\\ `--.  _   _   __| |  ___  | | __ _   _ \n"
+                    " `--. \\| | | | / _` | / _ \\ | |/ /| | | |\n"
+                    "/\\__/ /| |_| || (_| || (_) ||   < | |_| |\n"
+                    "\\____/  \\__,_| \\__,_| \\___/ |_|\\_\\ \\__,_|\n\n");
+        pause(true);
 
-        cout << "          A B C    D E F    G H I  "<< endl;
-        cout << "         ┏━━┯━┯━━┯━━┯━┯━━┯━━┯━┯━━┓ "<< endl;
-        cout << "      1❱ ┃ 0 0 0 │ 0 0 0 │ 0 0 0 ┃ "<< endl;
-        cout << "      2❱ ┃ 0 0 0 │ 0 0 0 │ 0 0 0 ┃ "<< endl;
-        cout << "      3❱ ┃ 0 0 0 │ 0 0 0 │ 0 0 0 ┃ "<< endl;
-        cout << "         ┠───────┼───────┼───────┨ "<< endl;
-        cout << "      4❱ ┃ 0 0 0 │ 0 0 0 │ 0 0 0 ┃ "<< endl;
-        cout << "      5❱ ┃ 0 0 0 │ 0 0 0 │ 0 0 0 ┃ "<< endl;
-        cout << "      6❱ ┃ 0 0 0 │ 0 0 0 │ 0 0 0 ┃ "<< endl;
-        cout << "         ┠───────┼───────┼───────┨ "<< endl;
-        cout << "      7❱ ┃ 0 0 0 │ 0 0 0 │ 0 0 0 ┃ "<< endl;
-        cout << "      8❱ ┃ 0 0 0 │ 0 0 0 │ 0 0 0 ┃ "<< endl;
-        cout << "      9❱ ┃ 0 0 0 │ 0 0 0 │ 0 0 0 ┃ "<< endl;
-        cout << "         ┗━━━━━━━┷━━━━━━━┷━━━━━━━┛ "<< endl;
 
-        cout << "           A   B   C   D   E   F   G   H   I   "<< endl;
-        cout << "         ┏━━━┯━━━┯━━━┳━━━┯━━━┯━━━┳━━━┯━━━┯━━━┓ "<< endl;
-        cout << "      1❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
-        cout << "         ┠───┼───┼───╂───┼───┼───╂───┼───┼───┨ "<< endl;
-        cout << "      2❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
-        cout << "         ┠───┼───┼───╂───┼───┼───╂───┼───┼───┨ "<< endl;
-        cout << "      3❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
-        cout << "         ┣━━━┿━━━┿━━━╋━━━┿━━━┿━━━╋━━━┿━━━┿━━━┫ "<< endl;
-        cout << "      4❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
-        cout << "         ┠───┼───┼───╂───┼───┼───╂───┼───┼───┨ "<< endl;
-        cout << "      5❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
-        cout << "         ┠───┼───┼───╂───┼───┼───╂───┼───┼───┨ "<< endl;
-        cout << "      6❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
-        cout << "         ┣━━━┿━━━┿━━━╋━━━┿━━━┿━━━╋━━━┿━━━┿━━━┫ "<< endl;
-        cout << "      7❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
-        cout << "         ┠───┼───┼───╂───┼───┼───╂───┼───┼───┨ "<< endl;
-        cout << "      8❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
-        cout << "         ┠───┼───┼───╂───┼───┼───╂───┼───┼───┨ "<< endl;
-        cout << "      9❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
-        cout << "         ┗━━━┷━━━┷━━━┻━━━┷━━━┷━━━┻━━━┷━━━┷━━━┛ "<< endl;
 
-        pause(false);
+//        cout << "          A B C    D E F    G H I  "<< endl;
+//        cout << "         ┏━━┯━┯━━┯━━┯━┯━━┯━━┯━┯━━┓ "<< endl;
+//        cout << "      1❱ ┃ 0 0 0 │ 0 0 0 │ 0 0 0 ┃ "<< endl;
+//        cout << "      2❱ ┃ 0 0 0 │ 0 0 0 │ 0 0 0 ┃ "<< endl;
+//        cout << "      3❱ ┃ 0 0 0 │ 0 0 0 │ 0 0 0 ┃ "<< endl;
+//        cout << "         ┠───────┼───────┼───────┨ "<< endl;
+//        cout << "      4❱ ┃ 0 0 0 │ 0 0 0 │ 0 0 0 ┃ "<< endl;
+//        cout << "      5❱ ┃ 0 0 0 │ 0 0 0 │ 0 0 0 ┃ "<< endl;
+//        cout << "      6❱ ┃ 0 0 0 │ 0 0 0 │ 0 0 0 ┃ "<< endl;
+//        cout << "         ┠───────┼───────┼───────┨ "<< endl;
+//        cout << "      7❱ ┃ 0 0 0 │ 0 0 0 │ 0 0 0 ┃ "<< endl;
+//        cout << "      8❱ ┃ 0 0 0 │ 0 0 0 │ 0 0 0 ┃ "<< endl;
+//        cout << "      9❱ ┃ 0 0 0 │ 0 0 0 │ 0 0 0 ┃ "<< endl;
+//        cout << "         ┗━━━━━━━┷━━━━━━━┷━━━━━━━┛ "<< endl;
 
-//cout <<"\033[1;31mbold red text\033[0m\n";
+//        cout << "           A   B   C   D   E   F   G   H   I   "<< endl;
+//        cout << "         ┏━━━┯━━━┯━━━┳━━━┯━━━┯━━━┳━━━┯━━━┯━━━┓ "<< endl;
+//        cout << "      1❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
+//        cout << "         ┠───┼───┼───╂───┼───┼───╂───┼───┼───┨ "<< endl;
+//        cout << "      2❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
+//        cout << "         ┠───┼───┼───╂───┼───┼───╂───┼───┼───┨ "<< endl;
+//        cout << "      3❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
+//        cout << "         ┣━━━┿━━━┿━━━╋━━━┿━━━┿━━━╋━━━┿━━━┿━━━┫ "<< endl;
+//        cout << "      4❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
+//        cout << "         ┠───┼───┼───╂───┼───┼───╂───┼───┼───┨ "<< endl;
+//        cout << "      5❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
+//        cout << "         ┠───┼───┼───╂───┼───┼───╂───┼───┼───┨ "<< endl;
+//        cout << "      6❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
+//        cout << "         ┣━━━┿━━━┿━━━╋━━━┿━━━┿━━━╋━━━┿━━━┿━━━┫ "<< endl;
+//        cout << "      7❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
+//        cout << "         ┠───┼───┼───╂───┼───┼───╂───┼───┼───┨ "<< endl;
+//        cout << "      8❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
+//        cout << "         ┠───┼───┼───╂───┼───┼───╂───┼───┼───┨ "<< endl;
+//        cout << "      9❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
+//        cout << "         ┗━━━┷━━━┷━━━┻━━━┷━━━┷━━━┻━━━┷━━━┷━━━┛ "<< endl;
         }
 
     void credits(){
@@ -150,7 +132,7 @@ public:
             if(saveFile.diff != 0){
                 cout << "Must enter 1 2 or 3" << endl;
             }
-            cout << "Choose difficulty:\n"
+            cout << bold("Choose difficulty:\n")
                  << "(1) Easy\n"
                  << "(2) Medium\n"
                  << "(3) Hard\n⏩ ";
@@ -162,7 +144,7 @@ public:
             if(saveFile.version != 0){
                 cout << "Must enter 1-5" << endl;
             }
-            cout << "Choose board number:\n"
+            cout << "Choose board number:"
                  << "(1) Board 1\n"
                  << "(2) Board 2\n"
                  << "(3) Board 3\n"
@@ -202,13 +184,32 @@ public:
         if(go){
             cout << "Run game code here" << endl;
         }else{
-            cout << "Game Terminated" << endl;
+            credits();
         }
     }
 
+
+    //Functions for manipulating strings
+    string bold(string text){
+        string newtext;
+        newtext += "\e[1m";
+        newtext += text;
+        newtext += "\e[0m";
+        return newtext;
+    }
+
+    string red(string text){
+        string newtext;
+        newtext += "\033[1;31m";
+        newtext += text;
+        newtext += "\033[0m";
+        return newtext;
+    }
+
+
+
 private:
     //Call functions durring game operation
-
     bool menu(){
         int option = -1;
         while(option < 0 || option > 2){
