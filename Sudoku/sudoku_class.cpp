@@ -24,14 +24,10 @@ using namespace std;
       //Print out a board with pretty display
 
     //Logic
-      //User can resaveFile anytime
-      //User can quit anytime
       //If user entered a void cord make them re-enter it. Also tell them "Invalid cordinate"
 
 
 //Q & A
-    //Is Aaron going to edit this over the weekend?
-//Idunno ~ OK
 
 
 
