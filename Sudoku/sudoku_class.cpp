@@ -12,6 +12,10 @@ using namespace std;
 
 //What to do...
 
+
+    //Errors
+      //Menu takes letters and thinks they are 0;
+
     //Graphical
       //Find a way to display boards. ~ Possibly with an array of strings?
 
@@ -19,15 +23,16 @@ using namespace std;
 
 
     //Functions
-      //Add Begin game function
+      //Fill credits
+      //Fill how to play
       //Print out a board with pretty display
 
     //Logic
-      //If user entered a void cord make them re-enter it. Also tell them "Invalid cordinate"
+
 
 
 //Q & A
-
+    //Aaron needs to work on this.
 
 
 //Creates a type stored in gameboard that stores play board and the key
@@ -119,7 +124,7 @@ public:
         }
 
     void credits(){
-        cout << "Enter credits here" << endl;
+        cout << "Taco Cat\nChuck Conner: Tester (The Best)\nalso john and aaron were there" << endl;
     }
 
     //Clears terminal
@@ -256,7 +261,7 @@ private:
     bool menu(){
         int option = -1;
         while(option < 0 || option > 2){
-            if(option != 10){
+            if(option != -1){
                 cout << "Must enter 0-2" << endl;
             }
             cout << "\nMenu\n"
@@ -266,8 +271,9 @@ private:
 //                 << "3) Restart game\n"
                  << "0) Exit Game\n⏩ ";
             cin >> option;
+            cin.ignore(); //Clears new line from cin
         }
-        cin.ignore(); //Clears new line from cin
+
         if(option == 0){
             return false;
         }else if(option == 1){
