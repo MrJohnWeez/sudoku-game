@@ -4,7 +4,7 @@
 #include <cmath>
 #include <iomanip> //setw
 #include "textediting.cpp"
-
+#include <limits>
 
 
 using namespace std;
@@ -32,7 +32,7 @@ using namespace std;
 
 
 //Q & A
-    //Aaron needs to work on this.
+    //Aaron needs to work on this instead of osu?
 
 
 //Creates a type stored in gameboard that stores play board and the key
@@ -77,6 +77,33 @@ public:
 
     }
 
+
+
+
+
+
+
+
+    //WORKING ON THIS ATM
+    //lets user imput a int but clears anything that is not an int causing issues
+    int getInt(){
+        int x = 0;
+        while(!(cin >> x)){
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(),'\n'); //Clears cin buffer
+            cout << "\n\n\n\nMust enter a number!";
+        }
+        cout << "Passed with" << x;
+        return x;
+    }
+
+    //USE STRINGS?
+
+
+
+
+
+
     void title(){
         cout <<"Total________________________________screen_______________________________Length" << endl;
         cout << red("                    _____             _         _           \n"
@@ -107,17 +134,6 @@ public:
 //        cout << "         ┠───┼───┼───╂───┼───┼───╂───┼───┼───┨ "<< endl;
 //        cout << "      9❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
 //        cout << "         ┗━━━┷━━━┷━━━┻━━━┷━━━┷━━━┻━━━┷━━━┷━━━┛ "<< endl;
-
-
-
-
-        //TEsting
-
-
-
-
-
-
 
 
 
@@ -153,8 +169,8 @@ public:
                  << "(1) Easy\n"
                  << "(2) Medium\n"
                  << "(3) Hard\n⏩ ";
-            cin >> saveFile.diff;
-            cin.ignore();
+            saveFile.diff = getInt();
+            cout << "\n";
         }
 
         while(saveFile.version < 1 || saveFile.version > 5){
@@ -167,7 +183,7 @@ public:
                  << "(3) Board 3\n"
                  << "(4) Board 4\n"
                  << "(5) Board 5\n⏩ ";
-            cin >> saveFile.version;
+            saveFile.version = getInt();
             cin.ignore();
         }
 
@@ -203,8 +219,7 @@ public:
                 cord2 = -1;
                 while((cord2 < 0 || cord2 > 9) && !exit){
                     cout << "Enter (1-9) cordinate: ";
-                    cin >> cord2;
-                    cin.ignore();
+                    cord2= getInt();
                     if(cord2 == 0) exit = true;
                 }
 
@@ -213,8 +228,7 @@ public:
                 answer = -1;
                 while((answer < 0 || answer > 9) && !exit){
                     cout << "Enter (1-9) answer: ";
-                    cin >> answer;
-                    cin.ignore();
+                    answer = getInt();
                     if(answer == 0) exit = true;
                 }
 
@@ -258,20 +272,21 @@ public:
 
 private:
     //Call functions durring game operation
+
+
     bool menu(){
         int option = -1;
         while(option < 0 || option > 2){
             if(option != -1){
                 cout << "Must enter 0-2" << endl;
             }
-            cout << "\nMenu\n"
-                 << "1) How to play\n"
+            cout << bold("Menu") << endl;
+            cout << "1) How to play\n"
                  << "2) Play game\n"
 //                 << "2) Continue game\n"
 //                 << "3) Restart game\n"
                  << "0) Exit Game\n⏩ ";
-            cin >> option;
-            cin.ignore(); //Clears new line from cin
+            option = getInt();
         }
 
         if(option == 0){
@@ -279,9 +294,8 @@ private:
         }else if(option == 1){
             howToPlay();
             menu();
-        }else if(option == 2){
-            return true;
         }
+        return true;
     }
 
     //Tells user how to play and what command there are
