@@ -195,6 +195,7 @@ public:
         //Copies board to save file (pass by reference via void function)
         copyBoard(saveFile);
         //Compares playboard to its key. Saves amount of incorrect in saveFile.incorrect returns number (pass by reference)
+
     }
 
 
@@ -204,105 +205,106 @@ public:
         int cord1 = 0;
         int cord2 = 0;
         int answer = 0;
-        go = menu(saveFile);
-        bool exit = false;
         int incorrect = 0;
-        if(go && !exit){
+        check(saveFile);
+        if(go && !(saveFile.incorrect == 81)){
             clear();
             print(saveFile);
             do{
                 charcord1 = 'Z';
-                while((charcord1 < 'A' || charcord1 > 'I') && !saveFile.exit){
+                while(go && (charcord1 < 'A' || charcord1 > 'I') && !saveFile.exit){
                     cout << "Enter (A-I) cordinate: ";
                     charcord1 = getAlpha();
                     charcord1 = toupper(charcord1);
+                    if(charcord1 == 26) menu(saveFile);
 
                 }
                 cord1 = double(charcord1)-65;
 
                 cord2 = -1;
-                while((cord2 < 0 || cord2 > 9) && !saveFile.exit){
+                while(go && (cord2 < 0 || cord2 > 9) && !saveFile.exit){
                     cout << "Enter (1-9) cordinate: ";
                     cord2= getInt();
-                    if(cord2 == 0) saveFile.exit = true;
+                    if(cord2 == 0) menu(saveFile);
                 }
-
-                cout << "Editing " << "(" << charcord1 << "," << cord2 << ")" << endl;
 
                 answer = -1;
-                while((answer < 0 || answer > 9) && !saveFile.exit){
+                while(go && (answer < 0 || answer > 9) && !saveFile.exit){
                     cout << "Enter (1-9) answer: ";
                     answer = getInt();
-                    if(answer == 0) saveFile.exit = true;
+                    if(answer == 0) menu(saveFile);
+
+
+                }
+                saveFile.board.boardPlay[cord2-1][cord1] = answer;
+                incorrect = check(saveFile);
+
+                //When this is false the user has won
+                if((saveFile.incorrect != 0) && !saveFile.exit){
+                    clear();
+                    cout << "Incorrect = " << incorrect << endl;
+                    print(saveFile);
                 }
 
-                saveFile.board.boardPlay[cord2-1][cord1] = answer;
-                clear();
 
-                incorrect = check(saveFile);
-                cout << "Incorrect = " << incorrect << endl;
-                print(saveFile);
-
-                //Does user win game? win == go = false
+                //Does user win game? go == false
                 if(saveFile.incorrect == 0) go = false;
 
             }while(go && !saveFile.exit);
 
-            clear();
             //User has won/solved puzzle
             if(!go && !saveFile.exit){
+                saveFile.exit = true;
                 cout << "you won!!!" << endl;
                 credits();
             }
-
-            if(saveFile.exit){
-                clear();
-                cout << "Sorry to see you go so soon" << endl;
-                credits();
-            }
-
-
-
-        }else{
+        }else if(saveFile.incorrect == 81 && !saveFile.exit){
+            clear();
+            cout << "No game currently running" << endl;
+            pause(true);
+            menu(saveFile);
+        }else if(saveFile.exit){
             clear();
             credits();
         }
     }
 
 
+    void menu(gameboard &saveFile){
+        if(!saveFile.exit){
+            int option = -1;
+            clear();
+            while(option < 0 || option > 3){
+                if(option != -1){
+                    cout << "Must enter 0-3" << endl;
+                }
+                cout << bold("Menu") << endl;
+                cout << "1) How to play\n"
+                     << "2) New game\n"
+                     << "3) Back to game\n"
+                     << "0) Exit Game\n⏩ ";
+                option = getInt();
+            }
 
-
+            if(option == 1){
+                howToPlay();
+                menu(saveFile);
+            }else if(option == 2){
+                boardSelect(saveFile);
+                run(saveFile);
+            }else if(option == 3){
+                run(saveFile);
+            }else if(option == 0){
+                saveFile.exit = true;
+                clear();
+                credits();
+            }
+        }
+    }
 
 
 private:
     //Call functions durring game operation
-
-
-    bool menu(gameboard &saveFile){
-        int option = -1;
-        while(option < 0 || option > 4){
-            if(option != -1){
-                cout << "Must enter 0-2" << endl;
-            }
-            cout << bold("Menu") << endl;
-            cout << "1) How to play\n"
-                 << "2) Play game\n"
-                 << "3) Back to game\n"
-                 << "4) New game\n"
-                 << "0) Exit Game\n⏩ ";
-            option = getInt();
-        }
-
-        if(option == 0){
-            return false;
-        }else if(option == 1){
-            howToPlay();
-            menu(saveFile);
-        }else if(option == 4){
-            saveFile.exit = true;
-        }
-        return true;
-    }
 
     //Tells user how to play and what command there are
     void howToPlay(){
@@ -325,12 +327,14 @@ private:
     //Checks to see if board is correct ~ also sets savefile incorrect # values
     int check(gameboard &saveFile){
         int RealitiveIncorrect = 0;
+        saveFile.incorrect = 0;
         for(unsigned int row = 0; row < 9; row++){
             for(unsigned int col = 0; col < 9; col++){
                 if((saveFile.board.boardPlay[row][col] != 0) && !(saveFile.board.boardPlay[row][col] == saveFile.board.boardKey[row][col])){
                     RealitiveIncorrect++;
                 }
-                if(!(saveFile.board.boardPlay[row][col] == saveFile.board.boardKey[row][col])){
+                if(!(saveFile.board.boardPlay[row][col] == saveFile.board.boardKey[row][col]) ||
+                        (saveFile.board.boardPlay[row][col] == 0)){
                     saveFile.incorrect++;
                 }
             }
