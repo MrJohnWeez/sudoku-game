@@ -6,7 +6,6 @@
 #include "textediting.cpp"
 #include <limits>
 
-
 using namespace std;
 
 
@@ -48,6 +47,7 @@ struct gameboard{
     int version = 0;
     int incorrect = 0;
     boardType board;
+    bool exit = false;
 };
 
 
@@ -65,19 +65,7 @@ public:
         cout << "Thanks for playing our game." << endl;
     }
 
-
-
-    //pause(true) will output "Press enter..." pause(false) does not output anything
-    void pause(bool enter){
-        if(enter) cout << setw(55) << "-----Press enter to continue-----" << endl;
-        do
-         {
-           cout << "";
-         } while (cin.get() != '\n');
-
-    }
-
-
+    //Cin functions:***********************************************************************
 
     //Gets the user's number the safe way to prevent crashing
     int getInt(){
@@ -95,22 +83,32 @@ public:
         return value;
     }
 
-
-
-
-
-    //WORKING ON!!!
     //Gets the user's  alpha the safe way to prevent crashing
     char getAlpha(){
-        char x;
+        string x;
+        bool go = true;
+        char letter;
         cin >> x;
         cin.ignore();
-        return x;
+        for(unsigned int i = 0; i <= x.length(); i++){
+            if(isalpha(x[i]) && go){
+                go = false;
+                letter = x[i];
+            }
+        }
+        return letter;
+    }
+
+    //pause(true) will output "Press enter..." pause(false) does not output anything
+    void pause(bool enter){
+        string dummy;
+        if(enter) cout << setw(55) << "-----Press enter to continue-----" << endl;
+        getline(cin,dummy);
+
     }
 
 
-
-
+    //Graphical Interface:***********************************************************************
 
     void title(){
         cout <<"Total________________________________screen_______________________________Length" << endl;
@@ -121,30 +119,6 @@ public:
                     "                   /\\__/ /| |_| || (_| || (_) ||   < | |_| |\n"
                     "                   \\____/  \\__,_| \\__,_| \\___/ |_|\\_\\ \\__,_|\n\n");
         pause(true);
-
-//        cout << "           A   B   C   D   E   F   G   H   I   "<< endl;
-//        cout << "         ┏━━━┯━━━┯━━━┳━━━┯━━━┯━━━┳━━━┯━━━┯━━━┓ "<< endl;
-//        cout << "      1❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
-//        cout << "         ┠───┼───┼───╂───┼───┼───╂───┼───┼───┨ "<< endl;
-//        cout << "      2❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
-//        cout << "         ┠───┼───┼───╂───┼───┼───╂───┼───┼───┨ "<< endl;
-//        cout << "      3❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
-//        cout << "         ┣━━━┿━━━┿━━━╋━━━┿━━━┿━━━╋━━━┿━━━┿━━━┫ "<< endl;
-//        cout << "      4❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
-//        cout << "         ┠───┼───┼───╂───┼───┼───╂───┼───┼───┨ "<< endl;
-//        cout << "      5❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
-//        cout << "         ┠───┼───┼───╂───┼───┼───╂───┼───┼───┨ "<< endl;
-//        cout << "      6❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
-//        cout << "         ┣━━━┿━━━┿━━━╋━━━┿━━━┿━━━╋━━━┿━━━┿━━━┫ "<< endl;
-//        cout << "      7❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
-//        cout << "         ┠───┼───┼───╂───┼───┼───╂───┼───┼───┨ "<< endl;
-//        cout << "      8❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
-//        cout << "         ┠───┼───┼───╂───┼───┼───╂───┼───┼───┨ "<< endl;
-//        cout << "      9❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
-//        cout << "         ┗━━━┷━━━┷━━━┻━━━┷━━━┷━━━┻━━━┷━━━┷━━━┛ "<< endl;
-
-
-
         }
 
     void credits(){
@@ -165,7 +139,31 @@ public:
             }
             cout << endl;
         }
+        //        cout << "           A   B   C   D   E   F   G   H   I   "<< endl;
+        //        cout << "         ┏━━━┯━━━┯━━━┳━━━┯━━━┯━━━┳━━━┯━━━┯━━━┓ "<< endl;
+        //        cout << "      1❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
+        //        cout << "         ┠───┼───┼───╂───┼───┼───╂───┼───┼───┨ "<< endl;
+        //        cout << "      2❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
+        //        cout << "         ┠───┼───┼───╂───┼───┼───╂───┼───┼───┨ "<< endl;
+        //        cout << "      3❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
+        //        cout << "         ┣━━━┿━━━┿━━━╋━━━┿━━━┿━━━╋━━━┿━━━┿━━━┫ "<< endl;
+        //        cout << "      4❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
+        //        cout << "         ┠───┼───┼───╂───┼───┼───╂───┼───┼───┨ "<< endl;
+        //        cout << "      5❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
+        //        cout << "         ┠───┼───┼───╂───┼───┼───╂───┼───┼───┨ "<< endl;
+        //        cout << "      6❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
+        //        cout << "         ┣━━━┿━━━┿━━━╋━━━┿━━━┿━━━╋━━━┿━━━┿━━━┫ "<< endl;
+        //        cout << "      7❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
+        //        cout << "         ┠───┼───┼───╂───┼───┼───╂───┼───┼───┨ "<< endl;
+        //        cout << "      8❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
+        //        cout << "         ┠───┼───┼───╂───┼───┼───╂───┼───┼───┨ "<< endl;
+        //        cout << "      9❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
+        //        cout << "         ┗━━━┷━━━┷━━━┻━━━┷━━━┷━━━┻━━━┷━━━┷━━━┛ "<< endl;
     }
+
+
+
+
 
     //sets difficulty, board #, and load it into "game memory"
     void boardSelect(gameboard &saveFile){
@@ -206,15 +204,15 @@ public:
         int cord1 = 0;
         int cord2 = 0;
         int answer = 0;
-        go = menu();
+        go = menu(saveFile);
         bool exit = false;
         int incorrect = 0;
-        if(go){
+        if(go && !exit){
             clear();
             print(saveFile);
             do{
                 charcord1 = 'Z';
-                while((charcord1 < 'A' || charcord1 > 'I') && !exit){
+                while((charcord1 < 'A' || charcord1 > 'I') && !saveFile.exit){
                     cout << "Enter (A-I) cordinate: ";
                     charcord1 = getAlpha();
                     charcord1 = toupper(charcord1);
@@ -223,19 +221,19 @@ public:
                 cord1 = double(charcord1)-65;
 
                 cord2 = -1;
-                while((cord2 < 0 || cord2 > 9) && !exit){
+                while((cord2 < 0 || cord2 > 9) && !saveFile.exit){
                     cout << "Enter (1-9) cordinate: ";
                     cord2= getInt();
-                    if(cord2 == 0) exit = true;
+                    if(cord2 == 0) saveFile.exit = true;
                 }
 
                 cout << "Editing " << "(" << charcord1 << "," << cord2 << ")" << endl;
 
                 answer = -1;
-                while((answer < 0 || answer > 9) && !exit){
+                while((answer < 0 || answer > 9) && !saveFile.exit){
                     cout << "Enter (1-9) answer: ";
                     answer = getInt();
-                    if(answer == 0) exit = true;
+                    if(answer == 0) saveFile.exit = true;
                 }
 
                 saveFile.board.boardPlay[cord2-1][cord1] = answer;
@@ -248,16 +246,16 @@ public:
                 //Does user win game? win == go = false
                 if(saveFile.incorrect == 0) go = false;
 
-            }while(go && !exit);
+            }while(go && !saveFile.exit);
 
             clear();
             //User has won/solved puzzle
-            if(!go && !exit){
+            if(!go && !saveFile.exit){
                 cout << "you won!!!" << endl;
                 credits();
             }
 
-            if(exit){
+            if(saveFile.exit){
                 clear();
                 cout << "Sorry to see you go so soon" << endl;
                 credits();
@@ -280,17 +278,17 @@ private:
     //Call functions durring game operation
 
 
-    bool menu(){
+    bool menu(gameboard &saveFile){
         int option = -1;
-        while(option < 0 || option > 2){
+        while(option < 0 || option > 4){
             if(option != -1){
                 cout << "Must enter 0-2" << endl;
             }
             cout << bold("Menu") << endl;
             cout << "1) How to play\n"
                  << "2) Play game\n"
-//                 << "2) Continue game\n"
-//                 << "3) Restart game\n"
+                 << "3) Back to game\n"
+                 << "4) New game\n"
                  << "0) Exit Game\n⏩ ";
             option = getInt();
         }
@@ -299,7 +297,9 @@ private:
             return false;
         }else if(option == 1){
             howToPlay();
-            menu();
+            menu(saveFile);
+        }else if(option == 4){
+            saveFile.exit = true;
         }
         return true;
     }
