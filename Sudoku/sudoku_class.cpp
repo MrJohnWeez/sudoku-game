@@ -79,26 +79,34 @@ public:
 
 
 
-
-
-
-
-
-    //WORKING ON THIS ATM
-    //lets user imput a int but clears anything that is not an int causing issues
+    //Gets the user's number the safe way to prevent crashing
     int getInt(){
-        int x = 0;
-        while(!(cin >> x)){
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(),'\n'); //Clears cin buffer
-            cout << "\n\n\n\nMust enter a number!";
+        string x;
+        cin >> x;
+        cin.ignore();
+        int value = 0;
+        string newString;
+        for(unsigned int i = 0; i <= x.length(); i++){
+            if(isdigit(x[i])){
+                newString += x[i];
+            }
         }
-        cout << "Passed with" << x;
-        return x;
+        value = atof(newString.c_str()); //Converts string -> c string (chars) -> double
+        return value;
     }
 
-    //USE STRINGS?
 
+
+
+
+    //WORKING ON!!!
+    //Gets the user's  alpha the safe way to prevent crashing
+    char getAlpha(){
+        char x;
+        cin >> x;
+        cin.ignore();
+        return x;
+    }
 
 
 
@@ -184,7 +192,6 @@ public:
                  << "(4) Board 4\n"
                  << "(5) Board 5\n⏩ ";
             saveFile.version = getInt();
-            cin.ignore();
         }
 
         //Copies board to save file (pass by reference via void function)
@@ -209,8 +216,7 @@ public:
                 charcord1 = 'Z';
                 while((charcord1 < 'A' || charcord1 > 'I') && !exit){
                     cout << "Enter (A-I) cordinate: ";
-                    cin >> charcord1;
-                    cin.ignore();
+                    charcord1 = getAlpha();
                     charcord1 = toupper(charcord1);
 
                 }
