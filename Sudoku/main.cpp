@@ -9,6 +9,7 @@ int main()
     //Runs game
     game Suduko;
     gameboard saveFile;
+    Suduko.title();
     //Options and Board setup ~ saves to game file
     Suduko.menu(saveFile);
     return 0;
