@@ -49,12 +49,19 @@ struct gameboard{
 class game{
 public:
     //This is a constructor
+    gameboard saveFile;
     game(){
     }
 
     //This is a deconstructor
     ~game(){
         cout << "Thanks for playing our game." << endl;
+    }
+
+    void runGame(){
+        title();
+        menu(saveFile);
+        credits();
     }
 
     //Graphical functions
