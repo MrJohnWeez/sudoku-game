@@ -8,31 +8,25 @@
 
 using namespace std;
 
+/*
+What to do...
 
-//What to do...
+    Graphical Functions
+      -Find a way to display boards. ~ Possibly with an array of strings?
+      -Fill credits
+      -Fill how to play
+      -Print out a board with pretty display
 
-
-    //Errors
-      //Menu takes letters and thinks they are 0;
-
-    //Graphical
-      //Find a way to display boards. ~ Possibly with an array of strings?
-
-      // We can use these chars: http://www.copypastecharacter.com/all-characters
-
-
-    //Functions
-      //Fill credits
-      //Fill how to play
-      //Print out a board with pretty display
-
-    //Logic
+    Game run functions
+      -After edit point is entered display point. User needs to enter "-" to re-enter point.
 
 
 
-//Q & A
-    //Aaron needs to work on this instead of osu?
+       We can use these chars: http://www.copypastecharacter.com/all-characters
 
+
+Q & A
+*/
 
 //Creates a type stored in gameboard that stores play board and the key
 struct boardType{
@@ -54,36 +48,38 @@ struct gameboard{
 
 class game{
 public:
-    //Runs game when class is called ~ This is a constructor
+    //This is a constructor
     game(){
-
     }
 
-    //Runs when game is exited ~ This is a deconstructor
+    //This is a deconstructor
     ~game(){
         cout << "Thanks for playing our game." << endl;
     }
 
-    int getInt();
-    char getAlpha();
-    void pause(bool);
+    //Graphical functions
     void title();
+    void howToPlay();
     void credits();
     void clear();
     void print(gameboard &saveFile);
-    void boardSelect(gameboard &saveFile);
-    void run(gameboard &saveFile);
     void menu(gameboard &saveFile);
 
 private:
     //Call functions durring game operation
-    void howToPlay();
+    //Cin functions
+    int getInt();
+    char getAlpha();
+    void pause(bool);
+
+    //Game run functions
+    void boardSelect(gameboard &saveFile);
     void updateBoard(gameboard &saveFile, int main[][9], int key[][9]);
-    int check(gameboard &saveFile);
     void copyBoard(gameboard &saveFile);
+    int check(gameboard &saveFile);
+    void run(gameboard &saveFile);
 
 };
-
 
 
 //Cin functions:***********************************************************************
@@ -92,16 +88,15 @@ private:
 int game::getInt(){
     string x;
     cin >> x;
-    cin.ignore();
-    int value = 0;
+    cin.ignore(); //Clears cin buffer -> Prevents crashing
     string newString;
+    //Takes first number found
     for(unsigned int i = 0; i <= x.length(); i++){
         if(isdigit(x[i])){
             newString += x[i];
         }
     }
-    value = atof(newString.c_str()); //Converts string -> c string (chars) -> double
-    return value;
+    return atof(newString.c_str()); //Converts string -> c string (chars) -> double
 }
 
 //Gets the user's  alpha the safe way to prevent crashing
@@ -110,10 +105,10 @@ char game::getAlpha(){
     bool go = true;
     char letter;
     cin >> x;
-    cin.ignore();
+    cin.ignore(); //Clears cin buffer -> Prevents crashing
     for(unsigned int i = 0; i <= x.length(); i++){
         if(isalpha(x[i]) && go){
-            go = false;
+            go = !go;
             letter = x[i];
         }
     }
@@ -253,8 +248,6 @@ void game::boardSelect(gameboard &saveFile){
 
     //Copies board to save file (pass by reference via void function)
     copyBoard(saveFile);
-    //Compares playboard to its key. Saves amount of incorrect in saveFile.incorrect returns number (pass by reference)
-
 }
 
 
