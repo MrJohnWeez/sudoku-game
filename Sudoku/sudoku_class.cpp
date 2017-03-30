@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <cmath>
+
 #include <iomanip> //setw
 #include "textediting.cpp"
 #include <limits>
@@ -58,6 +59,7 @@ public:
         cout << "Thanks for playing our game." << endl;
     }
 
+    //Start game
     void runGame(){
         title();
         menu(saveFile);
@@ -315,7 +317,6 @@ void game::run(gameboard &saveFile){
         if(!go && !saveFile.exit){
             saveFile.exit = true;
             cout << "you won!!!" << endl;
-            credits();
         }
     }else if(saveFile.incorrect == 81 && !saveFile.exit){
         clear();
