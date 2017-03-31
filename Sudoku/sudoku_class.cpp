@@ -26,6 +26,64 @@ What to do...
        We can use these chars: http://www.copypastecharacter.com/all-characters
 
 
+
+
+
+
+
+
+
+TEMP EXAMPLE OF A CLASS /\/\/\/\/\\//////////////////////\\\\\\\\\\\\\\\\\\\\\/////////////////\\\\\\\\\\\\\\\\\/\/\/\/\/\\//////////////////////
+
+
+#include <iostream>
+
+using namespace std;
+
+class info{
+private:
+    int x;
+    int y;
+    int z;
+public:
+    info(){
+        x = 0;
+        y = 0;
+        z = 0;
+    }
+    info(int inx, int iny, int inz){
+        x = inx;
+        y = iny;
+        z = inz;
+    }
+
+    int getx(){
+        return x;
+    }
+};
+
+int main()
+{
+    info box;
+    cout << box.getx() << endl;
+
+
+    return 0;
+}
+
+/\/\/\/\/\\//////////////////////\\\\\\\\\\\\\\\\\\\\\/////////////////\\\\\\\\\\\\\\\\\/\/\/\/\/\\//////////////////////\\\\\\\\\\\\\\\\\\\\\////
+
+
+
+
+
+
+
+
+
+
+
+
 Q & A
 */
 
