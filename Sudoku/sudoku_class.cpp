@@ -21,6 +21,8 @@ What to do...
     Game run functions
       -After edit point is entered display point. User needs to enter "-" to re-enter point.
 
+    KNOWN ERRORS
+      -Pressing continue game before game started is an error
 
 
        We can use these chars: http://www.copypastecharacter.com/all-characters
@@ -98,31 +100,45 @@ struct gameboard{
     string title = "Untitled_Save";
     int diff = 0;
     int version = 0;
-    int incorrect = 0;
     boardType board;
-    bool exit = false;
 };
 
 
 
 class game{
 public:
-    //This is a constructor
+
     gameboard saveFile;
+    //This is a constructor
     game(){
+        exit = false;
+        incorrect = 0;
     }
 
     //This is a deconstructor
     ~game(){
-        cout << "Thanks for playing our game." << endl;
+        exit = false;
     }
 
-    //Start game
-    void runGame(){
+    //Start game:
+    void sudukoGame(){
         title();
-        menu(saveFile);
+        clear();
+        menu(saveFile); //Whole game runs from menu
+        clear();
         credits();
     }
+
+private:
+    //Priavte Vars
+    bool exit;
+    int incorrect;
+
+    //Cin call functions durring game operation
+    //These prevent any glitches/bugs/crashes
+    int getInt();
+    char getAlpha();
+    void pause(bool);
 
     //Graphical functions
     void title();
@@ -132,20 +148,12 @@ public:
     void print(gameboard &saveFile);
     void menu(gameboard &saveFile);
 
-private:
-    //Call functions durring game operation
-    //Cin functions
-    int getInt();
-    char getAlpha();
-    void pause(bool);
-
     //Game run functions
     void boardSelect(gameboard &saveFile);
     void updateBoard(gameboard &saveFile, int main[][9], int key[][9]);
     void copyBoard(gameboard &saveFile);
     int check(gameboard &saveFile);
     void run(gameboard &saveFile);
-
 };
 
 
@@ -252,7 +260,7 @@ void game::howToPlay(){
 }
 
 void game::menu(gameboard &saveFile){
-    if(!saveFile.exit){
+    if(!exit){
         int option = -1;
         clear();
         while(option < 0 || option > 3){
@@ -276,9 +284,7 @@ void game::menu(gameboard &saveFile){
         }else if(option == 3){
             run(saveFile);
         }else if(option == 0){
-            saveFile.exit = true;
-            clear();
-            credits();
+            exit = true;
         }
     }
 }
@@ -326,12 +332,12 @@ void game::run(gameboard &saveFile){
     int answer = 0;
     int incorrect = 0;
     check(saveFile);
-    if(go && !(saveFile.incorrect == 81)){
+    if(go && !(incorrect == 81)){
         clear();
         print(saveFile);
         do{
             charcord1 = 'Z';
-            while(go && (charcord1 < 'A' || charcord1 > 'I') && !saveFile.exit){
+            while(go && (charcord1 < 'A' || charcord1 > 'I') && !exit){
                 cout << "Enter (A-I) cordinate: ";
                 charcord1 = getAlpha();
                 charcord1 = toupper(charcord1);
@@ -341,14 +347,14 @@ void game::run(gameboard &saveFile){
             cord1 = double(charcord1)-65;
 
             cord2 = -1;
-            while(go && (cord2 < 0 || cord2 > 9) && !saveFile.exit){
+            while(go && (cord2 < 0 || cord2 > 9) && !exit){
                 cout << "Enter (1-9) cordinate: ";
                 cord2= getInt();
                 if(cord2 == 0) menu(saveFile);
             }
 
             answer = -1;
-            while(go && (answer < 0 || answer > 9) && !saveFile.exit){
+            while(go && (answer < 0 || answer > 9) && !exit){
                 cout << "Enter (1-9) answer: ";
                 answer = getInt();
                 if(answer == 0) menu(saveFile);
@@ -359,7 +365,7 @@ void game::run(gameboard &saveFile){
             incorrect = check(saveFile);
 
             //When this is false the user has won
-            if((saveFile.incorrect != 0) && !saveFile.exit){
+            if((incorrect != 0) && !exit){
                 clear();
                 cout << "Incorrect = " << incorrect << endl;
                 print(saveFile);
@@ -367,21 +373,21 @@ void game::run(gameboard &saveFile){
 
 
             //Does user win game? go == false
-            if(saveFile.incorrect == 0) go = false;
+            if(incorrect == 0) go = false;
 
-        }while(go && !saveFile.exit);
+        }while(go && !exit);
 
         //User has won/solved puzzle
-        if(!go && !saveFile.exit){
-            saveFile.exit = true;
+        if(!go && !exit){
+            exit = true;
             cout << "you won!!!" << endl;
         }
-    }else if(saveFile.incorrect == 81 && !saveFile.exit){
+    }else if(incorrect == 81 && !exit){
         clear();
         cout << "No game currently running" << endl;
         pause(true);
         menu(saveFile);
-    }else if(saveFile.exit){
+    }else if(exit){
         clear();
         credits();
     }
@@ -402,7 +408,7 @@ void game::updateBoard(gameboard &saveFile, int main[][9], int key[][9]){
 //Checks to see if board is correct ~ also sets savefile incorrect # values
 int game::check(gameboard &saveFile){
     int RealitiveIncorrect = 0;
-    saveFile.incorrect = 0;
+    incorrect = 0;
     for(unsigned int row = 0; row < 9; row++){
         for(unsigned int col = 0; col < 9; col++){
             if((saveFile.board.boardPlay[row][col] != 0) && !(saveFile.board.boardPlay[row][col] == saveFile.board.boardKey[row][col])){
@@ -410,7 +416,7 @@ int game::check(gameboard &saveFile){
             }
             if(!(saveFile.board.boardPlay[row][col] == saveFile.board.boardKey[row][col]) ||
                     (saveFile.board.boardPlay[row][col] == 0)){
-                saveFile.incorrect++;
+                incorrect++;
             }
         }
     }
