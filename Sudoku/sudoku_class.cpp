@@ -1,11 +1,7 @@
 #include <iostream>
 #include <string>
-#include <vector>
-#include <cmath>
-
 #include <iomanip> //setw
 #include "textediting.cpp"
-#include <limits>
 
 using namespace std;
 
@@ -18,75 +14,13 @@ What to do...
       -Fill how to play
       -Print out a board with pretty display
 
-    Game run functions
-      -After edit point is entered display point. User needs to enter "-" to re-enter point.
-
-    KNOWN ERRORS
-      -Pressing continue game before game started is an error
+    WORKING ON:
+      -Make the game not use referance vars
 
 
        We can use these chars: http://www.copypastecharacter.com/all-characters
 
 
-
-
-
-
-
-
-
-TEMP EXAMPLE OF A CLASS /\/\/\/\/\\//////////////////////\\\\\\\\\\\\\\\\\\\\\/////////////////\\\\\\\\\\\\\\\\\/\/\/\/\/\\//////////////////////
-
-
-#include <iostream>
-
-using namespace std;
-
-class info{
-private:
-    int x;
-    int y;
-    int z;
-public:
-    info(){
-        x = 0;
-        y = 0;
-        z = 0;
-    }
-    info(int inx, int iny, int inz){
-        x = inx;
-        y = iny;
-        z = inz;
-    }
-
-    int getx(){
-        return x;
-    }
-};
-
-int main()
-{
-    info box;
-    cout << box.getx() << endl;
-
-
-    return 0;
-}
-
-/\/\/\/\/\\//////////////////////\\\\\\\\\\\\\\\\\\\\\/////////////////\\\\\\\\\\\\\\\\\/\/\/\/\/\\//////////////////////\\\\\\\\\\\\\\\\\\\\\////
-
-
-
-
-
-
-
-
-
-
-
-
-Q & A
 */
 
 //Creates a type stored in gameboard that stores play board and the key
@@ -101,43 +35,18 @@ struct gameboard{
     int diff = 0;
     int version = 0;
     boardType board;
-    int incorrect = 0;
 };
 
 
 
 class game{
-private:
-    //Priavte Vars
-    gameboard saveFile;
-    bool exit;
-
-    //Cin call functions durring game operation
-    //These prevent any glitches/bugs/crashes
-    int getInt();
-    char getAlpha();
-    void pause(bool);
-
-    //Graphical functions
-    void title();
-    void howToPlay();
-    void credits();
-    void clear();
-    void print(gameboard &saveFile);
-    void menu(gameboard &saveFile);
-
-    //Game run functions
-    void boardSelect(gameboard &saveFile);
-    void updateBoard(gameboard &saveFile, int main[][9], int key[][9]);
-    void copyBoard(gameboard &saveFile);
-    int check(gameboard &saveFile);
-    void run(gameboard &saveFile);
-
 public:
 
     //This is a constructor
     game(){
         exit = false;
+        numLeft = 0;
+        userIncorrect = 0;
     }
 
     //This is a deconstructor
@@ -154,24 +63,52 @@ public:
     }
 
 
+private:
+    //Priavte Vars
+    gameboard saveFile;  //Acts like game save data
+    bool exit;
+    int numLeft;
+    int userIncorrect;
+
+    //Cin call functions durring game operation
+    //These prevent any glitches/bugs/crashes
+    char getInt();
+    char getAlpha();
+    void pause(bool);
+
+    //Graphical functions
+    void title();
+    void howToPlay();
+    void credits();
+    void clear();
+    void print(gameboard &saveFile);
+    void menu(gameboard &saveFile);
+
+    //Game run functions
+    void boardSelect(gameboard &saveFile);
+    void updateBoard(gameboard &saveFile, int main[][9], int key[][9]);
+    void copyBoard(gameboard &saveFile);
+    void check(gameboard &saveFile);
+    void run(gameboard &saveFile);
 };
 
 
 //Cin functions:***********************************************************************
 
 //Gets the user's number the safe way to prevent crashing
-int game::getInt(){
+char game::getInt(){
     string x;
+    bool go = true;
+    char num;
     cin >> x;
     cin.ignore(); //Clears cin buffer -> Prevents crashing
-    string newString;
-    //Takes first number found
     for(unsigned int i = 0; i <= x.length(); i++){
-        if(isdigit(x[i])){
-            newString += x[i];
+        if((isdigit(x[i]) && go) || (x[i] == '-' && go)){
+            go = !go;
+            num = x[0];
         }
     }
-    return atof(newString.c_str()); //Converts string -> c string (chars) -> double
+    return num;
 }
 
 //Gets the user's  alpha the safe way to prevent crashing
@@ -182,9 +119,9 @@ char game::getAlpha(){
     cin >> x;
     cin.ignore(); //Clears cin buffer -> Prevents crashing
     for(unsigned int i = 0; i <= x.length(); i++){
-        if(isalpha(x[i]) && go){
+        if((isalpha(x[i]) && go) || (x[i] == '-' && go)){
             go = !go;
-            letter = x[i];
+            letter = x[0];
         }
     }
     return letter;
@@ -273,7 +210,12 @@ void game::menu(gameboard &saveFile){
                  << "2) New game\n"
                  << "3) Back to game\n"
                  << "0) Exit Game\n⏩ ";
-            option = getInt();
+            char temp = getInt();
+            if(isdigit(temp)){
+                option = temp - '0';
+            }
+            else if(temp == '-') option = 0;
+
         }
 
         if(option == 1){
@@ -285,6 +227,7 @@ void game::menu(gameboard &saveFile){
         }else if(option == 3){
             run(saveFile);
         }else if(option == 0){
+            clear();
             exit = true;
         }
     }
@@ -295,6 +238,10 @@ void game::menu(gameboard &saveFile){
 
 //sets difficulty, board #, and load it into "game memory"
 void game::boardSelect(gameboard &saveFile){
+    //Clears any values held before
+    saveFile.diff = 0;
+    saveFile.version = 0;
+
     while(saveFile.diff != 1 && saveFile.diff != 2 && saveFile.diff != 3){
         if(saveFile.diff != 0){
             cout << "Must enter 1 2 or 3" << endl;
@@ -303,7 +250,13 @@ void game::boardSelect(gameboard &saveFile){
              << "(1) Easy\n"
              << "(2) Medium\n"
              << "(3) Hard\n⏩ ";
-        saveFile.diff = getInt();
+        char temp = getInt();
+        if(isdigit(temp)){
+            saveFile.diff = temp - '0';
+        }
+        else if(temp == '-'){
+            menu(saveFile);
+        }
         cout << "\n";
     }
 
@@ -317,7 +270,14 @@ void game::boardSelect(gameboard &saveFile){
              << "(3) Board 3\n"
              << "(4) Board 4\n"
              << "(5) Board 5\n⏩ ";
-        saveFile.version = getInt();
+        char temp = getInt();
+        if(isdigit(temp)){
+            saveFile.version = temp - '0';
+        }
+        else if(temp == '-'){
+            menu(saveFile);
+        }
+
     }
 
     //Copies board to save file (pass by reference via void function)
@@ -327,22 +287,26 @@ void game::boardSelect(gameboard &saveFile){
 
 void game::run(gameboard &saveFile){
     bool go = true;
-    char charcord1;
-    int cord1 = 0;
-    int cord2 = 0;
-    int answer = 0;
-    int incorrect = 0;
+    //vars for
+    char charcord1, sanswer, scord2;
+    int cord1, cord2, answer = 0;
+
     check(saveFile);
-    if(go && !(saveFile.incorrect == 81)){
-        clear();
-        print(saveFile);
+    if(go && !(numLeft == 81)){
         do{
+            if(!exit){
+                clear();
+                cout << "Number of empty boxes: " << numLeft << endl;
+                cout << "Incorrect values: " << userIncorrect << endl;
+                print(saveFile);
+            }
+
             charcord1 = 'Z';
             while(go && (charcord1 < 'A' || charcord1 > 'I') && !exit){
                 cout << "Enter (A-I) cordinate: ";
                 charcord1 = getAlpha();
-                charcord1 = toupper(charcord1);
-                if(charcord1 == 26) menu(saveFile);
+                if(isalpha(charcord1)) charcord1 = toupper(charcord1);
+                else if(charcord1 == '-') menu(saveFile);
 
             }
             cord1 = double(charcord1)-65;
@@ -350,48 +314,49 @@ void game::run(gameboard &saveFile){
             cord2 = -1;
             while(go && (cord2 < 0 || cord2 > 9) && !exit){
                 cout << "Enter (1-9) cordinate: ";
-                cord2= getInt();
-                if(cord2 == 0) menu(saveFile);
+                scord2= getInt();
+                if(isdigit(scord2)) cord2 = scord2 - '0';
+                else if(scord2 == '-') menu(saveFile);
+
             }
 
             answer = -1;
             while(go && (answer < 0 || answer > 9) && !exit){
                 cout << "Enter (1-9) answer: ";
-                answer = getInt();
-                if(answer == 0) menu(saveFile);
-
-
+                sanswer = getInt();
+                if(isdigit(sanswer)) answer = sanswer - '0';
+                else if(sanswer == '-') menu(saveFile);
             }
+
             saveFile.board.boardPlay[cord2-1][cord1] = answer;
-            incorrect = check(saveFile);
+            check(saveFile);
 
             //When this is false the user has won/quit
-            if((saveFile.incorrect != 0) && !exit){
+            if((numLeft + userIncorrect != 0) && !exit){
                 clear();
-                cout << "Incorrect = " << incorrect << endl;
+                cout << "User Incorrect = " << userIncorrect << endl;
+                cout << "Number left = " << numLeft << endl;
                 print(saveFile);
             }
 
-
             //Does user win game? go == false
-            if(saveFile.incorrect == 0) go = false;
+            if((numLeft + userIncorrect) == 0){
+                exit = true;
+                go = false;
+            }
 
         }while(go && !exit);
 
         //User has won/solved puzzle
-        if(!go && !exit){
-            exit = true;
+        if(!go && exit){
             clear();
             cout << "you won!!!" << endl;
         }
-    }else if(saveFile.incorrect == 81 && !exit){
+    }else if(numLeft == 81 && !exit){
         clear();
         cout << "No game currently running" << endl;
         pause(true);
         menu(saveFile);
-    }else if(exit){
-        clear();
-        credits();
     }
 }
 
@@ -408,21 +373,19 @@ void game::updateBoard(gameboard &saveFile, int main[][9], int key[][9]){
 
 
 //Checks to see if board is correct ~ also sets savefile incorrect # values
-int game::check(gameboard &saveFile){
-    int RealitiveIncorrect = 0;
-    saveFile.incorrect = 0;
+void game::check(gameboard &saveFile){
+    numLeft = 0;
+    userIncorrect = 0;
     for(unsigned int row = 0; row < 9; row++){
         for(unsigned int col = 0; col < 9; col++){
             if((saveFile.board.boardPlay[row][col] != 0) && !(saveFile.board.boardPlay[row][col] == saveFile.board.boardKey[row][col])){
-                RealitiveIncorrect++;
+                userIncorrect++;
             }
-            if(!(saveFile.board.boardPlay[row][col] == saveFile.board.boardKey[row][col]) ||
-                    (saveFile.board.boardPlay[row][col] == 0)){
-                saveFile.incorrect++;
+            if(saveFile.board.boardPlay[row][col] == 0){
+                numLeft++;
             }
         }
     }
-    return RealitiveIncorrect;
 }
 
 
