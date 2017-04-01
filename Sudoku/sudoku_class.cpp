@@ -101,38 +101,16 @@ struct gameboard{
     int diff = 0;
     int version = 0;
     boardType board;
+    int incorrect = 0;
 };
 
 
 
 class game{
-public:
-
-    gameboard saveFile;
-    //This is a constructor
-    game(){
-        exit = false;
-        incorrect = 0;
-    }
-
-    //This is a deconstructor
-    ~game(){
-        exit = false;
-    }
-
-    //Start game:
-    void sudukoGame(){
-        title();
-        clear();
-        menu(saveFile); //Whole game runs from menu
-        clear();
-        credits();
-    }
-
 private:
     //Priavte Vars
+    gameboard saveFile;
     bool exit;
-    int incorrect;
 
     //Cin call functions durring game operation
     //These prevent any glitches/bugs/crashes
@@ -154,6 +132,28 @@ private:
     void copyBoard(gameboard &saveFile);
     int check(gameboard &saveFile);
     void run(gameboard &saveFile);
+
+public:
+
+    //This is a constructor
+    game(){
+        exit = false;
+    }
+
+    //This is a deconstructor
+    ~game(){
+        exit = false;
+    }
+
+    //Start game:
+    void sudukoGame(){
+        title();
+        clear();
+        menu(saveFile); //Whole game runs from menu
+        credits();
+    }
+
+
 };
 
 
@@ -231,6 +231,7 @@ void game::print(gameboard &saveFile){
         }
         cout << endl;
     }
+
     //        cout << "           A   B   C   D   E   F   G   H   I   "<< endl;
     //        cout << "         ┏━━━┯━━━┯━━━┳━━━┯━━━┯━━━┳━━━┯━━━┯━━━┓ "<< endl;
     //        cout << "      1❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
@@ -332,7 +333,7 @@ void game::run(gameboard &saveFile){
     int answer = 0;
     int incorrect = 0;
     check(saveFile);
-    if(go && !(incorrect == 81)){
+    if(go && !(saveFile.incorrect == 81)){
         clear();
         print(saveFile);
         do{
@@ -364,8 +365,8 @@ void game::run(gameboard &saveFile){
             saveFile.board.boardPlay[cord2-1][cord1] = answer;
             incorrect = check(saveFile);
 
-            //When this is false the user has won
-            if((incorrect != 0) && !exit){
+            //When this is false the user has won/quit
+            if((saveFile.incorrect != 0) && !exit){
                 clear();
                 cout << "Incorrect = " << incorrect << endl;
                 print(saveFile);
@@ -373,16 +374,17 @@ void game::run(gameboard &saveFile){
 
 
             //Does user win game? go == false
-            if(incorrect == 0) go = false;
+            if(saveFile.incorrect == 0) go = false;
 
         }while(go && !exit);
 
         //User has won/solved puzzle
         if(!go && !exit){
             exit = true;
+            clear();
             cout << "you won!!!" << endl;
         }
-    }else if(incorrect == 81 && !exit){
+    }else if(saveFile.incorrect == 81 && !exit){
         clear();
         cout << "No game currently running" << endl;
         pause(true);
@@ -408,7 +410,7 @@ void game::updateBoard(gameboard &saveFile, int main[][9], int key[][9]){
 //Checks to see if board is correct ~ also sets savefile incorrect # values
 int game::check(gameboard &saveFile){
     int RealitiveIncorrect = 0;
-    incorrect = 0;
+    saveFile.incorrect = 0;
     for(unsigned int row = 0; row < 9; row++){
         for(unsigned int col = 0; col < 9; col++){
             if((saveFile.board.boardPlay[row][col] != 0) && !(saveFile.board.boardPlay[row][col] == saveFile.board.boardKey[row][col])){
@@ -416,7 +418,7 @@ int game::check(gameboard &saveFile){
             }
             if(!(saveFile.board.boardPlay[row][col] == saveFile.board.boardKey[row][col]) ||
                     (saveFile.board.boardPlay[row][col] == 0)){
-                incorrect++;
+                saveFile.incorrect++;
             }
         }
     }
