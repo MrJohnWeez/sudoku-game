@@ -20,6 +20,7 @@ What to do...
 
        We can use these chars: http://www.copypastecharacter.com/all-characters
 
+       Game Report: https://docs.google.com/document/d/1W9t9L3NHXSCfmkRBUQDQo04xI60NdST3vGZK92s__sU/edit?usp=sharing
 
 */
 
