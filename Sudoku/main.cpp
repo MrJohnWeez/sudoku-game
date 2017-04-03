@@ -8,6 +8,7 @@ int main()
 {
     //Runs game
     game Suduko;
+    Suduko.sudukoGame();
     return 0;
 
 }
