@@ -97,7 +97,7 @@ private:
         cout << setw(62) << "-----Press enter to continue-----\033[0m\n";\
 
         cout << "          A B C    D E F    G H I  "<< endl;
-        cout << "         ┏━━┯━┯━━┯━━┯━┯━━┯━━┯━┯━━┓ "<< endl;
+        cout << "         ┏━━━━━━━┯━━━━━━━┯━━━━━━━┓ "<< endl;
         cout << "      1❱ ┃ 0 0 0 │ 0 0 0 │ 0 0 0 ┃ "<< endl;
         cout << "      2❱ ┃ 0 0 0 │ 0 0 0 │ 0 0 0 ┃ "<< endl;
         cout << "      3❱ ┃ 0 0 0 │ 0 0 0 │ 0 0 0 ┃ "<< endl;
