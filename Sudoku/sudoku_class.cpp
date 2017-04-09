@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <vector>
 #include <iomanip> //setw
 #include "textediting.cpp"
 
@@ -66,10 +67,38 @@ public:
 
 private:
     //Priavte Vars
-    gameboard saveFile;  //Acts like game save data
-    bool exit;
-    int numLeft;
+    gameboard saveFile;      //Acts like game save data
+    bool exit;       //Ends game if true
+    int numLeft;        //Total number of numbers left
     int userIncorrect;
+
+
+    //This needs to go into string printing
+    string printing[10][10] = {{"Testing"}};
+
+    //        cout << "           A   B   C   D   E   F   G   H   I   "<< endl;
+    //        cout << "         ┏━━━┯━━━┯━━━┳━━━┯━━━┯━━━┳━━━┯━━━┯━━━┓ "<< endl;
+    //        cout << "      1❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
+    //        cout << "         ┠───┼───┼───╂───┼───┼───╂───┼───┼───┨ "<< endl;
+    //        cout << "      2❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
+    //        cout << "         ┠───┼───┼───╂───┼───┼───╂───┼───┼───┨ "<< endl;
+    //        cout << "      3❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
+    //        cout << "         ┣━━━┿━━━┿━━━╋━━━┿━━━┿━━━╋━━━┿━━━┿━━━┫ "<< endl;
+    //        cout << "      4❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
+    //        cout << "         ┠───┼───┼───╂───┼───┼───╂───┼───┼───┨ "<< endl;
+    //        cout << "      5❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
+    //        cout << "         ┠───┼───┼───╂───┼───┼───╂───┼───┼───┨ "<< endl;
+    //        cout << "      6❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
+    //        cout << "         ┣━━━┿━━━┿━━━╋━━━┿━━━┿━━━╋━━━┿━━━┿━━━┫ "<< endl;
+    //        cout << "      7❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
+    //        cout << "         ┠───┼───┼───╂───┼───┼───╂───┼───┼───┨ "<< endl;
+    //        cout << "      8❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
+    //        cout << "         ┠───┼───┼───╂───┼───┼───╂───┼───┼───┨ "<< endl;
+    //        cout << "      9❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
+    //        cout << "         ┗━━━┷━━━┷━━━┻━━━┷━━━┷━━━┻━━━┷━━━┷━━━┛ "<< endl;
+
+
+
 
     //Cin call functions durring game operation
     //These prevent any glitches/bugs/crashes
@@ -139,6 +168,8 @@ void game::pause(bool enter){
 
 //Graphical functions:***********************************************************************
 
+
+
 void game::title(){
     cout <<"Total________________________________screen_______________________________Length" << endl;
     cout << red("                    _____             _         _           \n"
@@ -147,6 +178,9 @@ void game::title(){
                 "                    `--. \\| | | | / _` | / _ \\ | |/ /| | | |\n"
                 "                   /\\__/ /| |_| || (_| || (_) ||   < | |_| |\n"
                 "                   \\____/  \\__,_| \\__,_| \\___/ |_|\\_\\ \\__,_|\n\n");
+
+
+    cout << printing[0][0] << endl;
     pause(true);
     }
 
@@ -170,26 +204,7 @@ void game::print(gameboard &saveFile){
         cout << endl;
     }
 
-    //        cout << "           A   B   C   D   E   F   G   H   I   "<< endl;
-    //        cout << "         ┏━━━┯━━━┯━━━┳━━━┯━━━┯━━━┳━━━┯━━━┯━━━┓ "<< endl;
-    //        cout << "      1❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
-    //        cout << "         ┠───┼───┼───╂───┼───┼───╂───┼───┼───┨ "<< endl;
-    //        cout << "      2❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
-    //        cout << "         ┠───┼───┼───╂───┼───┼───╂───┼───┼───┨ "<< endl;
-    //        cout << "      3❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
-    //        cout << "         ┣━━━┿━━━┿━━━╋━━━┿━━━┿━━━╋━━━┿━━━┿━━━┫ "<< endl;
-    //        cout << "      4❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
-    //        cout << "         ┠───┼───┼───╂───┼───┼───╂───┼───┼───┨ "<< endl;
-    //        cout << "      5❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
-    //        cout << "         ┠───┼───┼───╂───┼───┼───╂───┼───┼───┨ "<< endl;
-    //        cout << "      6❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
-    //        cout << "         ┣━━━┿━━━┿━━━╋━━━┿━━━┿━━━╋━━━┿━━━┿━━━┫ "<< endl;
-    //        cout << "      7❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
-    //        cout << "         ┠───┼───┼───╂───┼───┼───╂───┼───┼───┨ "<< endl;
-    //        cout << "      8❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
-    //        cout << "         ┠───┼───┼───╂───┼───┼───╂───┼───┼───┨ "<< endl;
-    //        cout << "      9❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
-    //        cout << "         ┗━━━┷━━━┷━━━┻━━━┷━━━┷━━━┻━━━┷━━━┷━━━┛ "<< endl;
+
 }
 
 //Tells user how to play and what command there are
