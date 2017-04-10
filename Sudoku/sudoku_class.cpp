@@ -74,7 +74,7 @@ private:
 
 
     //This needs to go into string printing
-    string printing[10][10] = {{"Testing"}};
+    string printing[10][10] = {{"Hello","","","","","","","","","",},};
 
     //        cout << "           A   B   C   D   E   F   G   H   I   "<< endl;
     //        cout << "         ┏━━━┯━━━┯━━━┳━━━┯━━━┯━━━┳━━━┯━━━┯━━━┓ "<< endl;
