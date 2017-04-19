@@ -181,13 +181,12 @@ char game::getAlpha(){
 //pause(true) will output "Press enter..." pause(false) does not output anything
 void game::pause(bool enter){
     string dummy;
-    if(enter) cout << setw(55) << "-----Press enter to continue-----" << endl;
+    if(enter) cout << setw(57) << "-----Press enter to continue-----" << endl;
     getline(cin,dummy);
 }
 
 //Graphical functions:***********************************************************************
 void game::title(){
-    cout <<"Total________________________________screen_______________________________Length" << endl;
     cout << red("                    _____             _         _           \n"
                 "                   /  ___|           | |       | |          \n"
                 "                   \\ `--.  _   _   __| |  ___  | | __ _   _ \n"
@@ -199,7 +198,22 @@ void game::title(){
     }
 
 void game::credits(){
-    cout << "Taco Cat\nChuck Conner: Tester (The Best)\nalso john and aaron were there" << endl;
+    //cout << "Total________________________________screen_______________________________Length" << endl;
+    cout << "                      ____  _   _    __    _  _  _  _  ___ \n"
+            "                     (_  _)( )_( )  /__\\  ( \\( )( )/ )/ __)\n"
+            "                       )(   ) _ (  /(__)\\  )  (  )  ( \\__ \\\n"
+            "                      (__) (_) (_)(__)(__)(_)\\_)(_)\\_)(___/\n"
+            "                               ____  _____  ____ \n"
+            "                              ( ___)(  _  )(  _ \\\n"
+            "                               )__)  )(_)(  )   /\n"
+            "                              (__)  (_____)(_)\\_)\n"
+            "                     ____  __      __   _  _  ____  _  _  ___ \n"
+            "                    (  _ \\(  )    /__\\ ( \\/ )(_  _)( \\( )/ __)\n"
+            "                     )___/ )(__  /(__)\\ \\  /  _)(_  )  (( (_-.\n"
+            "                    (__)  (____)(__)(__)(__) (____)(_)\\_)\\___/\n" << endl;
+    cout << "                           Logic made by: John Wieser\n"
+            "                         Game art made by: Aaron Wagner\n"
+            "                                2017 Copyright" << endl;
 }
 
 //Clears terminal
@@ -219,7 +233,15 @@ void game::print(gameboard &saveFile){
 
 //Tells user how to play and what command there are
 void game::howToPlay(){
-    cout << "Bla Bla Bla" << endl;
+    cout << "                     Use numbers to navigate the menu\n"
+            "     Press the '-' and Enter to exit to menu anytime durring the game.\n"
+            "    If you want to stop playing make sure you save your game (option5).\n\n"
+            "                             Normal sudoku rules:\n"
+            "               The objective is to fill a 9x9 grid so that each\n"
+            "               column, each row, and each of the nine 3x3 boxes\n"
+            "     contains the digits from 1 to 9. The amount of empty spaces and how\n"
+            "           many you have gotten correct is labled above the board.\n"
+            "                           Good luck and have FUN!" << endl;
     pause(true);
 }
 
