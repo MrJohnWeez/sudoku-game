@@ -56,7 +56,7 @@ string black(string text){
 
 string green(string text){
     string newtext;
-    newtext += "\033[1;32m";
+    newtext += "\033[1;32m"; //"\033[1;32m"
     newtext += text;
     newtext += "\033[0m";
     return newtext;

@@ -11,19 +11,13 @@ using namespace std;
 What to do...
 
     Graphical Functions
-      -Find a way to display boards. ~ Possibly with an array of strings?
-      -Fill credits
-      -Fill how to play
-      -Print out a board with pretty display
-
-    WORKING ON:
-      -Make the game not use referance vars
-
+      -Print out a board with pretty display AARON!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      -Fix the "You won text" make it fancy
+      -Make credits fancy
+      -Menu needs to be centered and fancified
 
        We can use these chars: http://www.copypastecharacter.com/all-characters
-
        Game Report: https://docs.google.com/document/d/1W9t9L3NHXSCfmkRBUQDQo04xI60NdST3vGZK92s__sU/edit?usp=sharing
-
 */
 
 //Creates a type stored in gameboard that stores play board and the key
@@ -39,7 +33,6 @@ struct gameboard{
     int version = 0;
     boardType board;
 };
-
 
 
 class game{
@@ -73,28 +66,27 @@ private:
     int numLeft;        //Total number of numbers left
     int userIncorrect;
 
-
     //This needs to go into string printing
     string printing[20][10] = {{"","","","","","","","","","",},
-                              {"","","","","","","","","","",},
-                              {"","","","","","","","","","",},
-                              {"","","","","","","","","","",},
-                              {"","","","","","","","","","",},
-                              {"","","","","","","","","","",},
-                              {"","","","","","","","","","",},
-                              {"","","","","","","","","","",},
-                              {"","","","","","","","","","",},
-                              {"","","","","","","","","","",},
-                              {"","","","","","","","","","",},
-                              {"","","","","","","","","","",},
-                              {"","","","","","","","","","",},
-                              {"","","","","","","","","","",},
-                              {"","","","","","","","","","",},
-                              {"","","","","","","","","","",},
-                              {"","","","","","","","","","",},
-                              {"","","","","","","","","","",},
-                              {"","","","","","","","","","",},
-                              {"","","","","","","","","","",},};
+                               {"","","","","","","","","","",},
+                               {"","","","","","","","","","",},
+                               {"","","","","","","","","","",},
+                               {"","","","","","","","","","",},
+                               {"","","","","","","","","","",},
+                               {"","","","","","","","","","",},
+                               {"","","","","","","","","","",},
+                               {"","","","","","","","","","",},
+                               {"","","","","","","","","","",},
+                               {"","","","","","","","","","",},
+                               {"","","","","","","","","","",},
+                               {"","","","","","","","","","",},
+                               {"","","","","","","","","","",},
+                               {"","","","","","","","","","",},
+                               {"","","","","","","","","","",},
+                               {"","","","","","","","","","",},
+                               {"","","","","","","","","","",},
+                               {"","","","","","","","","","",},
+                               {"","","","","","","","","","",},};
 
     //        cout << "           A   B   C   D   E   F   G   H   I   "<< endl;
     //        cout << "         ┏━━━┯━━━┯━━━┳━━━┯━━━┯━━━┳━━━┯━━━┯━━━┓ "<< endl;
@@ -125,6 +117,7 @@ private:
     void pause(bool);
 
     //Graphical functions
+    void sizeScreen();
     void title();
     void howToPlay();
     void credits();
@@ -132,10 +125,12 @@ private:
     void print(gameboard &saveFile);
     void menu(gameboard &saveFile);
 
-    //Game run functions
+    //Import and Export Boards
     void import(gameboard &saveFile);
     void saveBoard(gameboard &saveFile);
     void getData(gameboard &savefile, vector<string> importData);
+
+    //Game run functions
     void boardSelect(gameboard &saveFile);
     void updateBoard(gameboard &saveFile, int main[][9], int key[][9]);
     void copyBoard(gameboard &saveFile);
@@ -144,15 +139,17 @@ private:
 };
 
 
-//Cin functions:***********************************************************************
+//Cin functions:***************************************************************************************************************
 
-//Gets the user's number the safe way to prevent crashing
+//Gets the user's 1 digit number the safe way to prevent crashing
 char game::getInt(){
     string x;
     bool go = true;
     char num;
     cin >> x;
     cin.ignore(); //Clears cin buffer -> Prevents crashing
+
+    //Searches for the first valid letter or '-'
     for(unsigned int i = 0; i <= x.length(); i++){
         if((isdigit(x[i]) && go) || (x[i] == '-' && go)){
             go = !go;
@@ -162,13 +159,15 @@ char game::getInt(){
     return num;
 }
 
-//Gets the user's  alpha the safe way to prevent crashing
+//Gets the user's 1 letter alpha the safe way to prevent crashing
 char game::getAlpha(){
     string x;
     bool go = true;
     char letter;
     cin >> x;
     cin.ignore(); //Clears cin buffer -> Prevents crashing
+
+    //Searches for the first valid letter or '-'
     for(unsigned int i = 0; i <= x.length(); i++){
         if((isalpha(x[i]) && go) || (x[i] == '-' && go)){
             go = !go;
@@ -178,40 +177,76 @@ char game::getAlpha(){
     return letter;
 }
 
-//pause(true) will output "Press enter..." pause(false) does not output anything
+//pause(true) will output "Press enter..." pause(false) does not output anything but still pauses
 void game::pause(bool enter){
     string dummy;
-    if(enter) cout << setw(57) << "-----Press enter to continue-----" << endl;
+    if(enter) cout << setw(67) << white("-----Press enter to continue-----") << endl;
     getline(cin,dummy);
 }
 
-//Graphical functions:***********************************************************************
+//Graphical functions:*******************************************************************************************************
+void game::sizeScreen(){
+    cout << "┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n"
+            "┃                                                                              ┃\n"
+            "┃                                                                              ┃\n"
+            "┃                                                                              ┃\n"
+            "┃                                                                              ┃\n"
+            "┃                                                                              ┃\n"
+            "┃                                                                              ┃\n"
+            "┃                                                                              ┃\n"
+            "┃                                                                              ┃\n"
+            "┃                                                                              ┃\n"
+            "┃                                                                              ┃\n"
+            "┃                                                                              ┃\n"
+            "┃                                                                              ┃\n"
+            "┃                                                                              ┃\n"
+            "┃                                                                              ┃\n"
+            "┃                                                                              ┃\n"
+            "┃                                                                              ┃\n"
+            "┃                                                                              ┃\n"
+            "┃                       -----Press enter to continue-----                      ┃\n"
+            "┃                                                                              ┃\n"
+            "┃                                                                              ┃\n"
+            "┃                                                                              ┃\n"
+            "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛" << endl;
+    pause(false);
+}
+
 void game::title(){
-    testColors();
-    cout << red("                    _____             _         _           \n"
-                "                   /  ___|           | |       | |          \n"
-                "                   \\ `--.  _   _   __| |  ___  | | __ _   _ \n"
-                "                    `--. \\| | | | / _` | / _ \\ | |/ /| | | |\n"
-                "                   /\\__/ /| |_| || (_| || (_) ||   < | |_| |\n"
-                "                   \\____/  \\__,_| \\__,_| \\___/ |_|\\_\\ \\__,_|\n\n");
-    cout << printing[0][0] << endl;
-    pause(true);
-    }
+    //testColors();
+    cout << blue("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n")
+         << lightblue("   _____                                           _      _     _            \n"
+                 "  /  __ \\                                         | |    | |   (_)           \n"
+                 "  | /  \\/ ___  _ __ ___  _ __ ___   __ _ _ __   __| |    | |    _ _ __   ___ \n"
+                 "  | |    / _ \\| '_ ` _ \\| '_ ` _ \\ / _` | '_ \\ / _` |    | |   | | '_ \\ / _ \\\n"
+                 "  | \\__/\\ (_) | | | | | | | | | | | (_| | | | | (_| |    | |___| | | | |  __/\n"
+                 "   \\____/\\___/|_| |_| |_|_| |_| |_|\\__,_|_| |_|\\__,_|    \\_____/_|_| |_|\\___|\n")
+         <<  red("                    _____             _         _                               \n"
+                 "                   /  ___|           | |       | |                              \n"
+                 "                   \\ `--.  _   _   __| |  ___  | | __ _   _                    \n"
+                 "                    `--. \\| | | | / _` | / _ \\ | |/ /| | | |                  \n"
+                 "                   /\\__/ /| |_| || (_| || (_) ||   < | |_| |                   \n"
+                 "                   \\____/  \\__,_| \\__,_| \\___/ |_|\\_\\ \\__,_|             \n\n") << endl;
+    cout << setw(67) << white("-----Press enter to continue-----") << endl;
+    cout << blue("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛") << endl;
+    pause(false);
+
+}
 
 void game::credits(){
     //cout << "Total________________________________screen_______________________________Length" << endl;
     cout << lightblue("                      ____  _   _    __    _  _  _  _  ___ \n"
-            "                     (_  _)( )_( )  /__\\  ( \\( )( )/ )/ __)\n"
-            "                       )(   ) _ (  /(__)\\  )  (  )  ( \\__ \\\n"
-            "                      (__) (_) (_)(__)(__)(_)\\_)(_)\\_)(___/\n"
-            "                               ____  _____  ____ \n"
-            "                              ( ___)(  _  )(  _ \\\n"
-            "                               )__)  )(_)(  )   /\n"
-            "                              (__)  (_____)(_)\\_)\n"
-            "                     ____  __      __   _  _  ____  _  _  ___ \n"
-            "                    (  _ \\(  )    /__\\ ( \\/ )(_  _)( \\( )/ __)\n"
-            "                     )___/ )(__  /(__)\\ \\  /  _)(_  )  (( (_-.\n"
-            "                    (__)  (____)(__)(__)(__) (____)(_)\\_)\\___/\n") << endl;
+                      "                     (_  _)( )_( )  /__\\  ( \\( )( )/ )/ __)\n"
+                      "                       )(   ) _ (  /(__)\\  )  (  )  ( \\__ \\\n"
+                      "                      (__) (_) (_)(__)(__)(_)\\_)(_)\\_)(___/\n"
+                      "                               ____  _____  ____ \n"
+                      "                              ( ___)(  _  )(  _ \\\n"
+                      "                               )__)  )(_)(  )   /\n"
+                      "                              (__)  (_____)(_)\\_)\n"
+                      "                     ____  __      __   _  _  ____  _  _  ___ \n"
+                      "                    (  _ \\(  )    /__\\ ( \\/ )(_  _)( \\( )/ __)\n"
+                      "                     )___/ )(__  /(__)\\ \\  /  _)(_  )  (( (_-.\n"
+                      "                    (__)  (____)(__)(__)(__) (____)(_)\\_)\\___/\n") << endl;
     cout << "                           Logic made by: John Wieser\n"
             "                         Game art made by: Aaron Wagner\n"
             "                                2017 Copyright" << endl;
@@ -222,7 +257,7 @@ void game::clear(){
     cout << string( 24, '\n' );
 }
 
-//Printing A Aron THIS IS WHAT YOU SHOULD DO >:( ~Chuck Conner aka The Best
+//Printing A Aron THIS IS WHAT YOU SHOULD DO >:( ~Chuck Conner
 void game::print(gameboard &saveFile){
     for(unsigned int row = 0; row < 9; row++){
         for(unsigned int col = 0; col < 9; col++){
@@ -237,41 +272,20 @@ void game::howToPlay(){
     clear();
     //cout << "Total________________________________screen_______________________________Length" << endl;
     cout << blue("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n")
-         << blue("┃") << "                       Use numbers to navigate the menu                       " << blue("┃\n")
-         << blue("┃") << "       Press the '-' and Enter to exit to menu anytime durring the game.      " << blue("┃\n")
-         << blue("┃") << "      If you want to stop playing make sure you save your game (option5).     " << blue("┃\n")
-         << blue("┃") << "                                                                              " << blue("┃\n")
-         << blue("┃") << white("                             Normal sudoku rules:                             ") << blue("┃\n")
-         << blue("┃") << "                The objective is to fill a 9x9 grid so that each              " << blue("┃\n")
-         << blue("┃") << "                column, each row, and each of the nine 3x3 boxes              " << blue("┃\n")
-         << blue("┃") << "       contains the digits from 1 to 9. The amount of empty spaces and how    " << blue("┃\n")
-         << blue("┃") << "             many you have gotten correct is labled above the board.          " << blue("┃\n")
-         << blue("┃") << "                            Good luck and have FUN!                           " << blue("┃\n")
+         << "                       Use numbers to navigate the menu                       \n"
+         << "       Press the '-' and Enter to exit to menu anytime durring the game.      \n"
+         << "      If you want to stop playing make sure you save your game (option5).     \n"
+         << "                                                                              \n"
+         << white("                             Normal sudoku rules:                             \n")
+         << "                The objective is to fill a 9x9 grid so that each              \n"
+         << "                column, each row, and each of the nine 3x3 boxes              \n"
+         << "       contains the digits from 1 to 9. The amount of empty spaces and how    \n"
+         << "             many you have gotten correct is labled above the board.          \n"
+         << "                            Good luck and have FUN!                           \n"
          << blue("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n") << endl;
     pause(true);
 }
 
-
-//        cout << "           A   B   C   D   E   F   G   H   I   "<< endl;
-//        cout << "         ┏━━━┯━━━┯━━━┳━━━┯━━━┯━━━┳━━━┯━━━┯━━━┓ "<< endl;
-//        cout << "      1❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
-//        cout << "         ┠───┼───┼───╂───┼───┼───╂───┼───┼───┨ "<< endl;
-//        cout << "      2❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
-//        cout << "         ┠───┼───┼───╂───┼───┼───╂───┼───┼───┨ "<< endl;
-//        cout << "      3❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
-//        cout << "         ┣━━━┿━━━┿━━━╋━━━┿━━━┿━━━╋━━━┿━━━┿━━━┫ "<< endl;
-//        cout << "      4❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
-//        cout << "         ┠───┼───┼───╂───┼───┼───╂───┼───┼───┨ "<< endl;
-//        cout << "      5❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
-//        cout << "         ┠───┼───┼───╂───┼───┼───╂───┼───┼───┨ "<< endl;
-//        cout << "      6❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
-//        cout << "         ┣━━━┿━━━┿━━━╋━━━┿━━━┿━━━╋━━━┿━━━┿━━━┫ "<< endl;
-//        cout << "      7❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
-//        cout << "         ┠───┼───┼───╂───┼───┼───╂───┼───┼───┨ "<< endl;
-//        cout << "      8❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
-//        cout << "         ┠───┼───┼───╂───┼───┼───╂───┼───┼───┨ "<< endl;
-//        cout << "      9❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
-//        cout << "         ┗━━━┷━━━┷━━━┻━━━┷━━━┷━━━┻━━━┷━━━┷━━━┛ "<< endl;
 void game::menu(gameboard &saveFile){
     if(!exit){
         int option = -1;
@@ -282,11 +296,12 @@ void game::menu(gameboard &saveFile){
             }
             cout << bold("Menu") << endl;
             cout << "1) How to play\n"
-                 << "2) New game\n"
-                 << "3) Import Board\n"
-                 << "4) Save Game to file\n"
-                 << "5) Back to game\n"
-                 << "6) Credits\n"
+                 << "2) Screen Size\n"
+                 << "3) New game\n"
+                 << "4) Import Board\n"
+                 << "5) Save Game to file\n"
+                 << "6) Back to game\n"
+                 << "7) Credits\n"
                  << "0) Exit Game\n⏩ ";
             char temp = getInt();
             if(isdigit(temp)){
@@ -298,15 +313,18 @@ void game::menu(gameboard &saveFile){
             howToPlay();
             menu(saveFile);
         }else if(option == 2){
+            sizeScreen();
+            menu(saveFile);
+        }else if(option == 3){
             boardSelect(saveFile);
             run(saveFile);
-        }else if(option == 3){
-            import(saveFile);
         }else if(option == 4){
-            saveBoard(saveFile);
+            import(saveFile);
         }else if(option == 5){
-            run(saveFile);
+            saveBoard(saveFile);
         }else if(option == 6){
+            run(saveFile);
+        }else if(option == 7){
             clear();
             credits();
             pause(true);
@@ -380,9 +398,9 @@ void game::getData(gameboard &savefile, vector<string> importData){
                 savefile.board.boardPlay[r-1][count] = storeNum;
                 count++;
             }else if(isdigit(temp2)){
-                 storeNum = temp2-'0';
-                 savefile.board.boardPlay[r-1][count] = storeNum;
-                 count++;
+                storeNum = temp2-'0';
+                savefile.board.boardPlay[r-1][count] = storeNum;
+                count++;
             }
         }
     }
@@ -397,9 +415,9 @@ void game::getData(gameboard &savefile, vector<string> importData){
                 savefile.board.boardKey[r-11][count] = storeNum;
                 count++;
             }else if(isdigit(temp2)){
-                 storeNum = temp2-'0';
-                 savefile.board.boardKey[r-11][count] = storeNum;
-                 count++;
+                storeNum = temp2-'0';
+                savefile.board.boardKey[r-11][count] = storeNum;
+                count++;
             }
         }
     }
