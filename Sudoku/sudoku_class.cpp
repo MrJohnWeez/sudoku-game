@@ -69,7 +69,7 @@ public:
 private:
     //Priavte Vars
     gameboard saveFile;      //Acts like game save data
-    bool exit;       //Ends game if true
+    bool exit;       //Terminates game if true
     int numLeft;        //Total number of numbers left
     int userIncorrect;
 
@@ -116,8 +116,6 @@ private:
     //        cout << "         ┠───┼───┼───╂───┼───┼───╂───┼───┼───┨ "<< endl;
     //        cout << "      9❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
     //        cout << "         ┗━━━┷━━━┷━━━┻━━━┷━━━┷━━━┻━━━┷━━━┷━━━┛ "<< endl;
-
-
 
 
     //Cin call functions durring game operation
@@ -185,7 +183,6 @@ void game::pause(bool enter){
     string dummy;
     if(enter) cout << setw(55) << "-----Press enter to continue-----" << endl;
     getline(cin,dummy);
-
 }
 
 //Graphical functions:***********************************************************************
@@ -197,8 +194,6 @@ void game::title(){
                 "                    `--. \\| | | | / _` | / _ \\ | |/ /| | | |\n"
                 "                   /\\__/ /| |_| || (_| || (_) ||   < | |_| |\n"
                 "                   \\____/  \\__,_| \\__,_| \\___/ |_|\\_\\ \\__,_|\n\n");
-
-
     cout << printing[0][0] << endl;
     pause(true);
     }
@@ -212,7 +207,7 @@ void game::clear(){
     cout << string( 24, '\n' );
 }
 
-//Printing A Aron THIS IS WHAT YOU SHOULD DO :D
+//Printing A Aron THIS IS WHAT YOU SHOULD DO >:( ~Chuck Conner aka The Best
 void game::print(gameboard &saveFile){
     for(unsigned int row = 0; row < 9; row++){
         for(unsigned int col = 0; col < 9; col++){
@@ -232,9 +227,9 @@ void game::menu(gameboard &saveFile){
     if(!exit){
         int option = -1;
         clear();
-        while(option < 0 || option > 5){
+        while(option < 0 || option > 6){
             if(option != -1){
-                cout << "Must enter 0-5" << endl;
+                cout << "Must enter 0-6" << endl;
             }
             cout << bold("Menu") << endl;
             cout << "1) How to play\n"
@@ -242,15 +237,14 @@ void game::menu(gameboard &saveFile){
                  << "3) Import Board\n"
                  << "4) Save Game to file\n"
                  << "5) Back to game\n"
+                 << "6) Credits\n"
                  << "0) Exit Game\n⏩ ";
             char temp = getInt();
             if(isdigit(temp)){
                 option = temp - '0';
             }
             else if(temp == '-') option = 0;
-
         }
-
         if(option == 1){
             howToPlay();
             menu(saveFile);
@@ -263,6 +257,11 @@ void game::menu(gameboard &saveFile){
             saveBoard(saveFile);
         }else if(option == 5){
             run(saveFile);
+        }else if(option == 6){
+            clear();
+            credits();
+            pause(true);
+            menu(saveFile);
         }else if(option == 0){
             clear();
             exit = true;
@@ -528,6 +527,7 @@ void game::run(gameboard &saveFile){
         menu(saveFile);
     }else{
         cout << "CORRUPTION IN RUN" << endl;
+        exit = true;
     }
 }
 
