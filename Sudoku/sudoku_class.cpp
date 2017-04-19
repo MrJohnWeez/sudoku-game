@@ -139,48 +139,6 @@ private:
     void run(gameboard &saveFile);
 };
 
-
-void game::print(gameboard &saveFile){
-
-    for(unsigned int row = 0; row <= 19; row++){
-
-        for(unsigned int col = 0; col <= 8; col++){
-            cout << printing[row][col];
-            if(row == 2){
-            cout << saveFile.board.boardPlay[row-2][col];
-            }
-            if(row == 4){
-            cout << saveFile.board.boardPlay[row-3][col];
-            }
-            if(row == 6){
-            cout << saveFile.board.boardPlay[row-4][col];
-            }
-            if(row == 8){
-            cout << saveFile.board.boardPlay[row-5][col];
-            }
-            if(row == 10){
-            cout << saveFile.board.boardPlay[row-6][col];
-            }
-            if(row == 12){
-            cout << saveFile.board.boardPlay[row-7][col];
-            }
-            if(row == 14){
-            cout << saveFile.board.boardPlay[row-8][col];
-            }
-            if(row == 16){
-            cout << saveFile.board.boardPlay[row-9][col];
-            }
-            if(row == 18){
-            cout << saveFile.board.boardPlay[row-10][col];
-            }
-            if(row == 20){
-            cout << saveFile.board.boardPlay[row-11][col];
-            }
-        }
-        cout << printing[row][9];
-    }
-}
-
 //Cin functions:***************************************************************************************************************
 
 //Gets the user's 1 digit number the safe way to prevent crashing
@@ -321,6 +279,22 @@ void game::howToPlay(){
     pause(true);
 }
 
+//Prints fancy board
+void game::print(gameboard &saveFile){
+    int validrow = 0;
+    for(unsigned int row = 0; row <= 19; row++){
+        for(unsigned int col = 0; col <= 8; col++){
+            cout << printing[row][col];
+            if(row % 2 == 0 && row != 0){
+                validrow = row/2;
+                cout << saveFile.board.boardPlay[row-(validrow+1)][col];
+            }
+        }
+        cout << printing[row][9];
+    }
+}
+
+//Menu system for the game
 void game::menu(gameboard &saveFile){
     if(!exit){
         int option = -1;
