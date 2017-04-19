@@ -272,6 +272,8 @@ void game::menu(gameboard &saveFile){
 
 
 //Game Run functions:***********************************************************************
+
+//Saves the current saveFile board to a user defined .txt file
 void game::saveBoard(gameboard &saveFile){
     string name;
     string fileOutName = "../Sudoku/";
@@ -309,6 +311,9 @@ void game::saveBoard(gameboard &saveFile){
         outfile.close();
 
         cout << "Board Progress saved as: " << name << endl;
+        exit = true;
+        pause(true);
+        clear();
     }
 }
 
@@ -563,7 +568,7 @@ void game::copyBoard(gameboard &saveFile){
     //Easy
     if(saveFile.diff == 1){
         if(saveFile.version == 1){
-
+            saveFile.title = "Easy1";
             int main[9][9] = {{0, 6, 1,   2, 5, 9,   4, 3, 8},
                               {5, 4, 3,   8, 6, 7,   2, 9, 1},
                               {9, 8, 2,   3, 4, 1,   7, 5, 6},
@@ -614,6 +619,7 @@ void game::copyBoard(gameboard &saveFile){
             //Similar to inccorect logic: saveFile.board.boardPlay = main
             updateBoard(saveFile, main, key);
         }else if(saveFile.version == 2){
+            saveFile.title = "Easy2";
             int main[9][9] = {{6, 1, 0,   0, 0, 0,   2, 0, 4},
                               {0, 7, 3,   4, 0, 0,   0, 8, 5},
                               {8, 0, 0,   7, 9, 0,   0, 6, 0},
@@ -638,6 +644,7 @@ void game::copyBoard(gameboard &saveFile){
                              {3, 6, 7,   9, 8, 4,   5, 1, 2}};
             updateBoard(saveFile, main, key);
         }else if(saveFile.version == 3){
+            saveFile.title = "Easy3";
             int main[9][9] = {{9, 0, 0,   3, 0, 4,   0, 0, 0},
                               {7, 6, 0,   0, 0, 0,   0, 4, 9},
                               {0, 4, 0,   0, 8, 0,   7, 0, 0},
@@ -662,6 +669,7 @@ void game::copyBoard(gameboard &saveFile){
                              {1, 3, 7,   2, 5, 6,   9, 8, 4}};
             updateBoard(saveFile, main, key);
         }else if(saveFile.version == 4){
+            saveFile.title = "Easy4";
             int main[9][9] = {{0, 4, 1,   0, 2, 3,   0, 0, 0},
                               {0, 7, 0,   0, 5, 0,   0, 4, 9},
                               {0, 3, 0,   0, 0, 6,   0, 1, 0},
@@ -686,6 +694,7 @@ void game::copyBoard(gameboard &saveFile){
                              {1, 9, 5,   8, 3, 4,   2, 7, 6}};
             updateBoard(saveFile, main, key);
         }else{ //saveFile.version = 5
+            saveFile.title = "Easy5";
             int main[9][9] = {{4, 0, 2,   6, 0, 0,   8, 0, 0},
                               {0, 9, 0,   3, 0, 0,   6, 0, 7},
                               {0, 6, 0,   1, 0, 5,   0, 3, 0},
@@ -713,6 +722,7 @@ void game::copyBoard(gameboard &saveFile){
         //Medium
     }else if(saveFile.diff == 2){
         if(saveFile.version == 1){
+            saveFile.title = "Medium1";
             int main[9][9] = {{0, 3, 6,   0, 0, 0,   0, 0, 0},
                               {5, 0, 0,   8, 0, 6,   0, 0, 2},
                               {9, 8, 0,   0, 0, 3,   0, 7, 0},
@@ -737,6 +747,7 @@ void game::copyBoard(gameboard &saveFile){
                              {4, 1, 9,   7, 3, 8,   5, 2, 6}};
             updateBoard(saveFile, main, key);
         }else if(saveFile.version == 2){
+            saveFile.title = "Medium2";
             int main[9][9] = {{0, 0, 0,   0, 4, 0,   8, 7, 9},
                               {9, 3, 0,   7, 5, 0,   0, 2, 0},
                               {0, 0, 0,   0, 0, 0,   5, 0, 0},
@@ -761,6 +772,7 @@ void game::copyBoard(gameboard &saveFile){
                              {4, 7, 8,   1, 3, 5,   9, 6, 2}};
             updateBoard(saveFile, main, key);
         }else if(saveFile.version == 3){
+            saveFile.title = "Medium3";
             int main[9][9] = {{0, 1, 0,   3, 0, 0,   8, 0, 0},
                               {7, 0, 0,   2, 0, 0,   0, 0, 6},
                               {6, 0, 0,   0, 1, 9,   0, 0, 5},
@@ -786,6 +798,7 @@ void game::copyBoard(gameboard &saveFile){
 
             updateBoard(saveFile, main, key);
         }else if(saveFile.version == 4){
+            saveFile.title = "Medium4";
             int main[9][9] = {{0, 4, 9,   0, 0, 0,   1, 0, 0},
                               {0, 0, 0,   1, 4, 0,   0, 0, 5},
                               {7, 0, 0,   0, 0, 9,   0, 0, 4},
@@ -811,6 +824,7 @@ void game::copyBoard(gameboard &saveFile){
 
             updateBoard(saveFile, main, key);
         }else{ //saveFile.version = 5
+            saveFile.title = "Medium5";
             int main[9][9] = {{0, 0, 3,   4, 5, 0,   2, 0, 0},
                               {0, 0, 4,   0, 0, 0,   0, 0, 1},
                               {8, 0, 0,   6, 0, 0,   7, 9, 0},
@@ -840,6 +854,7 @@ void game::copyBoard(gameboard &saveFile){
         //hard
     }else{
         if(saveFile.version == 1){
+            saveFile.title = "Hard1";
             int main[9][9] = {{0, 2, 8,   0, 5, 0,   0, 0, 3},
                               {0, 6, 0,   0, 0, 0,   8, 0, 0},
                               {3, 0, 5,   0, 7, 2,   0, 0, 0},
@@ -865,6 +880,7 @@ void game::copyBoard(gameboard &saveFile){
 
             updateBoard(saveFile, main, key);
         }else if(saveFile.version == 2){
+            saveFile.title = "Hard2";
             int main[9][9] = {{0, 9, 0,   1, 0, 0,   0, 8, 0},
                               {0, 0, 0,   6, 0, 0,   0, 9, 2},
                               {0, 0, 8,   2, 0, 4,   7, 1, 0},
@@ -890,6 +906,7 @@ void game::copyBoard(gameboard &saveFile){
 
             updateBoard(saveFile, main, key);
         }else if(saveFile.version == 3){
+            saveFile.title = "Hard3";
             int main[9][9] = {{0, 9, 6,   2, 0, 3,   0, 0, 5},
                               {0, 2, 1,   0, 0, 0,   0, 0, 6},
                               {7, 0, 0,   4, 0, 0,   0, 0, 0},
@@ -915,6 +932,7 @@ void game::copyBoard(gameboard &saveFile){
 
             updateBoard(saveFile, main, key);
         }else if(saveFile.version == 4){
+            saveFile.title = "Hard4";
             int main[9][9] = {{0, 3, 5,   0, 0, 0,   8, 0, 0},
                               {0, 0, 0,   2, 3, 0,   0, 0, 5},
                               {9, 0, 0,   0, 0, 8,   0, 0, 3},
@@ -940,6 +958,7 @@ void game::copyBoard(gameboard &saveFile){
 
             updateBoard(saveFile, main, key);
         }else{ //saveFile.version = 5
+            saveFile.title = "Hard5";
             int main[9][9] = {{0, 0, 0,   7, 8, 0,   0, 5, 6},
                               {5, 1, 0,   0, 3, 4,   0, 0, 7},
                               {0, 0, 0,   0, 0, 0,   0, 0, 0},
