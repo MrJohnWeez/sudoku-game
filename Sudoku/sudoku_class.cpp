@@ -159,7 +159,7 @@ char game::getInt(){
     return num;
 }
 
-//Gets the user's 1 letter alpha the safe way to prevent crashing
+//Gets the    user's 1 letter alpha the safe way to prevent crashing
 char game::getAlpha(){
     string x;
     bool go = true;
