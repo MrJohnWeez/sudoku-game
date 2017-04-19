@@ -274,7 +274,7 @@ void game::howToPlay(){
     cout << blue("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n")
          << "                       Use numbers to navigate the menu                       \n"
          << "       Press the '-' and Enter to exit to menu anytime durring the game.      \n"
-         << "      If you want to stop playing make sure you save your game (option5).     \n"
+         << "      If you want to stop playing make sure you save your game (option6).     \n"
          << "                                                                              \n"
          << white("                             Normal sudoku rules:                             \n")
          << "                The objective is to fill a 9x9 grid so that each              \n"
@@ -290,19 +290,19 @@ void game::menu(gameboard &saveFile){
     if(!exit){
         int option = -1;
         clear();
-        while(option < 0 || option > 6){
+        while(option < 0 || option > 7){
             if(option != -1){
-                cout << "Must enter 0-6" << endl;
+                cout << "Must enter 0-7" << endl;
             }
-            cout << bold("Menu") << endl;
-            cout << "1) How to play\n"
-                 << "2) Screen Size\n"
-                 << "3) New game\n"
-                 << "4) Import Board\n"
-                 << "5) Save Game to file\n"
-                 << "6) Back to game\n"
-                 << "7) Credits\n"
-                 << "0) Exit Game\n⏩ ";
+            cout << bold("                                  Menu\n")
+                 << "                                 1) New game\n"
+                 << "                                 2) Back to game\n"
+                 << "                                 3) Screen Size\n"
+                 << "                                 4) How to play\n"
+                 << "                                 5) Import Board\n"
+                 << "                                 6) Save Game\n"
+                 << "                                 7) Credits\n"
+                 << "                                 0) Exit Game\n⏩ ";
             char temp = getInt();
             if(isdigit(temp)){
                 option = temp - '0';
@@ -310,20 +310,20 @@ void game::menu(gameboard &saveFile){
             else if(temp == '-') option = 0;
         }
         if(option == 1){
-            howToPlay();
-            menu(saveFile);
-        }else if(option == 2){
-            sizeScreen();
-            menu(saveFile);
-        }else if(option == 3){
             boardSelect(saveFile);
             run(saveFile);
-        }else if(option == 4){
-            import(saveFile);
-        }else if(option == 5){
-            saveBoard(saveFile);
-        }else if(option == 6){
+        }else if(option == 2){
             run(saveFile);
+        }else if(option == 3){
+            sizeScreen();
+            menu(saveFile);
+        }else if(option == 4){
+            howToPlay();
+            menu(saveFile);
+        }else if(option == 5){
+            import(saveFile);
+        }else if(option == 6){
+            saveBoard(saveFile);
         }else if(option == 7){
             clear();
             credits();
