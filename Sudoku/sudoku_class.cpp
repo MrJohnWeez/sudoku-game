@@ -187,6 +187,7 @@ void game::pause(bool enter){
 
 //Graphical functions:***********************************************************************
 void game::title(){
+    testColors();
     cout << red("                    _____             _         _           \n"
                 "                   /  ___|           | |       | |          \n"
                 "                   \\ `--.  _   _   __| |  ___  | | __ _   _ \n"
@@ -199,7 +200,7 @@ void game::title(){
 
 void game::credits(){
     //cout << "Total________________________________screen_______________________________Length" << endl;
-    cout << "                      ____  _   _    __    _  _  _  _  ___ \n"
+    cout << lightblue("                      ____  _   _    __    _  _  _  _  ___ \n"
             "                     (_  _)( )_( )  /__\\  ( \\( )( )/ )/ __)\n"
             "                       )(   ) _ (  /(__)\\  )  (  )  ( \\__ \\\n"
             "                      (__) (_) (_)(__)(__)(_)\\_)(_)\\_)(___/\n"
@@ -210,7 +211,7 @@ void game::credits(){
             "                     ____  __      __   _  _  ____  _  _  ___ \n"
             "                    (  _ \\(  )    /__\\ ( \\/ )(_  _)( \\( )/ __)\n"
             "                     )___/ )(__  /(__)\\ \\  /  _)(_  )  (( (_-.\n"
-            "                    (__)  (____)(__)(__)(__) (____)(_)\\_)\\___/\n" << endl;
+            "                    (__)  (____)(__)(__)(__) (____)(_)\\_)\\___/\n") << endl;
     cout << "                           Logic made by: John Wieser\n"
             "                         Game art made by: Aaron Wagner\n"
             "                                2017 Copyright" << endl;
@@ -233,18 +234,44 @@ void game::print(gameboard &saveFile){
 
 //Tells user how to play and what command there are
 void game::howToPlay(){
-    cout << "                     Use numbers to navigate the menu\n"
-            "     Press the '-' and Enter to exit to menu anytime durring the game.\n"
-            "    If you want to stop playing make sure you save your game (option5).\n\n"
-            "                             Normal sudoku rules:\n"
-            "               The objective is to fill a 9x9 grid so that each\n"
-            "               column, each row, and each of the nine 3x3 boxes\n"
-            "     contains the digits from 1 to 9. The amount of empty spaces and how\n"
-            "           many you have gotten correct is labled above the board.\n"
-            "                           Good luck and have FUN!" << endl;
+    clear();
+    //cout << "Total________________________________screen_______________________________Length" << endl;
+    cout << blue("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n")
+         << blue("┃") << "                       Use numbers to navigate the menu                       " << blue("┃\n")
+         << blue("┃") << "       Press the '-' and Enter to exit to menu anytime durring the game.      " << blue("┃\n")
+         << blue("┃") << "      If you want to stop playing make sure you save your game (option5).     " << blue("┃\n")
+         << blue("┃") << "                                                                              " << blue("┃\n")
+         << blue("┃") << white("                             Normal sudoku rules:                             ") << blue("┃\n")
+         << blue("┃") << "                The objective is to fill a 9x9 grid so that each              " << blue("┃\n")
+         << blue("┃") << "                column, each row, and each of the nine 3x3 boxes              " << blue("┃\n")
+         << blue("┃") << "       contains the digits from 1 to 9. The amount of empty spaces and how    " << blue("┃\n")
+         << blue("┃") << "             many you have gotten correct is labled above the board.          " << blue("┃\n")
+         << blue("┃") << "                            Good luck and have FUN!                           " << blue("┃\n")
+         << blue("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n") << endl;
     pause(true);
 }
 
+
+//        cout << "           A   B   C   D   E   F   G   H   I   "<< endl;
+//        cout << "         ┏━━━┯━━━┯━━━┳━━━┯━━━┯━━━┳━━━┯━━━┯━━━┓ "<< endl;
+//        cout << "      1❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
+//        cout << "         ┠───┼───┼───╂───┼───┼───╂───┼───┼───┨ "<< endl;
+//        cout << "      2❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
+//        cout << "         ┠───┼───┼───╂───┼───┼───╂───┼───┼───┨ "<< endl;
+//        cout << "      3❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
+//        cout << "         ┣━━━┿━━━┿━━━╋━━━┿━━━┿━━━╋━━━┿━━━┿━━━┫ "<< endl;
+//        cout << "      4❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
+//        cout << "         ┠───┼───┼───╂───┼───┼───╂───┼───┼───┨ "<< endl;
+//        cout << "      5❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
+//        cout << "         ┠───┼───┼───╂───┼───┼───╂───┼───┼───┨ "<< endl;
+//        cout << "      6❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
+//        cout << "         ┣━━━┿━━━┿━━━╋━━━┿━━━┿━━━╋━━━┿━━━┿━━━┫ "<< endl;
+//        cout << "      7❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
+//        cout << "         ┠───┼───┼───╂───┼───┼───╂───┼───┼───┨ "<< endl;
+//        cout << "      8❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
+//        cout << "         ┠───┼───┼───╂───┼───┼───╂───┼───┼───┨ "<< endl;
+//        cout << "      9❱ ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ 0 │ 0 │ 0 ┃ "<< endl;
+//        cout << "         ┗━━━┷━━━┷━━━┻━━━┷━━━┷━━━┻━━━┷━━━┷━━━┛ "<< endl;
 void game::menu(gameboard &saveFile){
     if(!exit){
         int option = -1;
