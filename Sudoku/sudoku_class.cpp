@@ -3,6 +3,7 @@
 #include <vector>
 #include <iomanip> //setw
 #include "textediting.cpp"
+#include <fstream>
 
 using namespace std;
 
@@ -134,6 +135,8 @@ private:
     void menu(gameboard &saveFile);
 
     //Game run functions
+    void import(gameboard &saveFile);
+    void getData(gameboard &savefile, vector<string> importData);
     void boardSelect(gameboard &saveFile);
     void updateBoard(gameboard &saveFile, int main[][9], int key[][9]);
     void copyBoard(gameboard &saveFile);
@@ -143,6 +146,7 @@ private:
 
 
 //Cin functions:***********************************************************************
+
 
 //Gets the user's number the safe way to prevent crashing
 char game::getInt(){
@@ -236,14 +240,15 @@ void game::menu(gameboard &saveFile){
     if(!exit){
         int option = -1;
         clear();
-        while(option < 0 || option > 3){
+        while(option < 0 || option > 4){
             if(option != -1){
-                cout << "Must enter 0-3" << endl;
+                cout << "Must enter 0-4" << endl;
             }
             cout << bold("Menu") << endl;
             cout << "1) How to play\n"
                  << "2) New game\n"
-                 << "3) Back to game\n"
+                 << "3) Import Board\n"
+                 << "4) Back to game\n"
                  << "0) Exit Game\n⏩ ";
             char temp = getInt();
             if(isdigit(temp)){
@@ -260,6 +265,8 @@ void game::menu(gameboard &saveFile){
             boardSelect(saveFile);
             run(saveFile);
         }else if(option == 3){
+            import(saveFile);
+        }else if(option == 4){
             run(saveFile);
         }else if(option == 0){
             clear();
@@ -270,6 +277,94 @@ void game::menu(gameboard &saveFile){
 
 
 //Game Run functions:***********************************************************************
+void game::getData(gameboard &savefile, vector<string> importData){
+    string temp;
+    int storeNum = 0;
+    char temp2;
+    int count = 0;
+    for(int r = 1; r < 10; r++){
+        temp = importData[r];
+        count = 0;
+        for(unsigned int c = 0; c < temp.length(); c++){
+            temp2 = temp[c];
+            if(temp2 == '-'){
+                storeNum = 0;
+                savefile.board.boardPlay[r-1][count] = storeNum;
+                count++;
+            }else if(isdigit(temp2)){
+                 storeNum = temp2-'0';
+                 savefile.board.boardPlay[r-1][count] = storeNum;
+                 count++;
+            }
+        }
+    }
+
+    for(int r = 11; r < 20; r++){
+        temp = importData[r];
+        count = 0;
+        for(unsigned int c = 0; c < temp.length(); c++){
+            temp2 = temp[c];
+            if(temp2 == '-'){
+                storeNum = 0;
+                savefile.board.boardKey[r-11][count] = storeNum;
+                count++;
+            }else if(isdigit(temp2)){
+                 storeNum = temp2-'0';
+                 savefile.board.boardKey[r-11][count] = storeNum;
+                 count++;
+            }
+        }
+    }
+}
+
+void game::import(gameboard &saveFile){
+    cout << "Enter the .txt file with your boards in it." << endl;
+    string fileName;
+    getline(cin, fileName);
+
+
+
+    //This is temp
+    fileName = "../Sudoku/boards.txt";
+
+
+
+    //exits if player enters "-" char to quit to menu
+    if(fileName[0] == '-'){
+        menu(saveFile);
+    }else{
+        cout << "Using file directory: " << fileName << endl;
+        fstream infile;
+
+        infile.open(fileName, ios::in);
+
+        if(infile){
+            string temp;
+            vector<string> importData;
+
+            while(!infile.eof()){
+                getline(infile, temp);
+                importData.push_back(temp);
+            }
+            infile.close();
+            getData(saveFile, importData);
+            cout << "File Succesfully Imported" << endl;
+            pause(true);
+            run(saveFile);
+
+        }else{
+            infile.close();
+            clear();
+            fileName = "";
+            cout << "Make sure files are where you are running this program." << endl;
+            cout << "INVALID FILE NAME\n    """ << fileName << """ Was Not Found." << endl;
+            pause(true);
+            clear();
+            import(saveFile);
+        }
+    }
+}
+
 
 //sets difficulty, board #, and load it into "game memory"
 void game::boardSelect(gameboard &saveFile){
@@ -392,6 +487,8 @@ void game::run(gameboard &saveFile){
         cout << "No game currently running" << endl;
         pause(true);
         menu(saveFile);
+    }else{
+        cout << "CORRUPTION IN RUN" << endl;
     }
 }
 
