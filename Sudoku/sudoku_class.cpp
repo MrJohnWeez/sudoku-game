@@ -136,6 +136,7 @@ private:
 
     //Game run functions
     void import(gameboard &saveFile);
+    void saveBoard(gameboard &saveFile);
     void getData(gameboard &savefile, vector<string> importData);
     void boardSelect(gameboard &saveFile);
     void updateBoard(gameboard &saveFile, int main[][9], int key[][9]);
@@ -146,7 +147,6 @@ private:
 
 
 //Cin functions:***********************************************************************
-
 
 //Gets the user's number the safe way to prevent crashing
 char game::getInt(){
@@ -188,11 +188,7 @@ void game::pause(bool enter){
 
 }
 
-
 //Graphical functions:***********************************************************************
-
-
-
 void game::title(){
     cout <<"Total________________________________screen_______________________________Length" << endl;
     cout << red("                    _____             _         _           \n"
@@ -211,12 +207,10 @@ void game::credits(){
     cout << "Taco Cat\nChuck Conner: Tester (The Best)\nalso john and aaron were there" << endl;
 }
 
-
 //Clears terminal
 void game::clear(){
     cout << string( 24, '\n' );
 }
-
 
 //Printing A Aron THIS IS WHAT YOU SHOULD DO :D
 void game::print(gameboard &saveFile){
@@ -226,8 +220,6 @@ void game::print(gameboard &saveFile){
         }
         cout << endl;
     }
-
-
 }
 
 //Tells user how to play and what command there are
@@ -240,15 +232,16 @@ void game::menu(gameboard &saveFile){
     if(!exit){
         int option = -1;
         clear();
-        while(option < 0 || option > 4){
+        while(option < 0 || option > 5){
             if(option != -1){
-                cout << "Must enter 0-4" << endl;
+                cout << "Must enter 0-5" << endl;
             }
             cout << bold("Menu") << endl;
             cout << "1) How to play\n"
                  << "2) New game\n"
                  << "3) Import Board\n"
-                 << "4) Back to game\n"
+                 << "4) Save Game to file\n"
+                 << "5) Back to game\n"
                  << "0) Exit Game\n⏩ ";
             char temp = getInt();
             if(isdigit(temp)){
@@ -267,6 +260,8 @@ void game::menu(gameboard &saveFile){
         }else if(option == 3){
             import(saveFile);
         }else if(option == 4){
+            saveBoard(saveFile);
+        }else if(option == 5){
             run(saveFile);
         }else if(option == 0){
             clear();
@@ -277,6 +272,46 @@ void game::menu(gameboard &saveFile){
 
 
 //Game Run functions:***********************************************************************
+void game::saveBoard(gameboard &saveFile){
+    string name;
+    string fileOutName = "../Sudoku/";
+
+    cout << "Enter name of file." << endl;
+    getline(cin, name);
+    if(name[0] == '-'){
+        menu(saveFile);
+    }else{
+        fileOutName += name;
+        fileOutName += ".txt";
+
+        fstream outfile;
+
+        outfile.open(fileOutName, ios::out);
+
+        string temp;
+        temp = saveFile.title;
+        temp += "\n";
+        outfile << temp;
+
+        for(unsigned int row = 0; row < 9; row++){
+            for(unsigned int col = 0; col < 9; col++){
+                outfile << saveFile.board.boardPlay[row][col];
+            }
+            outfile << "\n";
+        }
+        outfile << "Key:\n";
+        for(unsigned int row = 0; row < 9; row++){
+            for(unsigned int col = 0; col < 9; col++){
+                outfile << saveFile.board.boardKey[row][col];
+            }
+            outfile << "\n";
+        }
+        outfile.close();
+
+        cout << "Board Progress saved as: " << name << endl;
+    }
+}
+
 void game::getData(gameboard &savefile, vector<string> importData){
     string temp;
     int storeNum = 0;
@@ -317,6 +352,8 @@ void game::getData(gameboard &savefile, vector<string> importData){
     }
 }
 
+
+//Import a selected game board file.
 void game::import(gameboard &saveFile){
     cout << "Enter the .txt file with your boards in it." << endl;
     string fileName;
@@ -325,7 +362,8 @@ void game::import(gameboard &saveFile){
 
 
     //This is temp
-    fileName = "../Sudoku/boards.txt";
+    cout << "SET SET" << endl;
+    fileName = "../Sudoku/templateBoard.txt";
 
 
 
@@ -351,7 +389,6 @@ void game::import(gameboard &saveFile){
             cout << "File Succesfully Imported" << endl;
             pause(true);
             run(saveFile);
-
         }else{
             infile.close();
             clear();
@@ -407,13 +444,10 @@ void game::boardSelect(gameboard &saveFile){
         else if(temp == '-'){
             menu(saveFile);
         }
-
     }
-
     //Copies board to save file (pass by reference via void function)
     copyBoard(saveFile);
 }
-
 
 void game::run(gameboard &saveFile){
     bool go = true;
