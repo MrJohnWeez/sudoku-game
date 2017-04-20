@@ -86,9 +86,9 @@ string lightblue(string text){
     return newtext;
 }
 
-string purple(string text){
+string gray(string text){
     string newtext;
-    newtext += "\033[1;35m";
+    newtext += "\033[2;1m";
     newtext += text;
     newtext += "\033[0m";
     return newtext;
