@@ -302,7 +302,11 @@ void game::print(gameboard &saveFile){
             cout << gray(printing[row][col]);
             if(row % 2 == 0 && row != 0){
                 validrow = row/2;
-                cout << white(to_string(saveFile.board.boardPlay[row-(validrow+1)][col]));
+                if(saveFile.board.boardPlay[row-(validrow+1)][col] == 0){
+                    cout << " ";
+                }else{
+                    cout << white(to_string(saveFile.board.boardPlay[row-(validrow+1)][col]));
+                }
             }
         }
         cout << gray(printing[row][9]);
