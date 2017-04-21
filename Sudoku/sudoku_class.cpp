@@ -553,12 +553,11 @@ void game::boardSelect(gameboard &saveFile){
         if(isdigit(temp)){
             clear();
             saveFile.version = temp - '0';
-            boardName += (to_string(temp));
-//            if(saveFile.version == 1) boardName += "1";
-//            else if(saveFile.version == 2) boardName += "2";
-//            else if(saveFile.version == 3) boardName += "3";
-//            else if(saveFile.version == 4) boardName += "4";
-//            else if(saveFile.version == 5) boardName += "5";
+            if(saveFile.version == 1) boardName += "1";
+            else if(saveFile.version == 2) boardName += "2";
+            else if(saveFile.version == 3) boardName += "3";
+            else if(saveFile.version == 4) boardName += "4";
+            else if(saveFile.version == 5) boardName += "5";
         }
         else if(temp == '-') menu(saveFile);
     }
