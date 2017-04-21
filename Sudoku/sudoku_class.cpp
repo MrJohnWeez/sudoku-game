@@ -8,18 +8,11 @@
 using namespace std;
 
 /*
-What to do...
-    Graphical Functions
-      -Print out a board with pretty display AARON!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-      -Fix the "You won text" make it fancy
-      -Make credits fancy
-      -Menu needs to be centered and fancified
-
-       We can use these chars: http://www.copypastecharacter.com/all-characters
-       Game Report: https://docs.google.com/document/d/1W9t9L3NHXSCfmkRBUQDQo04xI60NdST3vGZK92s__sU/edit?usp=sharing
+    We can use these unicode chars: http://www.copypastecharacter.com/all-characters
+    Game Report: https://docs.google.com/document/d/1W9t9L3NHXSCfmkRBUQDQo04xI60NdST3vGZK92s__sU/edit?usp=sharing
 */
 
-//Creates a type stored in gameboard that stores play board and the key
+//Stores play board, key, and data
 struct boardType{
     int boardPlay[9][9] = {{0}};
     int boardKey[9][9] = {{0}};
@@ -28,7 +21,7 @@ struct boardType{
 
 //Creates a type that stores game data
 struct gameboard{
-    string title = "Untitled_Save";
+    string title = "Custom_Board";
     int diff = 0;
     int version = 0;
     boardType board;
@@ -45,7 +38,7 @@ public:
         userIncorrect = 0;
     }
 
-    //This is a deconstructor
+    //This is a deconstructor (Useless for now)
     ~game(){
         exit = false;
     }
@@ -130,18 +123,21 @@ private:
     void menu(gameboard &saveFile);
 
     //Import and Export Boards
-    void import(gameboard &saveFile);
     void saveBoard(gameboard &saveFile);
     void getData(gameboard &savefile, vector<string> importData);
+    void import(gameboard &saveFile);
+
+    //Modify boards
+    void dataBlock(gameboard &saveFile);
+    void updateBoard(gameboard &saveFile, int main[][9], int key[][9]);
 
     //Game run functions
-    void dataUpdate(gameboard &saveFile);
-    void dataBlock(gameboard &saveFile);
-    void copyBoard(gameboard &saveFile);
     void boardSelect(gameboard &saveFile);
-    void updateBoard(gameboard &saveFile, int main[][9], int key[][9]);
     void check(gameboard &saveFile);
     void run(gameboard &saveFile);
+
+    //Build in boards
+    void copyBoard(gameboard &saveFile);
 };
 
 //Cin functions:***************************************************************************************************************
@@ -182,14 +178,19 @@ char game::getAlpha(){
     return letter;
 }
 
-//pause(true) will output "Press enter..." pause(false) does not output anything but still pauses
+//pause(true) will output "....Press enter..." pause(false) does not output anything but still pauses
 void game::pause(bool enter){
     string dummy;
     if(enter) cout << setw(67) << white("-----Press enter to continue-----") << endl;
     getline(cin,dummy);
+    if(dummy[0] == '-'){
+        exit = true;
+    }
 }
 
+
 //Graphical functions:*******************************************************************************************************
+
 void game::sizeScreen(){
     cout << "┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n"
             "┃                                                                              ┃\n"
@@ -217,6 +218,16 @@ void game::sizeScreen(){
     pause(false);
 }
 
+void game::win(){
+    clear();
+    cout << yellow("  ██╗   ██╗ ██████╗ ██╗   ██╗    ██╗    ██╗██╗███╗   ██╗██╗██╗██╗\n"
+                   "  ╚██╗ ██╔╝██╔═══██╗██║   ██║    ██║    ██║██║████╗  ██║██║██║██║\n"
+                   "   ╚████╔╝ ██║   ██║██║   ██║    ██║ █╗ ██║██║██╔██╗ ██║██║██║██║\n"
+                   "    ╚██╔╝  ██║   ██║██║   ██║    ██║███╗██║██║██║╚██╗██║╚═╝╚═╝╚═╝\n"
+                   "     ██║   ╚██████╔╝╚██████╔╝    ╚███╔███╔╝██║██║ ╚████║██╗██╗██╗\n"
+                   "     ╚═╝    ╚═════╝  ╚═════╝      ╚══╝╚══╝ ╚═╝╚═╝  ╚═══╝╚═╝╚═╝╚═╝\n") << endl;
+}
+
 void game::title(){
     //testColors();
     cout << blue("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n")
@@ -238,8 +249,29 @@ void game::title(){
 
 }
 
+//Tells user how to play and what command there are
+void game::howToPlay(){
+    clear();
+    //cout << "Total________________________________screen_______________________________Length" << endl;
+    cout << blue("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n")
+         << "                       Use numbers to navigate the menu                       \n"
+         << "        Enter a dash character to exit to menu anytime durring the game.      \n"
+         << "      If you want to stop playing make sure you save your game (Option6).     \n"
+         << "  All " << green("green") << " numbers on the board are defult numbers. You cannot change them.\n"
+         << "                       Enter 0 as answer to clear spot                        \n"
+         << "                                                                              \n"
+         << lightblue("                             Normal sudoku rules:                             \n")
+         << "                The objective is to fill a 9x9 grid so that each              \n"
+         << "                column, each row, and each of the nine 3x3 boxes              \n"
+         << "       contains the digits from 1 to 9. The amount of empty spaces and how    \n"
+         << "             many you have gotten correct is labled above the board.          \n"
+         << "                            Good luck and have FUN!                           \n"
+         << blue("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n\n\n\n\n\n\n") << endl;
+    pause(true);
+}
+
 void game::credits(){
-    //cout <<         "Total________________________________screen_______________________________Length" << endl;
+    clear();
     cout << lightblue("                                       ____  _   _    __    _  _  _  _  ___ \n"
                  "                                      (_  _)( )_( )  /__\\  ( \\( )( )/ )/ __)\n"
                  "                                        )(   ) _ (  /(__)\\  )  (  )  ( \\__ \\\n"
@@ -254,40 +286,11 @@ void game::credits(){
                          "                                     (__)  (____)(__)(__)(__) (____)(_)\\_)\\___/\n") << endl;
 }
 
-void game::win(){
-    clear();
-    cout << yellow("  ██╗   ██╗ ██████╗ ██╗   ██╗    ██╗    ██╗██╗███╗   ██╗██╗██╗██╗\n"
-                   "  ╚██╗ ██╔╝██╔═══██╗██║   ██║    ██║    ██║██║████╗  ██║██║██║██║\n"
-                   "   ╚████╔╝ ██║   ██║██║   ██║    ██║ █╗ ██║██║██╔██╗ ██║██║██║██║\n"
-                   "    ╚██╔╝  ██║   ██║██║   ██║    ██║███╗██║██║██║╚██╗██║╚═╝╚═╝╚═╝\n"
-                   "     ██║   ╚██████╔╝╚██████╔╝    ╚███╔███╔╝██║██║ ╚████║██╗██╗██╗\n"
-                   "     ╚═╝    ╚═════╝  ╚═════╝      ╚══╝╚══╝ ╚═╝╚═╝  ╚═══╝╚═╝╚═╝╚═╝\n") << endl;
-}
-
 //Clears terminal
 void game::clear(){
     cout << string( 24, '\n' );
 }
 
-//Tells user how to play and what command there are
-void game::howToPlay(){
-    clear();
-    //cout << "Total________________________________screen_______________________________Length" << endl;
-    cout << blue("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n")
-         << "                       Use numbers to navigate the menu                       \n"
-         << "        Enter a dash character to exit to menu anytime durring the game.      \n"
-         << "      If you want to stop playing make sure you save your game (Option6).     \n"
-         << "  All " << green("green") << " numbers on the board are defult numbers. You cannot change them.\n"
-         << "                                                                              \n"
-         << lightblue("                             Normal sudoku rules:                             \n")
-         << "                The objective is to fill a 9x9 grid so that each              \n"
-         << "                column, each row, and each of the nine 3x3 boxes              \n"
-         << "       contains the digits from 1 to 9. The amount of empty spaces and how    \n"
-         << "             many you have gotten correct is labled above the board.          \n"
-         << "                            Good luck and have FUN!                           \n"
-         << blue("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n\n\n\n\n\n\n") << endl;
-    pause(true);
-}
 
 //Prints fancy board
 void game::print(gameboard &saveFile){
@@ -316,7 +319,6 @@ void game::print(gameboard &saveFile){
         }
         cout << gray(printing[row][9]);
     }
-    dataUpdate(saveFile);
 }
 
 //Menu system for the game
@@ -370,7 +372,6 @@ void game::menu(gameboard &saveFile){
             clear();
             saveBoard(saveFile);
         }else if(option == 7){
-            clear();
             credits();
             pause(true);
             menu(saveFile);
@@ -381,27 +382,7 @@ void game::menu(gameboard &saveFile){
     }
 }
 
-
-//Game Run functions:***********************************************************************
-
-void game::dataUpdate(gameboard &saveFile){
-    for(int row = 0; row < 9; row++){
-        for(int col = 0; col < 9; col++){
-            cout << saveFile.board.data[row][col];
-        }
-        cout << endl;
-    }
-}
-
-void game::dataBlock(gameboard &saveFile){
-    for(int row = 0; row < 9; row++){
-        for(int col = 0; col < 9; col++){
-            if(saveFile.board.boardPlay[row][col] != 0){
-                saveFile.board.data[row][col] = 9;
-            }
-        }
-    }
-}
+//Import and Export Boards***************************************************************************************
 
 //Saves the current saveFile board to a user defined .txt file
 void game::saveBoard(gameboard &saveFile){
@@ -459,63 +440,30 @@ void game::getData(gameboard &savefile, vector<string> importData){
     int storeNum = 0;
     char temp2;
     int count = 0;
-    for(int r = 1; r < 10; r++){
+    savefile.title = importData[0];
+    for(int r = 1; r < 30; r++){
         temp = importData[r];
         count = 0;
         for(unsigned int c = 0; c < temp.length(); c++){
             temp2 = temp[c];
-            if(temp2 == '-'){
-                storeNum = 0;
-                savefile.board.boardPlay[r-1][count] = storeNum;
-                count++;
-            }else if(isdigit(temp2)){
-                storeNum = temp2-'0';
-                savefile.board.boardPlay[r-1][count] = storeNum;
-                count++;
-            }
-        }
-    }
-    for(int r = 11; r < 20; r++){
-        temp = importData[r];
-        count = 0;
-        for(unsigned int c = 0; c < temp.length(); c++){
-            temp2 = temp[c];
-            if(temp2 == '-'){
-                storeNum = 0;
-                savefile.board.boardKey[r-11][count] = storeNum;
-                count++;
-            }else if(isdigit(temp2)){
-                storeNum = temp2-'0';
-                savefile.board.boardKey[r-11][count] = storeNum;
-                count++;
-            }
-        }
-    }
-    for(int r = 21; r < 30; r++){
-        temp = importData[r];
-        count = 0;
-        for(unsigned int c = 0; c < temp.length(); c++){
-            temp2 = temp[c];
-            if(isdigit(temp2)){
-                storeNum = temp2-'0';
-                savefile.board.data[r-21][count] = storeNum;
-                count++;
-            }else{
-                savefile.board.data[r-21][count] = 0;
-                count++;
-            }
+            if(isdigit(temp2)) storeNum = temp2-'0';
+            else storeNum = 0;
+
+            if(r >= 1 && r < 10) savefile.board.boardPlay[r-1][count] = storeNum;
+            else if(r >= 11 && r < 20) savefile.board.boardKey[r-11][count] = storeNum;
+            else if(r >= 21 && r < 30) savefile.board.data[r-21][count] = storeNum;
+            count++;
         }
     }
 }
-
 
 //Import a selected game board file.
 void game::import(gameboard &saveFile){
     cout << "Enter the path of the .txt file with your board in it." << endl;
     string fileName;
     getline(cin, fileName);
-
-    //DEFULT: fileName = "../Sudoku/templateBoard.txt";
+    //DEFULT:
+    fileName = "../Sudoku/templateBoard.txt";
 
     //exits if player enters "-" char to quit to menu
     if(fileName[0] == '-'){
@@ -548,6 +496,18 @@ void game::import(gameboard &saveFile){
             pause(true);
             clear();
             import(saveFile);
+        }
+    }
+}
+
+//Modify Board functions:********************************************************************************************
+
+void game::dataBlock(gameboard &saveFile){
+    for(int row = 0; row < 9; row++){
+        for(int col = 0; col < 9; col++){
+            if(saveFile.board.boardPlay[row][col] != 0){
+                saveFile.board.data[row][col] = 9;
+            }
         }
     }
 }
@@ -607,6 +567,18 @@ void game::boardSelect(gameboard &saveFile){
     dataBlock(saveFile);
 }
 
+//Copies board to main "game memory"
+void game::updateBoard(gameboard &saveFile, int main[][9], int key[][9]){
+    for(unsigned int row = 0; row < 9; row++){
+        for(unsigned int col = 0; col < 9; col++){
+            saveFile.board.boardPlay[row][col] = main[row][col];
+            saveFile.board.boardKey[row][col] = key[row][col];
+        }
+    }
+}
+
+//Game Run functions:********************************************************************************************
+//Code run logic
 void game::run(gameboard &saveFile){
     bool go = true;
     char charcord1, sanswer, scord2;
@@ -631,7 +603,6 @@ void game::run(gameboard &saveFile){
                     print(saveFile);
                 }
                 else if(charcord1 == '-') menu(saveFile);
-
             }
             cord1 = double(charcord1)-65;
 
@@ -681,22 +652,14 @@ void game::run(gameboard &saveFile){
         }
     }else if(numLeft == 81 && !exit){
         clear();
-        cout << "No game currently running" << endl;
+        cout << "No game currently running..." << endl;
         pause(true);
         menu(saveFile);
     }else{
-        cout << "CORRUPTION IN RUN" << endl;
+        clear();
+        cout << "CORRUPTION IN RUN... Sorry for the error." << endl;
+        pause(true);
         exit = true;
-    }
-}
-
-//Copies board to main "game memory"
-void game::updateBoard(gameboard &saveFile, int main[][9], int key[][9]){
-    for(unsigned int row = 0; row < 9; row++){
-        for(unsigned int col = 0; col < 9; col++){
-            saveFile.board.boardPlay[row][col] = main[row][col];
-            saveFile.board.boardKey[row][col] = key[row][col];
-        }
     }
 }
 
@@ -715,9 +678,6 @@ void game::check(gameboard &saveFile){
         }
     }
 }
-
-
-
 
 //Suduko Boards
 //Copies saved boards to game save file
