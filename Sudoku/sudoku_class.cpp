@@ -315,13 +315,15 @@ void game::getBoard(gameboard &saveFile, string boardName){
                 importData.push_back(temp);
             }
         }
-        while(!infile.eof() && (count < 30)){
+        while(!infile.eof() && (count < 20)){
             getline(infile, temp);
             importData.push_back(temp);
             count++;
+            cout << temp << endl;
         }
         infile.close();
         getData(saveFile, importData);
+        dataBlock(saveFile);
         run(saveFile);
     }else{
         infile.close();
@@ -414,15 +416,15 @@ void game::saveBoard(gameboard &saveFile){
         fstream outfile;
         outfile.open(fileOutName, ios::out);
 
-        for(int b = 0; b < 3; b++){
+        for(int b = 0; b < 2; b++){
             if(b == 0) outfile << temp;
             else if(b == 1) outfile << "Key:\n";
-            else if(b == 2) outfile << "Data:\n";
+            //else if(b == 2) outfile << "Data:\n";
             for(unsigned int row = 0; row < 9; row++){
                 for(unsigned int col = 0; col < 9; col++){
                     if(b == 0) outfile << saveFile.board.boardPlay[row][col];
                     else if(b == 1) outfile << saveFile.board.boardKey[row][col];
-                    else if(b == 2) outfile << saveFile.board.data[row][col];
+                    //else if(b == 2) outfile << saveFile.board.data[row][col];
                 }
                 outfile << "\n";
             }
@@ -442,7 +444,7 @@ void game::getData(gameboard &savefile, vector<string> importData){
     char temp2;
     int count = 0;
     savefile.title = importData[0];
-    for(int r = 1; r < 30; r++){
+    for(int r = 1; r < 20; r++){
         temp = importData[r];
         count = 0;
         for(unsigned int c = 0; c < temp.length(); c++){
@@ -452,7 +454,7 @@ void game::getData(gameboard &savefile, vector<string> importData){
 
             if(r >= 1 && r < 10) savefile.board.boardPlay[r-1][count] = storeNum;
             else if(r >= 11 && r < 20) savefile.board.boardKey[r-11][count] = storeNum;
-            else if(r >= 21 && r < 30) savefile.board.data[r-21][count] = storeNum;
+            //else if(r >= 21 && r < 30) savefile.board.data[r-21][count] = storeNum;
             count++;
         }
     }
@@ -568,10 +570,7 @@ void game::boardSelect(gameboard &saveFile){
         }
         else if(temp == '-') menu(saveFile);
     }
-    //getBoard(saveFile, boardName);
-    //Copies board to saveFile and updates defult numbers
-    copyBoard(saveFile);
-    dataBlock(saveFile);
+    getBoard(saveFile, boardName);
 }
 
 //Copies board to main "game memory"
