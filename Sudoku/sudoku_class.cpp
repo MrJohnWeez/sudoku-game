@@ -9,7 +9,6 @@ using namespace std;
 
 /*
 What to do...
-
     Graphical Functions
       -Print out a board with pretty display AARON!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
       -Fix the "You won text" make it fancy
@@ -24,6 +23,7 @@ What to do...
 struct boardType{
     int boardPlay[9][9] = {{0}};
     int boardKey[9][9] = {{0}};
+    int data[9][9] = {{0}};
 };
 
 //Creates a type that stores game data
@@ -135,6 +135,8 @@ private:
     void getData(gameboard &savefile, vector<string> importData);
 
     //Game run functions
+    void dataUpdate(gameboard &saveFile);
+    void dataBlock(gameboard &saveFile);
     void copyBoard(gameboard &saveFile);
     void boardSelect(gameboard &saveFile);
     void updateBoard(gameboard &saveFile, int main[][9], int key[][9]);
@@ -238,16 +240,16 @@ void game::title(){
 
 void game::credits(){
     //cout <<         "Total________________________________screen_______________________________Length" << endl;
-    cout << blue("                                       ____  _   _    __    _  _  _  _  ___ \n"
+    cout << lightblue("                                       ____  _   _    __    _  _  _  _  ___ \n"
                  "                                      (_  _)( )_( )  /__\\  ( \\( )( )/ )/ __)\n"
                  "                                        )(   ) _ (  /(__)\\  )  (  )  ( \\__ \\\n"
                  "                                       (__) (_) (_)(__)(__)(_)\\_)(_)\\_)(___/\n")
-                 << lightblue("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┓") << blue("                   ____  _____  ____ \n")
-                 << lightblue("        Game made by:                          ") << blue("( ___)(  _  )(  _ \\\n")
-                 << lightblue(" John Wiesner & Aaron Wagner                   ") << blue(" )__)  )(_)(  )   /\n")
-                 << lightblue("       2017 Copyright                          ") << blue("(__)  (_____)(_)\\_)\n")
-                 << lightblue("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━┛")  << blue("         ____  __      __   _  _  ____  _  _  ___ \n")
-                 << blue("                                     (  _ \\(  )    /__\\ ( \\/ )(_  _)( \\( )/ __)\n"
+                 << lightblue("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┓") << lightblue("                   ____  _____  ____ \n")
+                 << lightblue("        Game made by:                          ") << lightblue("( ___)(  _  )(  _ \\\n")
+                 << lightblue(" John Wiesner & Aaron Wagner                   ") << lightblue(" )__)  )(_)(  )   /\n")
+                 << lightblue("       2017 Copyright                          ") << lightblue("(__)  (_____)(_)\\_)\n")
+                 << lightblue("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━┛")  << lightblue("         ____  __      __   _  _  ____  _  _  ___ \n")
+                 << lightblue("                                     (  _ \\(  )    /__\\ ( \\/ )(_  _)( \\( )/ __)\n"
                          "                                      )___/ )(__  /(__)\\ \\  /  _)(_  )  (( (_-.\n"
                          "                                     (__)  (____)(__)(__)(__) (____)(_)\\_)\\___/\n") << endl;
 }
@@ -275,8 +277,9 @@ void game::howToPlay(){
          << "                       Use numbers to navigate the menu                       \n"
          << "        Enter a dash character to exit to menu anytime durring the game.      \n"
          << "      If you want to stop playing make sure you save your game (Option6).     \n"
+         << "  All " << green("green") << " numbers on the board are defult numbers. You cannot change them.\n"
          << "                                                                              \n"
-         << bold("                             Normal sudoku rules:                             \n")
+         << lightblue("                             Normal sudoku rules:                             \n")
          << "                The objective is to fill a 9x9 grid so that each              \n"
          << "                column, each row, and each of the nine 3x3 boxes              \n"
          << "       contains the digits from 1 to 9. The amount of empty spaces and how    \n"
@@ -304,6 +307,8 @@ void game::print(gameboard &saveFile){
                 validrow = row/2;
                 if(saveFile.board.boardPlay[row-(validrow+1)][col] == 0){
                     cout << " ";
+                }else if(saveFile.board.data[row-(validrow+1)][col] == 9){
+                    cout << green(to_string(saveFile.board.boardPlay[row-(validrow+1)][col]));
                 }else{
                     cout << white(to_string(saveFile.board.boardPlay[row-(validrow+1)][col]));
                 }
@@ -311,6 +316,7 @@ void game::print(gameboard &saveFile){
         }
         cout << gray(printing[row][9]);
     }
+    dataUpdate(saveFile);
 }
 
 //Menu system for the game
@@ -378,6 +384,25 @@ void game::menu(gameboard &saveFile){
 
 //Game Run functions:***********************************************************************
 
+void game::dataUpdate(gameboard &saveFile){
+    for(int row = 0; row < 9; row++){
+        for(int col = 0; col < 9; col++){
+            cout << saveFile.board.data[row][col];
+        }
+        cout << endl;
+    }
+}
+
+void game::dataBlock(gameboard &saveFile){
+    for(int row = 0; row < 9; row++){
+        for(int col = 0; col < 9; col++){
+            if(saveFile.board.boardPlay[row][col] != 0){
+                saveFile.board.data[row][col] = 9;
+            }
+        }
+    }
+}
+
 //Saves the current saveFile board to a user defined .txt file
 void game::saveBoard(gameboard &saveFile){
     string name;
@@ -410,6 +435,13 @@ void game::saveBoard(gameboard &saveFile){
         for(unsigned int row = 0; row < 9; row++){
             for(unsigned int col = 0; col < 9; col++){
                 outfile << saveFile.board.boardKey[row][col];
+            }
+            outfile << "\n";
+        }
+        outfile << "Data:\n";
+        for(unsigned int row = 0; row < 9; row++){
+            for(unsigned int col = 0; col < 9; col++){
+                outfile << saveFile.board.data[row][col];
             }
             outfile << "\n";
         }
@@ -455,6 +487,21 @@ void game::getData(gameboard &savefile, vector<string> importData){
             }else if(isdigit(temp2)){
                 storeNum = temp2-'0';
                 savefile.board.boardKey[r-11][count] = storeNum;
+                count++;
+            }
+        }
+    }
+    for(int r = 21; r < 30; r++){
+        temp = importData[r];
+        count = 0;
+        for(unsigned int c = 0; c < temp.length(); c++){
+            temp2 = temp[c];
+            if(isdigit(temp2)){
+                storeNum = temp2-'0';
+                savefile.board.data[r-21][count] = storeNum;
+                count++;
+            }else{
+                savefile.board.data[r-21][count] = 0;
                 count++;
             }
         }
@@ -557,6 +604,7 @@ void game::boardSelect(gameboard &saveFile){
     }
     //Copies board to save file (pass by reference via void function)
     copyBoard(saveFile);
+    dataBlock(saveFile);
 }
 
 void game::run(gameboard &saveFile){
@@ -597,29 +645,34 @@ void game::run(gameboard &saveFile){
                     print(saveFile);
                 }
                 else if(scord2 == '-') menu(saveFile);
-
             }
 
-            answer = -1;
-            while(go && (answer < 0 || answer > 9) && !exit){
-                cout << "Enter (1-9) answer: ";
-                sanswer = getInt();
-                if(isdigit(sanswer)){
-                    answer = sanswer - '0';
+            if(go && !exit){
+                if(saveFile.board.data[cord2-1][cord1] == 9){
+                    cout << "Not allowed to edit predefined numbers. Press Enter to Continue.";
+                    pause(false);
+                }else{
+                    answer = -1;
+                    while(go && (answer < 0 || answer > 9) && !exit){
+                        cout << "Enter (1-9) answer: ";
+                        sanswer = getInt();
+                        if(isdigit(sanswer)){
+                            answer = sanswer - '0';
+                        }
+                        else if(sanswer == '-') menu(saveFile);
+                    }
+
+                    //Update number in board and check for errors
+                    saveFile.board.boardPlay[cord2-1][cord1] = answer;
+                    check(saveFile);
+
+                    //Does user win game? go == false
+                    if((numLeft + userIncorrect) == 0){
+                        exit = true;
+                        go = false;
+                    }
                 }
-                else if(sanswer == '-') menu(saveFile);
             }
-
-            //Update number in board and check for errors
-            saveFile.board.boardPlay[cord2-1][cord1] = answer;
-            check(saveFile);
-
-            //Does user win game? go == false
-            if((numLeft + userIncorrect) == 0){
-                exit = true;
-                go = false;
-            }
-
         }while(go && !exit);
 
         //User has won/solved puzzle
