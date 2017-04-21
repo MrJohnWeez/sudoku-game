@@ -95,6 +95,7 @@ private:
     void menu(gameboard &saveFile);
 
     //Import and Export Boards
+    void getBoard(gameboard &saveFile, string boardName);
     void saveBoard(gameboard &saveFile);
     void getData(gameboard &savefile, vector<string> importData);
     void import(gameboard &saveFile);
@@ -295,6 +296,45 @@ void game::print(gameboard &saveFile){
     }
 }
 
+void game::getBoard(gameboard &saveFile, string boardName){
+    string fileName = "../Sudoku/Boards.txt";
+
+    fstream infile;
+    infile.open(fileName, ios::in);
+
+    if(infile){
+        string temp;
+        int count = 0;
+        bool found = false;
+        vector<string> importData;
+
+        while(!infile.eof() && !found){
+            getline(infile, temp);
+            if(temp == boardName){
+                found = true;
+                importData.push_back(temp);
+            }
+        }
+        while(!infile.eof() && (count < 30)){
+            getline(infile, temp);
+            importData.push_back(temp);
+            count++;
+        }
+        infile.close();
+        getData(saveFile, importData);
+        run(saveFile);
+    }else{
+        infile.close();
+        clear();
+        fileName = "";
+        cout << "Missing Boards.txt from directory" << endl;
+        pause(true);
+        clear();
+        menu(saveFile);
+    }
+
+}
+
 //Menu system for the game
 void game::menu(gameboard &saveFile){
     if(!exit){
@@ -478,6 +518,7 @@ void game::boardSelect(gameboard &saveFile){
     //Clears any values held before
     saveFile.diff = 0;
     saveFile.version = 0;
+    string boardName;
 
     while(saveFile.diff != 1 && saveFile.diff != 2 && saveFile.diff != 3){
         if(saveFile.diff != 0){
@@ -494,6 +535,9 @@ void game::boardSelect(gameboard &saveFile){
         if(isdigit(temp)){
             clear();
             saveFile.diff = temp - '0';
+            if(saveFile.diff == 1) boardName = "Easy";
+            else if(saveFile.diff == 2) boardName = "Medium";
+            else if(saveFile.diff == 3) boardName = "Hard";
         }
         else if(temp == '-'){
             menu(saveFile);
@@ -516,9 +560,15 @@ void game::boardSelect(gameboard &saveFile){
         if(isdigit(temp)){
             clear();
             saveFile.version = temp - '0';
+            if(saveFile.version == 1) boardName += "1";
+            else if(saveFile.version == 2) boardName += "2";
+            else if(saveFile.version == 3) boardName += "3";
+            else if(saveFile.version == 4) boardName += "4";
+            else if(saveFile.version == 5) boardName += "5";
         }
         else if(temp == '-') menu(saveFile);
     }
+    //getBoard(saveFile, boardName);
     //Copies board to saveFile and updates defult numbers
     copyBoard(saveFile);
     dataBlock(saveFile);
@@ -1032,3 +1082,4 @@ void game::copyBoard(gameboard &saveFile){
         }
     }
 }
+
