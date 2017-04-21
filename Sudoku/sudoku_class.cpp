@@ -388,6 +388,9 @@ void game::menu(gameboard &saveFile){
 void game::saveBoard(gameboard &saveFile){
     string name;
     string fileOutName = "../Sudoku/";
+    string temp;
+    temp = saveFile.title;
+    temp += "\n";
 
     cout << "Enter name of file." << endl;
     getline(cin, name);
@@ -398,33 +401,20 @@ void game::saveBoard(gameboard &saveFile){
         fileOutName += ".txt";
 
         fstream outfile;
-
         outfile.open(fileOutName, ios::out);
 
-        string temp;
-        temp = saveFile.title;
-        temp += "\n";
-        outfile << temp;
-
-        for(unsigned int row = 0; row < 9; row++){
-            for(unsigned int col = 0; col < 9; col++){
-                outfile << saveFile.board.boardPlay[row][col];
+        for(int b = 0; b < 3; b++){
+            if(b == 0) outfile << temp;
+            else if(b == 1) outfile << "Key:\n";
+            else if(b == 2) outfile << "Data:\n";
+            for(unsigned int row = 0; row < 9; row++){
+                for(unsigned int col = 0; col < 9; col++){
+                    if(b == 0) outfile << saveFile.board.boardPlay[row][col];
+                    else if(b == 1) outfile << saveFile.board.boardKey[row][col];
+                    else if(b == 2) outfile << saveFile.board.data[row][col];
+                }
+                outfile << "\n";
             }
-            outfile << "\n";
-        }
-        outfile << "Key:\n";
-        for(unsigned int row = 0; row < 9; row++){
-            for(unsigned int col = 0; col < 9; col++){
-                outfile << saveFile.board.boardKey[row][col];
-            }
-            outfile << "\n";
-        }
-        outfile << "Data:\n";
-        for(unsigned int row = 0; row < 9; row++){
-            for(unsigned int col = 0; col < 9; col++){
-                outfile << saveFile.board.data[row][col];
-            }
-            outfile << "\n";
         }
         outfile.close();
 
