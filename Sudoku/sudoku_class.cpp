@@ -8,8 +8,19 @@
 using namespace std;
 
 /*
-    We can use these unicode chars: http://www.copypastecharacter.com/all-characters
+
+    This Sudoku c++ game was for a school project for the Spring 2017.
+    Copyright 2017 All rights reserved.
+    Last Edited 4/26/17
+
+
+    We used these unicode chars: http://www.copypastecharacter.com/all-characters
     Game Report: https://docs.google.com/document/d/1W9t9L3NHXSCfmkRBUQDQo04xI60NdST3vGZK92s__sU/edit?usp=sharing
+
+
+    NOTE:
+    If the game terminal is not in color or if it has random characters the platform does not support Unicode
+    *This program was writen for Linux
 */
 
 //Stores play board, key, and data
@@ -37,7 +48,7 @@ public:
         userIncorrect = 0;
     }
 
-    //This is a deconstructor (Useless for now)
+    //This is a deconstructor
     ~game(){
         exit = false;
     }
@@ -46,7 +57,7 @@ public:
     void sudukoGame(){
         title();
         clear();
-        menu(saveFile); //Whole game runs from menu
+        menu(saveFile);
         credits();
     }
 private:
@@ -157,6 +168,7 @@ void game::pause(bool enter){
     if(enter) cout << setw(67) << white("-----Press enter to continue-----") << endl;
     getline(cin,dummy);
     if(dummy[0] == '-'){
+        clear();
         exit = true;
     }
 }
@@ -243,7 +255,6 @@ void game::howToPlay(){
 }
 
 void game::credits(){
-    clear();
     cout << lightblue("                                       ____  _   _    __    _  _  _  _  ___ \n"
                       "                                      (_  _)( )_( )  /__\\  ( \\( )( )/ )/ __)\n"
                       "                                        )(   ) _ (  /(__)\\  )  (  )  ( \\__ \\\n"
@@ -316,7 +327,10 @@ void game::menu(gameboard &saveFile){
                  << "\n\n\n\n\n\n\n\n\n";
             char temp = getInt();
             if(isdigit(temp)) option = temp - '0';
-            else if(temp == '-') option = 0;
+            else if(temp == '-'){
+                option = 0;
+                clear();
+            }
         }
         if(option == 1){
             clear();
@@ -338,6 +352,7 @@ void game::menu(gameboard &saveFile){
             clear();
             saveBoard(saveFile);
         }else if(option == 7){
+            clear();
             credits();
             pause(true);
             menu(saveFile);
@@ -562,6 +577,7 @@ void game::boardSelect(gameboard &saveFile){
         else if(temp == '-') menu(saveFile);
     }
     getBoard(saveFile, boardName);
+    dataBlock(saveFile);
 }
 
 //Copies board to main "game memory"
@@ -598,7 +614,10 @@ void game::run(gameboard &saveFile){
                     editCord1 = charcord1;
                     print(saveFile);
                 }
-                else if(charcord1 == '-') menu(saveFile);
+                else if(charcord1 == '-'){
+                    clear();
+                    menu(saveFile);
+                }
             }
             cord1 = double(charcord1)-65;
 
@@ -611,7 +630,10 @@ void game::run(gameboard &saveFile){
                     cord2 = scord2 - '0';
                     print(saveFile);
                 }
-                else if(scord2 == '-') menu(saveFile);
+                else if(scord2 == '-'){
+                    clear();
+                    menu(saveFile);
+                }
             }
 
             if(go && !exit){
@@ -626,7 +648,10 @@ void game::run(gameboard &saveFile){
                         if(isdigit(sanswer)){
                             answer = sanswer - '0';
                         }
-                        else if(sanswer == '-') menu(saveFile);
+                        else if(sanswer == '-'){
+                            clear();
+                            menu(saveFile);
+                        }
                     }
 
                     //Update number in board and check for errors
