@@ -1,0 +1,15 @@
+﻿  textediting.cpp
+c:\users\john\documents\repositorycontrol\sudoku-game\vsproject\sudokugame\sudokugame\textediting.cpp(28): warning C4129: 'e': unrecognized character escape sequence
+c:\users\john\documents\repositorycontrol\sudoku-game\vsproject\sudokugame\sudokugame\textediting.cpp(30): warning C4129: 'e': unrecognized character escape sequence
+  sudoku_class.cpp
+c:\users\john\documents\repositorycontrol\sudoku-game\vsproject\sudokugame\sudokugame\sudoku_class.cpp(141): warning C4129: 'e': unrecognized character escape sequence
+c:\users\john\documents\repositorycontrol\sudoku-game\vsproject\sudokugame\sudokugame\sudoku_class.cpp(143): warning C4129: 'e': unrecognized character escape sequence
+c:\users\john\documents\repositorycontrol\sudoku-game\vsproject\sudokugame\sudokugame\sudoku_class.cpp(711): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+  main.cpp
+c:\users\john\documents\repositorycontrol\sudoku-game\vsproject\sudokugame\sudokugame\main.cpp(9): error C2065: 'game': undeclared identifier
+c:\users\john\documents\repositorycontrol\sudoku-game\vsproject\sudokugame\sudokugame\main.cpp(9): error C2146: syntax error: missing ';' before identifier 'Suduko'
+c:\users\john\documents\repositorycontrol\sudoku-game\vsproject\sudokugame\sudokugame\main.cpp(9): error C2065: 'Suduko': undeclared identifier
+c:\users\john\documents\repositorycontrol\sudoku-game\vsproject\sudokugame\sudokugame\main.cpp(10): error C2065: 'Suduko': undeclared identifier
+c:\users\john\documents\repositorycontrol\sudoku-game\vsproject\sudokugame\sudokugame\main.cpp(10): error C2228: left of '.sudukoGame' must have class/struct/union
+  c:\users\john\documents\repositorycontrol\sudoku-game\vsproject\sudokugame\sudokugame\main.cpp(10): note: type is 'unknown-type'
+  Generating Code...
