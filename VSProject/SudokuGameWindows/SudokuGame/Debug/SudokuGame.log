@@ -1,0 +1,4 @@
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(387,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (SudokuGame.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  sudoku_class.cpp
+c:\users\john\documents\repositorycontrol\sudoku-game\vsproject\sudokugamewindows\sudokugame\sudoku_class.cpp(531): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+  SudokuGame.vcxproj -> C:\Users\John\Documents\RepositoryControl\sudoku-game\VSProject\SudokuGameWindows\Debug\SudokuGameWindows10.exe

@@ -1,0 +1,9 @@
+﻿  main.cpp
+  sudoku_class.cpp
+sudoku_class.cpp(531): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+  Generating code
+  41 of 296 functions (13.9%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    44 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  SudokuGame.vcxproj -> C:\Users\John\Documents\RepositoryControl\sudoku-game\VSProject\SudokuGameWindows\Release\SudokuGameWindows10.exe
